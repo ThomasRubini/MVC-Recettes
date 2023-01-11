@@ -15,6 +15,11 @@ final class Controleur
             $S_url = substr($S_url, 0, strlen($S_url) - 1);
         }
 
+        // On élimine l'éventuel slash en début d'URL sinon notre explode renverra une première entrée vide
+        if ('/' == substr($S_url, 0, 1)) {
+            $S_url = substr($S_url, 1, strlen($S_url));
+        }
+
         // On éclate l'URL, elle va prendre place dans un tableau
         $A_urlDecortique = explode('/', $S_url);
 
