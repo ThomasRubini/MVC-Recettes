@@ -5,7 +5,7 @@ final class HelloworldController
     public function defaultAction()
     {
         $O_helloworld =  new Helloworld();
-        View::show('helloworld/view', array('helloworld' =>  $O_helloworld->donneMessage()));
+        View::show('helloworld/view', array('helloworld' =>  $O_helloworld->getMessage()));
 
     }
 
