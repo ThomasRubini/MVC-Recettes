@@ -39,7 +39,7 @@ final class controller
         $this->_A_urlParts['controller'] = array_shift($_A_urlParts);
         $this->_A_urlParts['action']     = array_shift($_A_urlParts);
 
-        $this->_A_urlParametres = $_A_urlParts;
+        $this->_A_urlParams = $_A_urlParts;
 
         $this->_A_postParams = $A_postParams;
 
