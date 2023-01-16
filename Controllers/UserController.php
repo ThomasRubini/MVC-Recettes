@@ -8,11 +8,6 @@ final class UserController
         View::show("user/login");
     }
 
-    public function registerAction(Array $A_urlParams = null, Array $A_postParams = null)
-    {
-        View::show("user/register");
-    }
-
     private function get_or_die($DICT, $key)
     {
         if (isset($DICT[$key])) return $DICT[$key];
