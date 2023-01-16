@@ -19,7 +19,8 @@ final class UserModel
         $stmt->bindParam("email", $S_email);
         $stmt->execute();
 
-        return $stmt->fetch()[0] !== 0;
+        $count = $stmt->fetch()[0];
+        return $count != 0;
     }
 
 
