@@ -5,6 +5,6 @@
 <?php
 
 foreach($A_view["INGREDIENTS"] as $i){
-    echo "<p> {$i['name']}: {$i['quantity']} </p>";
+    echo "<p> {$i['NAME']}: {$i['QUANTITY']} </p>";
 }
 ?>
