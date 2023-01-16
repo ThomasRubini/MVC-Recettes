@@ -1,10 +1,32 @@
-<p> <?= $A_view["NAME"] ?> </p>
-<p> Auteur: <?= $A_view["AUTHOR_NAME"] ?> </p>
-<p> Difficulté: <?= $A_view["DIFFICULTY_NAME"] ?> </p>
-<p> Ingrédients: </p>
-<?php
+<main>
 
-foreach($A_view["INGREDIENTS"] as $i){
-    echo "<p> {$i['NAME']}: {$i['QUANTITY']} </p>";
-}
-?>
+    <img src="<?= $A_view["imageRecette"] ?>" alt="Image d'illustration de la recette">
+
+    <section class="infosRecette">
+        <header>
+            <h1><?= $A_view["NAME"] ?></h1>
+        </header>
+        <p><?= $A_view["DESC"] ?></p>
+    </section>
+
+    <section class="ingredientsRecette">
+        <h2>Ingrédients</h2>
+        <ul>
+            <?php
+                foreach($A_view["INGREDIENTS"] as $ingredient)
+                    echo "<li> ${ingredient["NAME"]}: ${ingredient["QUANTITY"]} </li>";
+            ?>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Préparation</h2>
+        <ol>
+            <?php
+                foreach(explode("\n", $A_view["RECIPE"]) as $instructions)
+                    echo "<li>".$instructions."</li>";
+            ?>
+        </ol>
+    </section>
+
+</main>
