@@ -3,19 +3,33 @@
 final class RecipeModel
 {
 
-    public function getByID($I_id)
+    public function getRecipeByID($I_id)
     {
-        if ($I_id == 36) {
-            return array(
-                "id" => 36,
-                "name" => "Ma recette num 36",
-                "desc" => "Une brève description de la recette 36",
-                "recipe" => "Etape 1\nEtape 2\nEtape 3",
-                "difficulty_id" => 1,
-                "author_id" => 1,
-            );
-        } else {
-            return null;
-        }
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT * FROM RECIPE WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+        return $row;
+    }
+
+    public function getFullRecipeWithComments($I_id)
+    {
+        $A_recipe = self::getRecipeByID($I_id);
+        if ($A_recipe === null)return null;
+        
+
+        $O_ingredientModel = new IngredientModel();
+        $A_recipe["INGREDIENTS"] = $O_ingredientModel->searchByRecipe($A_recipe["ID"]);
+
+        $O_userModel = new UserModel();
+        $A_recipe["AUTHOR_NAME"] = $O_userModel->getNameByID($A_recipe["AUTHOR_ID"]);
+ 
+        $O_userModel = new DifficultyModel();
+        $A_recipe["DIFFICULTY_NAME"] = $O_userModel->getByID($A_recipe["DIFFICULTY_ID"]);
+
+        return $A_recipe;
     }
 }
