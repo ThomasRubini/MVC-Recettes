@@ -24,6 +24,17 @@ final class UserModel
     }
 
 
+    public function getUserByID($I_id){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT * FROM USER WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+        return $row;
+    }
+
     public function getUserByEmail($S_email){
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT * FROM USER WHERE email=:email");

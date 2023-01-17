@@ -37,9 +37,6 @@ final class UserController
 
         session_start();
         $_SESSION["ID"] = $A_user["ID"];
-        $_SESSION["EMAIL"] = $A_user["EMAIL"];
-        $_SESSION["USERNAME"] = $A_user["USERNAME"];
-        $_SESSION["ADMIN"] = $A_user["ADMIN"];
         View::show("user/signin", array("success" => True));
     }
 
@@ -80,11 +77,19 @@ final class UserController
 
         session_start();
         
-        if(!isset($_SESSION) || !isset($_SESSION["USERNAME"])){
+        if(!isset($_SESSION) || !isset($_SESSION["ID"])){
             echo "301 NOT LOGIN";
             return;
         }
 
-        return View::show("user/view", $_SESSION);
+        $O_userModel = new UserModel();
+        $A_user = $O_userModel->getUserByID($_SESSION["ID"]);
+        if ($A_user == null){
+            // User has been deleted ?!
+            echo "Error loading your profile ?";
+            return;
+        }
+
+        return View::show("user/view", $A_user);
     }
 }
