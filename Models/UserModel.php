@@ -67,6 +67,6 @@ final class UserModel
         
         $row = $stmt->fetch();
         if ($row === false) return false;
-        return $row["DISABLED"] === 0;
+        return $row["DISABLED"] !== 1;
     }
 }

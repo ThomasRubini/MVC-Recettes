@@ -35,7 +35,7 @@ final class UserController
             return View::show("user/signin", array("success" => False, "msg" => "This account is disabled"));
         }
 
-        Session::start($A_user["ID"]);
+        Session::set_login($A_user["ID"]);
         
         View::show("user/signin", array("success" => True));
     }
@@ -71,7 +71,7 @@ final class UserController
 
     public function logoutAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        Session::destroy();
+        Session::destroy_session();
         header("Location: /");
     }
 
@@ -82,6 +82,9 @@ final class UserController
         }
 
         Session::login_or_die();
+
+        $O_userModel = new UserModel();
+        $A_user = $O_userModel->getUserByID($_SESSION["ID"]);
 
         return View::show("user/view", $A_user);
     }
