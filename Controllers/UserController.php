@@ -90,7 +90,14 @@ final class UserController
         header("Location: /");
     }
 
+    // Kept for compatibility purposes
+    // TODO do a redirect route once implemented
     public function viewAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        return self::defaultAction($A_urlParams, $A_postParams);
+    }
+
+    public function defaultAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         if(count($A_urlParams)!=0){
             return View::show("errors/404");
