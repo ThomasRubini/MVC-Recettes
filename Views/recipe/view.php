@@ -5,6 +5,7 @@
     <section class="infosRecette">
         <header>
             <h1><?= $A_view["NAME"] ?></h1>
+            <p><?= $A_view["TIME"] ?>&nbsp;—&nbsp;<?= $A_view["DIFFICULTY_NAME"] ?></p>
         </header>
         <p><?= $A_view["DESC"] ?></p>
     </section>
@@ -14,7 +15,7 @@
         <ul>
             <?php
                 foreach($A_view["INGREDIENTS"] as $ingredient)
-                    echo "<li> ${ingredient["NAME"]}: ${ingredient["QUANTITY"]} </li>";
+                    echo "<li> {$ingredient["NAME"]}: {$ingredient["QUANTITY"]} </li>";
             ?>
         </ul>
     </section>
@@ -28,5 +29,7 @@
             ?>
         </ol>
     </section>
+
+    <p>By <?= $A_view["AUTHOR_USERNAME"] ?></p>
 
 </main>
