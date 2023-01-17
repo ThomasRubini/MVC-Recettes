@@ -9,7 +9,12 @@ final class UserController
 
     public function loginAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        View::show("user/login");
+        $S_errmsg = null;
+        if(Session::resume_session() && isset($_SESSION["errmsg"])){
+            $S_errmsg = $_SESSION["errmsg"];
+            unset($_SESSION["errmsg"]);
+        }
+        View::show("user/login", array("errmsg" => $S_errmsg));
     }
 
     private function get_or_die($DICT, $key)
@@ -26,18 +31,23 @@ final class UserController
         $O_userModel = new UserModel();
         $A_user = $O_userModel->getUserByEmail($S_email);
         if ($A_user == null) {
-            return View::show("user/signin", array("success" => False, "msg" => "No user with this email"));
+            $S_errmsg = "No user with this email";
+        }else if (!password_verify($S_password, $A_user["PASS_HASH"])) {
+            $S_errmsg = "Invalid password";
+        }else if ($A_user["DISABLED"]) {
+            $S_errmsg = "This account is disabled";
         }
-        if (!password_verify($S_password, $A_user["PASS_HASH"])) {
-            return View::show("user/signin", array("success" => False, "msg" => "Invalid password"));
-        }
-        if ($A_user["DISABLED"]) {
-            return View::show("user/signin", array("success" => False, "msg" => "This account is disabled"));
+
+        if (isset($S_errmsg)) {
+            Session::start_session();
+            $_SESSION["errmsg"] = $S_errmsg;
+            return header("Location: /user/login");
         }
 
         Session::set_login($A_user["ID"]);
         
-        View::show("user/signin", array("success" => True));
+        
+        header("Location: /");
     }
 
     public function signUpAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -46,26 +56,27 @@ final class UserController
         $S_username = self::get_or_die($A_postParams, "username");
         $S_password = self::get_or_die($A_postParams, "password");
 
+        $O_userModel = new UserModel();
+
         if (!filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
             $S_errmsg = "invalid email";
         } else if( strlen($S_password) < 8 || strlen($S_password) > 150 ) {
             $S_errmsg = "password must be between 8 and 150 characters";
-        }
-
-        $O_userModel = new UserModel();
-
-        if($O_userModel->isEmailInDatabase($S_email)){
+        } else if($O_userModel->isEmailInDatabase($S_email)) {
             $S_errmsg = "An user with this email is already registered";
         }
 
         if(isset($S_errmsg)){
-            return View::show("user/signup", array("success" => False, "msg" => $S_errmsg));
+            Session::start_session();
+            $_SESSION["errmsg"] = $S_errmsg;
+            return header("Location: /user/login");
         }
 
         $S_password_hash = password_hash($S_password, PASSWORD_DEFAULT);
 
         $O_userModel->createUser($S_email, $S_username, $S_password_hash);
-        return View::show("user/signup", array("success" => True));   
+        
+        return header("Location: /");
     }
 
 

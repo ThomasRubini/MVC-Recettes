@@ -1,3 +1,8 @@
+<?php
+    if (isset($A_view["errmsg"])){
+        echo "<p> Error: {$A_view["errmsg"]} </p>";
+    }
+?>
 <main>
     <section>
         <form method="POST" action="/user/signin">
