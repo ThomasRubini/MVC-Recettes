@@ -5,9 +5,9 @@ final class UserModel
 
     public function createUser($S_email, $S_username, $S_password_hash){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, NAME, PASS_HASH) VALUES(:email, :name, :password_hash)");
+        $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, USERNAME, PASS_HASH) VALUES(:email, :username, :password_hash)");
         $stmt->bindParam("email", $S_email);
-        $stmt->bindParam("name", $S_name);
+        $stmt->bindParam("username", $S_username);
         $stmt->bindParam("password_hash", $S_password_hash);
         $stmt->execute();
     }
@@ -44,6 +44,6 @@ final class UserModel
         
         $row = $stmt->fetch();
         if ($row === false) return null;
-        return $row["NAME"];
+        return $row["USERNAME"];
     }
 }

@@ -38,7 +38,7 @@ final class UserController
         session_start();
         $_SESSION["ID"] = $A_user["ID"];
         $_SESSION["EMAIL"] = $A_user["EMAIL"];
-        $_SESSION["NAME"] = $A_user["NAME"];
+        $_SESSION["USERNAME"] = $A_user["USERNAME"];
         $_SESSION["ADMIN"] = $A_user["ADMIN"];
         View::show("user/signin", array("success" => True));
     }
