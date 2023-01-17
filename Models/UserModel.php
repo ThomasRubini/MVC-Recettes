@@ -85,4 +85,11 @@ final class UserModel
         $stmt->bindParam("new_username", $S_newUsername);
         $stmt->execute();
     }
+
+    public function deleteByID($I_id){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("DELETE FROM USER WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+    }
 }
