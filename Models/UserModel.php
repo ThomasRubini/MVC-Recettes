@@ -24,17 +24,15 @@ final class UserModel
     }
 
 
-    public function isPasswordValid($S_email, $S_password){
+    public function getUserByEmail($S_email){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT PASS_HASH FROM USER WHERE EMAIL=:email");
+        $stmt = $O_model->prepare("SELECT * FROM USER WHERE email=:email");
         $stmt->bindParam("email", $S_email);
         $stmt->execute();
         
-        if($stmt->rowCount()==1){
-            $row = $stmt->fetch();
-            return password_verify($S_password, $row["PASS_HASH"]);
-        }
-        return False;
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+        return $row;
     }
 
     public function getNameByID($I_id)

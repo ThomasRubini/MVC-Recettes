@@ -3,7 +3,7 @@
     if ($A_view["success"]) {
         echo "Authentifié avec succès !";
     } else {
-        echo "Authentification échouée";
+        echo "Authentification échouée. Raison : ".$A_view["msg"];
     }
     ?>
 </p>
