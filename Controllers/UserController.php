@@ -9,12 +9,16 @@ final class UserController
 
     public function loginAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        $S_errmsg = null;
-        if(Session::resume_session() && isset($_SESSION["errmsg"])){
-            $S_errmsg = $_SESSION["errmsg"];
-            unset($_SESSION["errmsg"]);
+        if (Session::is_login()) {
+            header("Location: /user/view");
+        } else {
+            $S_errmsg = null;
+            if(Session::resume_session() && isset($_SESSION["errmsg"])){
+                $S_errmsg = $_SESSION["errmsg"];
+                unset($_SESSION["errmsg"]);
+            }
+            View::show("user/login", array("errmsg" => $S_errmsg));
         }
-        View::show("user/login", array("errmsg" => $S_errmsg));
     }
 
     private function get_or_die($DICT, $key)
