@@ -20,6 +20,7 @@ final class RecipeModel
         $A_recipe = self::getRecipeByID($I_id);
         if ($A_recipe === null)return null;
         
+        $A_recipe["IMAGE_URL"] = "/static/img/recettes/".$A_recipe["ID"].".jpg";
 
         $O_ingredientModel = new IngredientModel();
         $A_recipe["INGREDIENTS"] = $O_ingredientModel->searchByRecipe($A_recipe["ID"]);
