@@ -108,6 +108,6 @@ final class UserController
         $O_userModel = new UserModel();
         $A_user = $O_userModel->getUserByID($_SESSION["ID"]);
 
-        return View::show("user/view", $A_user);
+        return View::show("user/edit", $A_user);
     }
 }
