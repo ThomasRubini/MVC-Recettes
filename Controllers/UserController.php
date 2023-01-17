@@ -21,7 +21,7 @@ final class UserController
         }
     }
 
-    private function get_or_die($DICT, $key)
+    private function getOrDie($DICT, $key)
     {
         if (isset($DICT[$key])) return $DICT[$key];
         else die("Key $key not present");
@@ -29,8 +29,8 @@ final class UserController
 
     public function signInAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        $S_email = self::get_or_die($A_postParams, "email");
-        $S_password = self::get_or_die($A_postParams, "password");
+        $S_email = self::getOrDie($A_postParams, "email");
+        $S_password = self::getOrDie($A_postParams, "password");
 
         $O_userModel = new UserModel();
         $A_user = $O_userModel->getUserByEmail($S_email);
@@ -56,9 +56,9 @@ final class UserController
 
     public function signUpAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        $S_email = self::get_or_die($A_postParams, "email");
-        $S_username = self::get_or_die($A_postParams, "username");
-        $S_password = self::get_or_die($A_postParams, "password");
+        $S_email = self::getOrDie($A_postParams, "email");
+        $S_username = self::getOrDie($A_postParams, "username");
+        $S_password = self::getOrDie($A_postParams, "password");
 
         $O_userModel = new UserModel();
 
