@@ -69,6 +69,13 @@ final class UserController
     }
 
 
+    public function logoutAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        session_start();
+        session_destroy();
+        header("Location: /");
+    }
+
     public function viewAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         if(count($A_urlParams)!=0){
