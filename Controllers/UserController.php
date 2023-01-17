@@ -108,6 +108,28 @@ final class UserController
         $O_userModel = new UserModel();
         $A_user = $O_userModel->getUserByID($_SESSION["ID"]);
 
-        return View::show("user/view", $A_user);
+        return View::show("user/edit", $A_user);
+    }
+
+    public function updateAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        Session::login_or_die();
+
+        $O_userModel = new UserModel();
+
+        if (isset($_POST["email"])) {
+            $S_email = $_POST["email"];
+            if (!empty($S_email) && filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
+                $O_userModel->updateEmailByID($_SESSION["ID"], $_POST["email"]);
+            }
+        }
+        if (isset($_POST["username"])) {
+            $S_username = $_POST["username"];
+            if (!empty($S_username)) {
+                $O_userModel->updateUsernameByID($_SESSION["ID"], $_POST["username"]);
+            }
+        }
+
+        header("Location: /user");
     }
 }

@@ -69,4 +69,20 @@ final class UserModel
         if ($row === false) return false;
         return $row["DISABLED"] !== 1;
     }
+    
+    public function updateEmailByID($I_id, $S_newEmail){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("UPDATE USER SET EMAIL=:new_email WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->bindParam("new_email", $S_newEmail);
+        $stmt->execute();
+    }
+    
+    public function updateUsernameByID($I_id, $S_newUsername){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("UPDATE USER SET USERNAME=:new_username WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->bindParam("new_username", $S_newUsername);
+        $stmt->execute();
+    }
 }
