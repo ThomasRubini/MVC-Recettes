@@ -5,9 +5,9 @@ final class UserModel
 
     public function createUser($S_email, $S_username, $S_password_hash){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, NAME, PASS_HASH) VALUES(:email, :name, :password_hash)");
+        $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, USERNAME, PASS_HASH) VALUES(:email, :username, :password_hash)");
         $stmt->bindParam("email", $S_email);
-        $stmt->bindParam("name", $S_name);
+        $stmt->bindParam("username", $S_username);
         $stmt->bindParam("password_hash", $S_password_hash);
         $stmt->execute();
     }
@@ -24,17 +24,26 @@ final class UserModel
     }
 
 
-    public function isPasswordValid($S_email, $S_password){
+    public function getUserByID($I_id){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT PASS_HASH FROM USER WHERE EMAIL=:email");
+        $stmt = $O_model->prepare("SELECT * FROM USER WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+        return $row;
+    }
+
+    public function getUserByEmail($S_email){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT * FROM USER WHERE email=:email");
         $stmt->bindParam("email", $S_email);
         $stmt->execute();
         
-        if($stmt->rowCount()==1){
-            $row = $stmt->fetch();
-            return password_verify($S_password, $row["PASS_HASH"]);
-        }
-        return False;
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+        return $row;
     }
 
     public function getNameByID($I_id)
@@ -46,6 +55,6 @@ final class UserModel
         
         $row = $stmt->fetch();
         if ($row === false) return null;
-        return $row["NAME"];
+        return $row["USERNAME"];
     }
 }
