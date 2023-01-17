@@ -14,7 +14,7 @@
         <label for="email">Changer d'e-mail&nbsp;</label>
         <input type="email" name="email" id="email" placeholder="<?= $A_view["EMAIL"] ?>">
 
-        <button type="button">Enregistrer</button>
+        <input type="submit" value="Enregistrer">
     </form>
 
     <hr>
