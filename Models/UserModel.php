@@ -46,10 +46,10 @@ final class UserModel
         return $row;
     }
 
-    public function getNameByID($I_id)
+    public function getUsernameByID($I_id)
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT NAME FROM USER WHERE ID=:id");
+        $stmt = $O_model->prepare("SELECT USERNAME FROM USER WHERE ID=:id");
         $stmt->bindParam("id", $I_id);
         $stmt->execute();
         
