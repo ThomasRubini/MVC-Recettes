@@ -132,4 +132,18 @@ final class UserController
 
         header("Location: /user");
     }
+    
+    public function deleteAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        Session::login_or_die();
+
+        $O_userModel = new UserModel();
+
+        $O_userModel->deleteByID($_SESSION["ID"]);
+
+        Session::destroy_session();
+
+        header("Location: /");
+    }
+    
 }
