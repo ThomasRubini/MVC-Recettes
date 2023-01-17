@@ -80,7 +80,7 @@ final class UserController
 
         session_start();
         
-        if(!isset($_SESSION)){
+        if(!isset($_SESSION) || !isset($_SESSION["USERNAME"])){
             echo "301 NOT LOGIN";
             return;
         }
