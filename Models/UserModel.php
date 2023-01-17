@@ -57,4 +57,16 @@ final class UserModel
         if ($row === false) return null;
         return $row["USERNAME"];
     }
+
+    public function isUserActive($I_id)
+    {
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT DISABLED FROM USER WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        if ($row === false) return false;
+        return $row["DISABLED"] === 0;
+    }
 }

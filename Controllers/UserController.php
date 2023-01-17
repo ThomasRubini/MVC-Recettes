@@ -35,8 +35,8 @@ final class UserController
             return View::show("user/signin", array("success" => False, "msg" => "This account is disabled"));
         }
 
-        session_start();
-        $_SESSION["ID"] = $A_user["ID"];
+        Session::start($A_user["ID"]);
+        
         View::show("user/signin", array("success" => True));
     }
 
@@ -71,8 +71,7 @@ final class UserController
 
     public function logoutAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        session_start();
-        session_destroy();
+        Session::destroy();
         header("Location: /");
     }
 
@@ -82,20 +81,7 @@ final class UserController
             return View::show("errors/404");
         }
 
-        session_start();
-        
-        if(!isset($_SESSION) || !isset($_SESSION["ID"])){
-            echo "301 NOT LOGIN";
-            return;
-        }
-
-        $O_userModel = new UserModel();
-        $A_user = $O_userModel->getUserByID($_SESSION["ID"]);
-        if ($A_user == null){
-            // User has been deleted ?!
-            echo "Error loading your profile ?";
-            return;
-        }
+        Session::login_or_die();
 
         return View::show("user/view", $A_user);
     }
