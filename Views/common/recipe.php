@@ -1,7 +1,7 @@
-<a href="/recipe/view/<?= $A_view["id"]?>">
-    <img src="<?= $A_view["img"] ?>" alt="<?= $A_view["nom"]?>">
+<a href="<?= $A_view["LINK"]?>">
+    <img src="<?= $A_view["IMG"] ?>" alt="<?= $A_view["NAME"]?>">
     <section>
-        <h2> <?= $A_view["nom"]?> </h2>
-        <p> <?= $A_view["note"]?> </p>
+        <h2> <?= $A_view["NAME"]?> </h2>
+        <p> <?= $A_view["NOTE"]?> </p>
     </section>
 </a>
