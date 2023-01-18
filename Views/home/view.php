@@ -25,7 +25,7 @@ $array_recipes = array(
     <section>
         <?php
             foreach ($array_recipes as $recipe){
-                View::show("home/recipe", $recipe);
+                View::show("common/recipe", $recipe);
             }
         ?>
     </section>
