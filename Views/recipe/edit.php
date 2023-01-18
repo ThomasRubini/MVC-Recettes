@@ -132,30 +132,6 @@ function getOrEmpty($A_Dict, $S_keyName) {
 
 </main>
 
-<style>
-#recipePreparation {
-    display: flex;
-}
-
-textarea#recipeInstructions {
-    resize: none;
-    overflow: hidden;
-    line-height: 20px;
-    min-height: 20px;
-    width: 100%;
-}
-
-.lineNumber span {
-    counter-increment:  linenumber;
-}
-
-.lineNumber span::before {
-    content: counter(linenumber)".";
-    display: block;
-    line-height: 20px;
-}
-</style>
-
 <script>
 numberOfIngredients = <?= $numberOfIngredients ?>;
 const buttonIngredientPlus = document.querySelector("#recipeButtonIngredientPlus");
