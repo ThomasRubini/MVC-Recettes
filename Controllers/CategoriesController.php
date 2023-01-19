@@ -7,22 +7,22 @@ final class CategoriesController
     {
         $A_array_recipes_Type_de_cuisson = array( //test
             array(
-                "id" => "1",
-                "nom" => "Quaso",
-                "img" => "4.jpg",
-                "note" => "4.5"
+                "RECIPE_LINK" => "http://exemple",
+                "IMG_LINK" => "2.jpg",
+                "NAME" => "Croissant",
+                "NOTE" => "4.5"
             ),
             array(
-                "id" => "1",
-                "nom" => "Quaso",
-                "img" => "4.jpg",
-                "note" => "4.5"
+                "RECIPE_LINK" => "http://exemple",
+                "IMG_LINK" => "2.jpg",
+                "NAME" => "Croissant",
+                "NOTE" => "4.5"
             ),
             array(
-                "id" => "1",
-                "nom" => "Quaso",
-                "img" => "4.jpg",
-                "note" => "4.5"
+                "RECIPE_LINK" => "http://exemple",
+                "IMG_LINK" => "2.jpg",
+                "NAME" => "Croissant",
+                "NOTE" => "4.5"
             )
         );
         

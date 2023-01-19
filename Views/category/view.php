@@ -6,7 +6,7 @@
         <?php
         foreach ($A_view as $categoryName => $recipes) {
             echo '<li><section>
-                <h1><?$key?></h1>
+                <h1>'.$categoryName.'</h1>
                 <ul>';
                     foreach ($recipes as $recipe) {
                         echo '<li>';
