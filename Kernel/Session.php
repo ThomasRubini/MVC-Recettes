@@ -4,7 +4,9 @@ final class Session
 {
     public static function start_session()
     {
-        session_start();
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            session_start();
+        }
     }
 
     public static function resume_session()
@@ -18,7 +20,7 @@ final class Session
 
     public static function destroy_session()
     {
-        session_start();
+        self::start_session();
         session_destroy();
     }
 
