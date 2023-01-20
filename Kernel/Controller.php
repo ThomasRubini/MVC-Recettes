@@ -8,7 +8,7 @@ final class controller
 
     private $_A_postParams;
 
-    public function __construct ($S_url, $A_postParams)
+    public function __construct ($S_url, $A_postParams, $A_getParams)
     {
         // Remove the trailing slash
         if ('/' == substr($S_url, -1, 1)) {
@@ -43,6 +43,8 @@ final class controller
 
         $this->_A_postParams = $A_postParams;
 
+        $this->_A_getParams = $A_getParams;
+
 
     }
 
@@ -60,8 +62,11 @@ final class controller
         }
 
         
-        $B_called = call_user_func_array(array(new $this->_A_urlParts['controller'],
-            $this->_A_urlParts['action']), array($this->_A_urlParams, $this->_A_postParams ));
+        $B_called = call_user_func_array(array(
+            new $this->_A_urlParts['controller'],
+            $this->_A_urlParts['action']),
+            array($this->_A_urlParams, $this->_A_postParams, $this->_A_getParams)
+        );
 
         if (false === $B_called) {
             throw new ControllerException("Action " . $this->_A_urlParts['action'] .
