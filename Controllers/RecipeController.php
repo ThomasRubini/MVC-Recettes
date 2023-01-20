@@ -55,4 +55,30 @@ final class RecipeController
 
     }
 
+    public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
+    {
+        if (isset($A_getParams["query"])) {
+            self::searchQueryView($A_urlParams, $A_postParams, $A_getParams);
+        } else {
+            self::searchView($A_urlParams, $A_postParams, $A_getParams);
+        }
+    }
+
+    private function searchView(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
+    {
+        View::show("recipe/search", array("QUERY" => null));
+    }
+    
+    private function searchQueryView(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
+    {
+
+        $O_recipeModel = new RecipeModel();
+        $A_results = $O_recipeModel->searchRecipesByName($A_getParams["query"]);
+        
+        View::show("recipe/search", array(
+            "QUERY" => $A_getParams["query"],
+            "RESULTS" => $A_results,
+        ));
+    }
+
 }

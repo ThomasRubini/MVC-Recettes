@@ -33,4 +33,39 @@ final class RecipeModel
 
         return $A_recipe;
     }
+
+    public function searchRecipesByName($S_query)
+    {
+
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("
+        -- split search term at space
+        with recursive CTE as (
+            select
+                CAST(null as char(255)) as NAME,
+                CONCAT(:query, ' ') as NAMES
+
+            union all
+            select substring_index(NAMES, ' ', 1),
+                    substr(NAMES, instr(NAMES, ' ')+1)
+            from CTE
+            where NAMES != ''
+        )
+
+        -- get a row per occurrence and sort by occurrences number
+        select RECIPE.ID, RECIPE.NAME
+        from CTE
+                JOIN RECIPE
+        WHERE CTE.NAME is not null
+        AND INSTR(RECIPE.NAME, CTE.NAME) > 0
+        GROUP BY RECIPE.ID
+        ORDER BY count(RECIPE.ID) DESC
+        LIMIT 10;
+        ");
+
+        $stmt->bindParam("query", $S_query);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 }
