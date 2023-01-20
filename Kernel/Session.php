@@ -65,11 +65,17 @@ final class Session
         }
     }
 
+    public static function is_admin(){
+        if (!self::is_login()) return false;
+
+        $O_userModel = new UserModel();
+        return $O_userModel->isUserAdmin($_SESSION["ID"]);
+    }
+    
     public static function admin_or_die(){
         Session::login_or_die();
 
-        $O_userModel = new UserModel();
-        if (!$O_userModel->isUserAdmin($_SESSION["ID"])) {
+        if (!self::is_admin()) {
             header("Location: /");
             die();
         }
