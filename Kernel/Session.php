@@ -64,4 +64,15 @@ final class Session
             die();
         }
     }
+
+    public static function admin_or_die(){
+        Session::login_or_die();
+
+        $O_userModel = new UserModel();
+        if (!$O_userModel->isUserAdmin($_SESSION["ID"])) {
+            header("Location: /");
+            die();
+        }
+    }
+
 }
