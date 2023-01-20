@@ -9,12 +9,15 @@
 
     $S_url = isset($_GET['url']) ? $_GET['url'] : null;
     $A_postParams = isset($_POST) ? $_POST : null;
+    
+    $A_getParams = isset($_GET) ? $_GET : null;
+    unset($A_getParams["url"]);
 
     View::openBuffer();
 
     try
     {
-        $O_controller = new Controller($S_url, $A_postParams);
+        $O_controller = new Controller($S_url, $A_postParams, $A_getParams);
         $O_controller->execute();
     }
     catch (ControleurException $O_exception)
