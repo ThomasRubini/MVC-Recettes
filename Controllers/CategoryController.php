@@ -7,20 +7,20 @@ final class CategoryController
     {
         $A_array_recipes_Type_de_cuisson = array( //test
             array(
-                "RECIPE_LINK" => "http://exemple",
-                "IMG_LINK" => "2.jpg",
+                "RECIPE_LINK" => "/recipe/view/2",
+                "IMG_LINK" => "/static/img/recipes/2.jpg",
                 "NAME" => "Croissant",
                 "NOTE" => "4.5"
             ),
             array(
-                "RECIPE_LINK" => "http://exemple",
-                "IMG_LINK" => "2.jpg",
+                "RECIPE_LINK" => "/recipe/view/2",
+                "IMG_LINK" => "/static/img/recipes/2.jpg",
                 "NAME" => "Croissant",
                 "NOTE" => "4.5"
             ),
             array(
-                "RECIPE_LINK" => "http://exemple",
-                "IMG_LINK" => "2.jpg",
+                "RECIPE_LINK" => "/recipe/view/2",
+                "IMG_LINK" => "/static/img/recipes/2.jpg",
                 "NAME" => "Croissant",
                 "NOTE" => "4.5"
             )
