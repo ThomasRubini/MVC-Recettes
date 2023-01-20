@@ -71,7 +71,10 @@ final class RecipeController
     
     private function searchQueryView(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
-        $A_results = array();
+
+        $O_recipeModel = new RecipeModel();
+        $A_results = $O_recipeModel->searchRecipesByName($A_getParams["query"]);
+        
         View::show("recipe/search", array(
             "QUERY" => $A_getParams["query"],
             "RESULTS" => $A_results,
