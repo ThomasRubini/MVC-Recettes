@@ -8,6 +8,8 @@ final class controller
 
     private $_A_postParams;
 
+    private $_A_getParams;
+
     public function __construct ($S_url, $A_postParams, $A_getParams)
     {
         // Remove the trailing slash
