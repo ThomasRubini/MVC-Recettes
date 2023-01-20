@@ -8,6 +8,10 @@ $allCategory = array(
     "Sans lactose" => "sans_lactose");
 ?>
 
+<?php
+    View::show("common/category_list");
+?>
+
 <main>
     <?php
     foreach ($A_view as $categoryName => $recipes) {
