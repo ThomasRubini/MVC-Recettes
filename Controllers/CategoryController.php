@@ -1,6 +1,6 @@
 <?php
 
-final class CategoriesController
+final class CategoryController
 {
 
     public function defaultAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -25,7 +25,7 @@ final class CategoriesController
                 "NOTE" => "4.5"
             )
         );
-        
+
         $A_array_categories = array(
             "Type de cuisson" => $A_array_recipes_Type_de_cuisson,
             "Temps de préparation" => $A_array_recipes_Type_de_cuisson,
@@ -37,5 +37,5 @@ final class CategoriesController
 
         View::show("category/view", $A_array_categories);
     }
-    
+
 }
