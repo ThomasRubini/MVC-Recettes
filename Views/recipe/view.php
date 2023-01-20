@@ -34,4 +34,8 @@
 
     <p>By <?= $A_view["AUTHOR_USERNAME"] ?></p>
 
+    <?php
+        View::show("appreciations/view")//need to be linked with recipe?
+    ?>
+
 </main>
