@@ -17,7 +17,7 @@
 
     <?php
         foreach ($A_view["APPRS"] as $A_appr){
-            $A_appr["ADMIN"] = $A_view["ADMIN"];
+            $A_appr["SHOW_REMOVE_BUTTON"] = $B_view["ADMIN"];
             View::show("appreciations/appreciation", $A_appr);
         }
     ?>
