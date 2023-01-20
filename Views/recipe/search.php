@@ -2,10 +2,12 @@
     # Check presence of the search term query parameter, to avoid getting a warning as the input placeholder value
     $has_search_term = $A_view["search_term"] === null;
 ?>
+
+<?php View::show("common/category_list") ?>
+
 <main>
     <!-- Inclure les catégories -->
-    <?php View::show("common/category_list") ?>
-    <form method="GET" action="search">
+    <form method="GET" action="/recipe/search">
         <label for="search_term">Saisissez les termes à rechercher</label>
         <input id="search_term" type="text" name="search_term" placeholder="<?= $has_search_term ? $A_view["search_term"] : "Votre recherche" ?>">
         <input type="submit" value="Rechercher">
