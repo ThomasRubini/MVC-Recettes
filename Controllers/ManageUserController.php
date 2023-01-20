@@ -7,7 +7,7 @@ final class ManageUserController
     {
         Session::admin_or_die();
 
-        return View::show("manageUser/default");
+        return View::show("manageUser/search");
     }
 
     public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
