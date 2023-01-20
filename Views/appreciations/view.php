@@ -1,37 +1,3 @@
-<?php
-$appreciations = array(
-    array(
-        "NAME" => "test",
-        "PROFILE_IMG" => "1.jpg",
-        "COMMENT" => "j'me présente, je m'appelle henry",
-        "NOTE" => "2",
-        "DATE" => DATE("2020-07-08")
-    ),
-    array(
-        "NAME" => "test",
-        "PROFILE_IMG" => "1.jpg",
-        "COMMENT" => "j'me présente, je m'appelle henry",
-        "NOTE" => "2",
-        "DATE" => DATE("2020-07-08")
-    ),
-    array(
-        "NAME" => "test",
-        "PROFILE_IMG" => "1.jpg",
-        "COMMENT" => "j'me présente, je m'appelle henry",
-        "NOTE" => "2",
-        "DATE" => DATE("2020-07-08")
-    ),
-    array(
-        "NAME" => "AAAA",
-        "PROFILE_IMG" => "/static/img/recipes/1.jpg",
-        "COMMENT" => "j'me présente, je m'appelle henry",
-        "NOTE" => "2",
-        "DATE" => DATE("2020-07-08")
-    ),
-);
-?>
-
-
 <section>
     <h1> Appréciations: </h1>
     <form method="POST" action="/">
@@ -50,7 +16,7 @@ $appreciations = array(
     </form>
 
     <?php
-        foreach ($appreciations as $appreciation){
+        foreach ($A_view as $appreciation){
             View::show("appreciations/appreciation", $appreciation);
         }
     ?>
