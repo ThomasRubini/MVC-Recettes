@@ -21,16 +21,10 @@ final class UserController
         }
     }
 
-    private function getOrDie($DICT, $key)
-    {
-        if (isset($DICT[$key])) return $DICT[$key];
-        else die("Key $key not present");
-    }
-
     public function signInAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        $S_email = self::getOrDie($A_postParams, "email");
-        $S_password = self::getOrDie($A_postParams, "password");
+        $S_email = Utils::getOrDie($A_postParams, "email");
+        $S_password = Utils::getOrDie($A_postParams, "password");
 
         $O_userModel = new UserModel();
         $A_user = $O_userModel->getUserByEmail($S_email);
@@ -56,9 +50,9 @@ final class UserController
 
     public function signUpAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        $S_email = self::getOrDie($A_postParams, "email");
-        $S_username = self::getOrDie($A_postParams, "username");
-        $S_password = self::getOrDie($A_postParams, "password");
+        $S_email = Utils::getOrDie($A_postParams, "email");
+        $S_username = Utils::getOrDie($A_postParams, "username");
+        $S_password = Utils::getOrDie($A_postParams, "password");
 
         $O_userModel = new UserModel();
 
