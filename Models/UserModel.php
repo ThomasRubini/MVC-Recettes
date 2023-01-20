@@ -104,4 +104,22 @@ final class UserModel
         $stmt->bindParam("id", $I_id);
         $stmt->execute();
     }
+
+    public function searchUsers($S_query)
+    {
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("
+        SELECT * FROM USER
+        WHERE USER.USERNAME LIKE :full_query
+        OR USER.EMAIL LIKE :full_query
+        LIMIT 10
+        ");
+        $S_full_query = "%".$S_query."%";
+        $stmt->bindParam("full_query", $S_full_query);
+        $stmt->execute();
+        
+        $rows = $stmt->fetchAll();
+        
+        return $rows;
+    }
 }

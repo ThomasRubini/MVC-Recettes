@@ -27,8 +27,14 @@ final class ManageUserController
     
     private function searchQueryViewAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
-        $S_search = $A_getParams["query"];
-        echo "Terme de recherche choisi: $S_search";
+        $S_query = $A_getParams["query"];
+
+        $O_userModel = new UserModel();
+        $A_results = $O_userModel->searchUsers($S_query);
+
+        var_dump($A_results);
+
+        echo "Terme de recherche choisi: $S_query";
     }
 
 }
