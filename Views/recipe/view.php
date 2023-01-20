@@ -35,7 +35,37 @@
     <p>By <?= $A_view["AUTHOR_USERNAME"] ?></p>
 
     <?php
-        View::show("appreciations/view")//need to be linked with recipe?
+        $appreciations = array(
+            array(
+                "NAME" => "test",
+                "PROFILE_IMG" => "/static/img/users/1.jpg",
+                "COMMENT" => "j'me présente, je m'appelle henry",
+                "NOTE" => "2",
+                "DATE" => DATE("2020-07-08")
+            ),
+            array(
+                "NAME" => "test",
+                "PROFILE_IMG" => "/static/img/users/1.jpg",
+                "COMMENT" => "j'me présente, je m'appelle henry",
+                "NOTE" => "2",
+                "DATE" => DATE("2020-07-08")
+            ),
+            array(
+                "NAME" => "test",
+                "PROFILE_IMG" => "/static/img/users/1.jpg",
+                "COMMENT" => "j'me présente, je m'appelle henry",
+                "NOTE" => "2",
+                "DATE" => DATE("2020-07-08")
+            ),
+            array(
+                "NAME" => "AAAA",
+                "PROFILE_IMG" => "/static/img/users/1.jpg",
+                "COMMENT" => "j'me présente, je m'appelle henry",
+                "NOTE" => "2",
+                "DATE" => DATE("2020-07-08")
+            ),
+        );
+        View::show("appreciations/view", $appreciations)//need to be linked with recipe?
     ?>
 
 </main>
