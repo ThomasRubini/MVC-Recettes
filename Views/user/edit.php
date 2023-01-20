@@ -1,6 +1,11 @@
 <main>
 
-    <?php if($A_view["ADMIN"]) echo "<p>Compte administrateur</p>"; ?>
+    <?php
+        if ($A_view["ADMIN"]) {
+            echo "<p>Compte administrateur</p>";
+            echo "<a href='/manageUser'>Gestion des utilisateurs</a>";
+        }
+    ?>
 
     <a href="/user/logout">Se déconnecter</a>
 
