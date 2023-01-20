@@ -8,7 +8,6 @@ $array_header = array(
 );
 ?>
 <header>
-
     <nav>
         <ul>
             <?php
@@ -18,5 +17,4 @@ $array_header = array(
             ?>
         </ul>
     </nav>
-
 </header>
