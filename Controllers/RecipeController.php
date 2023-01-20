@@ -66,14 +66,14 @@ final class RecipeController
 
     private function searchView(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
-        View::show("recipe/search", array("SEARCH_TERM" => null));
+        View::show("recipe/search", array("QUERY" => null));
     }
     
     private function searchQueryView(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
         $A_results = array();
         View::show("recipe/search", array(
-            "SEARCH_TERM" => $A_getParams["query"],
+            "QUERY" => $A_getParams["query"],
             "RESULTS" => $A_results,
         ));
     }
