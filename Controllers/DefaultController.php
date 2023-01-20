@@ -7,21 +7,21 @@ final class DefaultController
     {
         $array_recipes = array(
             array(
-                "LINK" => "/recipe/view/1",
+                "RECIPE_LINK" => "/recipe/view/1",
                 "NAME" => "Pâte à crêpe",
-                "IMG" => "/static/img/recipes/1.jpg",
+                "IMG_LINK" => "/static/img/recipes/1.jpg",
                 "NOTE" => "4.5"
             ),
             array(
-                "LINK" => "/recipe/view/1",
+                "RECIPE_LINK" => "/recipe/view/1",
                 "NAME" => "Pâte à crêpe",
-                "IMG" => "/static/img/recipes/1.jpg",
+                "IMG_LINK" => "/static/img/recipes/1.jpg",
                 "NOTE" => "4.5"
             ),
             array(
-                "LINK" => "/recipe/view/1",
+                "RECIPE_LINK" => "/recipe/view/1",
                 "NAME" => "Pâte à crêpe",
-                "IMG" => "/static/img/recipes/1.jpg",
+                "IMG_LINK" => "/static/img/recipes/1.jpg",
                 "NOTE" => "4.5"
             ),
         );
