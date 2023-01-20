@@ -1,3 +1,5 @@
+<?php View::show("common/category_list") ?>
+
 <main>
 
     <img src="<?= $A_view["IMAGE_URL"] ?>" alt="Image d'illustration de la recette">
