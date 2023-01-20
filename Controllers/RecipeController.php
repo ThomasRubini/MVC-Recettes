@@ -10,7 +10,7 @@ final class RecipeController
         }
 
         $O_recipeModel = new RecipeModel();
-        $A_returnArray = $O_recipeModel->getFullRecipeWithComments($A_urlParams[0]);
+        $A_returnArray = $O_recipeModel->getFullRecipeWithApprs($A_urlParams[0]);
         if ($A_returnArray === null) {
             return View::show("errors/404");
         }
