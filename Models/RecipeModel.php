@@ -40,7 +40,7 @@ final class RecipeModel
 
         $O_apprModel = new ApprModel();
         
-        $A_recipe["APPRS"] = $O_apprModel->searchRecipeApprs($I_id);
+        $A_recipe["APPRS"] = $O_apprModel->searchRecipeApprsWithAuthors($I_id);
 
         return $A_recipe;
     }

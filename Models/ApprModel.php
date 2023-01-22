@@ -2,6 +2,26 @@
 
 final class ApprModel {
 
+    public function searchRecipeApprsWithAuthors($I_recipe_id)
+    {
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("
+            SELECT APPRECIATION.*, USER.USERNAME as AUTHOR_NAME FROM APPRECIATION
+            JOIN USER ON USER.ID = APPRECIATION.AUTHOR_ID
+            WHERE RECIPE_ID = :recipe_id
+        ");
+        $stmt->bindParam("recipe_id", $I_recipe_id);
+        $stmt->execute();
+        
+        $rows = $stmt->fetchAll();
+       
+        foreach($rows as &$row) {
+            $row["AUTHOR_IMG_LINK"] = "/static/img/user.jpg";
+        }
+
+        return $rows;
+    }
+
     public function searchRecipeApprs($I_recipe_id)
     {
         $O_model = Model::get();

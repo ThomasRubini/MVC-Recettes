@@ -1,7 +1,7 @@
 <section>
     <header>
-        <img src="<?= $A_view["PROFILE_IMG"] ?>" alt="profile picture">
-        <h3> <?= $A_view["NAME"] ?> </h3>
+        <img src="<?= $A_view["AUTHOR_IMG_LINK"] ?>" alt="profile picture">
+        <h3> <?= $A_view["AUTHOR_NAME"] ?> </h3>
         <p> <?= $A_view["COMMENT"] ?> </p>
     </header>
     <p> <?= $A_view["NOTE"] ?> </p>

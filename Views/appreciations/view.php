@@ -16,8 +16,9 @@
     </form>
 
     <?php
-        foreach ($A_view as $appreciation){
-            View::show("appreciations/appreciation", $appreciation);
+        foreach ($A_view["APPRS"] as $A_appr){
+            $A_appr["ADMIN"] = $A_view["ADMIN"];
+            View::show("appreciations/appreciation", $A_appr);
         }
     ?>
 </section>
