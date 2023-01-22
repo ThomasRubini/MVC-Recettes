@@ -34,6 +34,18 @@ final class ApprModel {
         $stmt->execute();
     }
 
+    public function getApprByID($I_appr_id)
+    {
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT * FROM APPPRECIATION WHERE ID = :appr_id");
+        $stmt->bindParam("appr_id", $I_appr_id);
+        $stmt->execute();
+
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+        return $row;
+    }
+
     public function updateAppreciation($I_appr_id)
     {
 
