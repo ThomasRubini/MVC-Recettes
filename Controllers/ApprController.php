@@ -19,11 +19,21 @@ final class ApprController
 
     public function deleteAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        Session::admin_or_die();
+        Session::login_or_die();
 
         $I_appr_id = $A_urlParams[0];
 
         $O_apprModel = new ApprModel();
+        $A_appr = $O_apprModel->getApprById($I_appr_id);
+
+        if ($A_appr === null) {
+            echo "404";
+            return;
+        }
+        
+        if ($A_appr["AUTHOR_ID"] !== $_SESSION["ID"]) {
+            Session::admin_or_die();
+        }
 
         $O_apprModel->deleteAppr($I_appr_id);
 
