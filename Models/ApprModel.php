@@ -10,7 +10,7 @@ final class ApprModel {
         return $stmt->fetch();
     }
 
-    public function createAppr($I_recipe_id, $I_user_id, $S_Comment, $I_score)
+    public function createAppr($I_user_id, $I_recipe_id, $S_Comment, $I_score)
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("
