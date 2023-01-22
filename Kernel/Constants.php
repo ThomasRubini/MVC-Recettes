@@ -14,6 +14,8 @@ final class Constants
 
     const CONTROLLERS_DIR = '/Controllers/';
 
+    const MODULES_DIR = '/Modules/';
+
 
     public static function rootDir() {
         return realpath(__DIR__ . '/../');
@@ -37,6 +39,10 @@ final class Constants
 
     public static function controllersDir() {
         return self::rootDir() . self::CONTROLLERS_DIR;
+    }
+
+    public static function modulesDir() {
+        return self::rootDir() . self::MODULES_DIR;
     }
 
 }

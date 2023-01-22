@@ -47,8 +47,8 @@ final class Session
         }
         
         // ensure account has not been deleted/disabled in the meantime
-        $O_userModel = new UserModel();
-        $B_userActive = $O_userModel->isUserActive($_SESSION["ID"]);
+        $O_userSessionModel = new UserSessionModel();
+        $B_userActive = $O_userSessionModel->isUserActive($_SESSION["ID"]);
         return $B_userActive;
     }
 
@@ -68,8 +68,8 @@ final class Session
     public static function is_admin(){
         if (!self::is_login()) return false;
 
-        $O_userModel = new UserModel();
-        return $O_userModel->isUserAdmin($_SESSION["ID"]);
+        $O_userSessionModel = new UserSessionModel();
+        return $O_userSessionModel->isUserAdmin($_SESSION["ID"]);
     }
     
     public static function admin_or_die(){
