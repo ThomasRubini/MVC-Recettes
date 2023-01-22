@@ -15,7 +15,7 @@ final class RecipeModel
         return $row;
     }
 
-    public function getFullRecipeWithComments($I_id)
+    public function getFullRecipeWithApprs($I_id)
     {
         $A_recipe = self::getRecipeByID($I_id);
         if ($A_recipe === null)return null;
