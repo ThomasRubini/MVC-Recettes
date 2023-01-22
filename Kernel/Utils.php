@@ -9,4 +9,10 @@ final class Utils
         else die("Key $key not present");
     }
 
+    public static function intOrDie($data)
+    {
+        if (is_numeric($data)) return (int) $data;
+        else die("Not an int");
+    }
+
 }
