@@ -1,13 +1,14 @@
 <?php
 
 final class ApprModel {
-    public function getRecipeApprs($I_recipe_id)
+
+    public function searchRecipeApprs($I_recipe_id)
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT * FROM APPRECIATION WHERE ID = :recipe_id");
-        $stmt->bindParam("recipe_id",$I_recipe_id);
+        $stmt = $O_model->prepare("SELECT * FROM APPRECIATION WHERE RECIPE_ID = :recipe_id");
+        $stmt->bindParam("recipe_id", $I_recipe_id);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetchAll();
     }
 
     public function createAppr($I_user_id, $I_recipe_id, $S_Comment, $I_score)

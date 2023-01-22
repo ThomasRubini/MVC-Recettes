@@ -15,7 +15,7 @@ final class RecipeModel
         return $row;
     }
 
-    public function getFullRecipeWithApprs($I_id)
+    public function getFullRecipe($I_id)
     {
         $A_recipe = self::getRecipeByID($I_id);
         if ($A_recipe === null)return null;
@@ -30,6 +30,17 @@ final class RecipeModel
 
         $O_userModel = new DifficultyModel();
         $A_recipe["DIFFICULTY_NAME"] = $O_userModel->getByID($A_recipe["DIFFICULTY_ID"]);
+
+        return $A_recipe;
+    }
+
+    public function getFullRecipeWithApprs($I_id)
+    {
+        $A_recipe = self::getFullRecipe($I_id);
+
+        $O_apprModel = new ApprModel();
+        
+        $A_recipe["APPRS"] = $O_apprModel->searchRecipeApprs($I_id);
 
         return $A_recipe;
     }
