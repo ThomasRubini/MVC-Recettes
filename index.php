@@ -3,6 +3,7 @@
 
     require 'vendor/autoload.php';
     require 'Kernel/AutoLoad.php';
+    require 'Modules/AutoLoad.php';
 
     $dotenv = Dotenv\Dotenv::createImmutable(Constants::rootDir());
     $dotenv->load();
