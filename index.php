@@ -19,7 +19,7 @@
     try
     {
         $O_controller = new Controller($S_url, $A_postParams, $A_getParams);
-        $O_controller->execute();
+        $ret = $O_controller->execute();
     }
     catch (ControleurException $O_exception)
     {
@@ -29,4 +29,10 @@
 
     $content = View::closeBuffer();
 
-    View::show('html', array('body' => $content));
+    if($ret === Utils::RETURN_HTML){
+        View::show('html', array('body' => $content));
+    }else if($ret === Utils::RETURN_RAW){
+        echo $content;
+    }else{
+        throw new Exception("Invalid return value: $ret");
+    }

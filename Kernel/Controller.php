@@ -64,15 +64,21 @@ final class controller
         }
 
         
-        $B_called = call_user_func_array(array(
+        $called = call_user_func_array(array(
             new $this->_A_urlParts['controller'],
             $this->_A_urlParts['action']),
             array($this->_A_urlParams, $this->_A_postParams, $this->_A_getParams)
         );
 
-        if (false === $B_called) {
+        if (false === $called) {
             throw new ControllerException("Action " . $this->_A_urlParts['action'] .
                 " of controller " . $this->_A_urlParts['controller'] . " failed.");
+        }
+
+        if(Utils::RETURN_RAW === $called){
+            return Utils::RETURN_RAW;
+        }else{
+            return Utils::RETURN_HTML;
         }
     }
 }
