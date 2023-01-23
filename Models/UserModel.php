@@ -2,29 +2,71 @@
 
 final class UserModel extends UserSessionModel
 {
+    public $I_ID = null;
+    public $S_EMAIL = null;
+    public $S_USERNAME= null;
+    public $S_PASSWORD_HASH = null;
+    public $S_LAST_SEEN = null;
+    public $S_FIRST_SEEN = null;
+    public $B_ADMIN = 0;
+    public $B_DISABLED = 0;
 
-    public function createUser($S_email, $S_username, $S_password_hash){
+    public function __construct($S_EMAIL, $S_USERNAME,$S_PASSWORD_HASH,$S_LAST_SEEN,$S_FIRST_SEEN,$B_ADMIN,$B_DISABLED)
+    {
+        $this->S_EMAIL = $S_EMAIL;
+        $this->S_USERNAME = $S_USERNAME;
+        $this->S_PASSWORD_HASH = $S_PASSWORD_HASH;
+        $this->S_LAST_SEEN = $S_LAST_SEEN;
+        $this->S_FIRST_SEEN = $S_FIRST_SEEN;
+        $this->B_ADMIN = $B_ADMIN;
+        $this->B_DISABLED = $B_DISABLED;
+    }
+    public function insert(){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, USERNAME, PASS_HASH) VALUES(:email, :username, :password_hash)");
-        $stmt->bindParam("email", $S_email);
-        $stmt->bindParam("username", $S_username);
-        $stmt->bindParam("password_hash", $S_password_hash);
+        $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, USERNAME, PASS_HASH, FIRST_SEEN) VALUES(:email, :username, :password_hash, :first_seen)");
+        $stmt->bindParam("email", $this->S_EMAIL);
+        $stmt->bindParam("username", $this->S_USERNAME);
+        $stmt->bindParam("password_hash", $this->S_PASSWORD_HASH);
+        $stmt->bindParam("first_seen", $this->S_FIRST_SEEN);
+        $stmt->execute();
+        #TODO instantly get the created user's id, for everything else to work
+    }
+    public function update(){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("UPDATE USER SET EMAIL=:email, USERNAME=:username, PASSWORD_HASH=:password_hash, FIRST_SEEN:first_seen, LAST_SEEN:last_seen, ADMIN=:admin, DISABLED=:disabled) WHERE ID=:id");
+        $stmt->bindParam("id", $this->I_ID);
+        $stmt->bindParam("email", $this->S_EMAIL);
+        $stmt->bindParam("username", $this->S_USERNAME);
+        $stmt->bindParam("password_hash", $this->S_PASSWORD_HASH);
+        $stmt->bindParam("first_seen", $this->S_FIRST_SEEN);
+        $stmt->bindParam("last_seen", $this->S_LAST_SEEN);
+        $stmt->bindParam("admin", $this->B_ADMIN);
+        $stmt->bindParam("disabled", $this->B_DISABLED);
         $stmt->execute();
     }
 
-    public function isEmailInDatabase($S_email){
-
+    public function delete(){
+        self::anonymise();
+        
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT count(*) FROM USER WHERE EMAIL=:email");
-        $stmt->bindParam("email", $S_email);
+        $stmt = $O_model->prepare("DELETE FROM USER WHERE ID=:id");
+        $stmt->bindParam("id", $this->I_ID);
         $stmt->execute();
-
-        $count = $stmt->fetch()[0];
-        return $count != 0;
     }
 
+    public function anonymise(){
+        $O_model = Model::get();
 
-    public function getUserByID($I_id){
+        $stmt = $O_model->prepare("UPDATE RECIPE SET AUTHOR_ID = NULL WHERE AUTHOR_ID = :id");
+        $stmt->bindParam("id", $this->I_ID);
+        $stmt->execute();
+
+        $stmt = $O_model->prepare("UPDATE APPRECIATION SET AUTHOR_ID = NULL WHERE AUTHOR_ID = :id");
+        $stmt->bindParam("id", $this->I_ID);
+        $stmt->execute();
+    }
+
+    public static function getByID($I_id){
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT * FROM USER WHERE ID=:id");
         $stmt->bindParam("id", $I_id);
@@ -33,77 +75,50 @@ final class UserModel extends UserSessionModel
         $row = $stmt->fetch();
         if ($row === false) return null;
         return $row;
+        //TODO create an user object and return it
+        // return new User()
     }
 
-    public function getUserByEmail($S_email){
+    public static function isEmailInDatabase($S_email){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT * FROM USER WHERE email=:email");
+        $stmt = $O_model->prepare("SELECT count(*) FROM USER WHERE EMAIL=:email");
+        $stmt->bindParam("email", $S_email);
+        $stmt->execute();
+        $count = $stmt->fetch()[0];
+        return $count != 0;
+    }
+
+    public static function getByEmail($S_email){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT ID FROM USER WHERE email=:email");
         $stmt->bindParam("email", $S_email);
         $stmt->execute();
         
         $row = $stmt->fetch();
         if ($row === false) return null;
         return $row;
+        #TODO create an user object and return it
+        //return UserModel::getById()
     }
-
-    public function getUsernameByID($I_id)
-    {
-        $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT USERNAME FROM USER WHERE ID=:id");
-        $stmt->bindParam("id", $I_id);
-        $stmt->execute();
-        
-        $row = $stmt->fetch();
-        if ($row === false) return null;
-        return $row["USERNAME"];
-    }
-    
-    public function updateProfilePicByID($I_id, $profile_pic_fp){
+    public function updateProfilePic($profile_pic_fp){
         $O_model = Model::get();
         $stmt = $O_model->prepare("UPDATE USER SET PROFILE_PIC=:profile_pic WHERE ID=:id");
-        $stmt->bindParam("id", $I_id);
+        $stmt->bindParam("id", $this->I_ID);
         $stmt->bindParam("profile_pic", $profile_pic_fp, PDO::PARAM_LOB);
         $stmt->execute();
     }
-    
-    public function updateEmailByID($I_id, $S_newEmail){
+
+    public function getProfilePic(){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("UPDATE USER SET EMAIL=:new_email WHERE ID=:id");
-        $stmt->bindParam("id", $I_id);
-        $stmt->bindParam("new_email", $S_newEmail);
+        $stmt = $O_model->prepare("SELECT PROFILE_PIC FROM USER WHERE ID=:id");
+        $stmt->bindParam("id", $this->I_ID);
         $stmt->execute();
-    }
-    
-    public function updateUsernameByID($I_id, $S_newUsername){
-        $O_model = Model::get();
-        $stmt = $O_model->prepare("UPDATE USER SET USERNAME=:new_username WHERE ID=:id");
-        $stmt->bindParam("id", $I_id);
-        $stmt->bindParam("new_username", $S_newUsername);
-        $stmt->execute();
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+        return $row;
     }
 
-    public function anonymiseByID($I_id){
-        $O_model = Model::get();
-
-        $stmt = $O_model->prepare("UPDATE RECIPE SET AUTHOR_ID = NULL WHERE AUTHOR_ID = :id");
-        $stmt->bindParam("id", $I_id);
-        $stmt->execute();
-
-        $stmt = $O_model->prepare("UPDATE APPRECIATION SET AUTHOR_ID = NULL WHERE AUTHOR_ID = :id");
-        $stmt->bindParam("id", $I_id);
-        $stmt->execute();
-    }
-
-    public function deleteByID($I_id){
-        self::anonymiseByID($I_id);
-        
-        $O_model = Model::get();
-        $stmt = $O_model->prepare("DELETE FROM USER WHERE ID=:id");
-        $stmt->bindParam("id", $I_id);
-        $stmt->execute();
-    }
-
-    public function searchUsers($S_query)
+    public static function searchUsers($S_query)
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("
@@ -116,9 +131,17 @@ final class UserModel extends UserSessionModel
         $S_full_query = "%".$S_query."%";
         $stmt->bindParam("full_query", $S_full_query);
         $stmt->execute();
-        
         $rows = $stmt->fetchAll();
-        
         return $rows;
     }
+
+    public static function anonymiseByID($I_id){
+        User::getByID($I_id)->anonymise();
+    }
+
+    public static function deleteByID($I_id){
+        //TODO Make static
+        User::getByID($I_id)->delete();
+    }
+
 }
