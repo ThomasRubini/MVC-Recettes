@@ -85,7 +85,8 @@ final class UserModel extends UserSessionModel
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("
-        SELECT * FROM USER
+        SELECT ID, EMAIL, USERNAME
+        FROM USER
         WHERE USER.USERNAME LIKE :full_query
         OR USER.EMAIL LIKE :full_query
         LIMIT 10
