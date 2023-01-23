@@ -36,7 +36,7 @@
 
     <?php
         View::show(
-            "appreciations/view",
+            "appreciations/view_all",
             array(
                 "APPRS" => $A_view["APPRS"],
                 "ADMIN" => $A_view["ADMIN"]
