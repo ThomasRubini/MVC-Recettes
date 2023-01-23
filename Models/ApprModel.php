@@ -6,7 +6,9 @@ final class ApprModel {
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("
-            SELECT APPRECIATION.*, USER.USERNAME as AUTHOR_NAME FROM APPRECIATION
+            SELECT APPRECIATION.*, USER.USERNAME as AUTHOR_NAME,
+            CONCAT('/user/profilePic/', APPRECIATION.AUTHOR_ID) AS AUTHOR_IMG_LINK
+            FROM APPRECIATION
             JOIN USER ON USER.ID = APPRECIATION.AUTHOR_ID
             WHERE RECIPE_ID = :recipe_id
         ");
@@ -14,10 +16,6 @@ final class ApprModel {
         $stmt->execute();
 
         $rows = $stmt->fetchAll();
-
-        foreach($rows as &$row) {
-            $row["AUTHOR_IMG_LINK"] = "/static/img/users/1.jpg";
-        }
 
         return $rows;
     }
