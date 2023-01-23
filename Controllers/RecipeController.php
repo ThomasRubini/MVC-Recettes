@@ -15,6 +15,8 @@ final class RecipeController
             return View::show("errors/404");
         }
 
+        $A_returnArray["ADMIN"] = Session::is_admin();
+
         View::show("recipe/view", $A_returnArray);
 
         // print_r($A_urlParams);

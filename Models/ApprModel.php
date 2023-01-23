@@ -1,13 +1,34 @@
 <?php
 
 final class ApprModel {
-    public function getRecipeApprs($I_recipe_id)
+
+    public function searchRecipeApprsWithAuthors($I_recipe_id)
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT * FROM APPRECIATION WHERE ID = :recipe_id");
-        $stmt->bindParam("recipe_id",$I_recipe_id);
+        $stmt = $O_model->prepare("
+            SELECT APPRECIATION.*, USER.USERNAME as AUTHOR_NAME FROM APPRECIATION
+            JOIN USER ON USER.ID = APPRECIATION.AUTHOR_ID
+            WHERE RECIPE_ID = :recipe_id
+        ");
+        $stmt->bindParam("recipe_id", $I_recipe_id);
         $stmt->execute();
-        return $stmt->fetch();
+        
+        $rows = $stmt->fetchAll();
+       
+        foreach($rows as &$row) {
+            $row["AUTHOR_IMG_LINK"] = "/static/img/user.jpg";
+        }
+
+        return $rows;
+    }
+
+    public function searchRecipeApprs($I_recipe_id)
+    {
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT * FROM APPRECIATION WHERE RECIPE_ID = :recipe_id");
+        $stmt->bindParam("recipe_id", $I_recipe_id);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
     public function createAppr($I_user_id, $I_recipe_id, $S_Comment, $I_score)
