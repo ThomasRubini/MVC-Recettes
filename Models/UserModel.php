@@ -58,6 +58,14 @@ final class UserModel extends UserSessionModel
         return $row["USERNAME"];
     }
     
+    public function updateProfilePicByID($I_id, $profile_pic_fp){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("UPDATE USER SET PROFILE_PIC=:profile_pic WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->bindParam("profile_pic", $profile_pic_fp, PDO::PARAM_LOB);
+        $stmt->execute();
+    }
+    
     public function updateEmailByID($I_id, $S_newEmail){
         $O_model = Model::get();
         $stmt = $O_model->prepare("UPDATE USER SET EMAIL=:new_email WHERE ID=:id");
