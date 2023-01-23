@@ -143,7 +143,7 @@ final class UserController
             }
         }
 
-        // header("Location: /user");
+        header("Location: /user");
     }
     
     public function deleteAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -179,6 +179,20 @@ final class UserController
 
         echo "Le compte à été supprimé avec succès";
 
+    }
+
+    public function profilePicAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        if (count($A_urlParams) !== 1 ) die();
+
+        $O_userModel = new UserModel();
+        $A_user = $O_userModel->getUserByID($A_urlParams[0]);
+
+        header("Content-Type: image/png");
+
+        echo $A_user["PROFILE_PIC"];
+
+        return Utils::RETURN_RAW;
     }
     
 }
