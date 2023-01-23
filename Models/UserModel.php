@@ -74,7 +74,21 @@ final class UserModel extends UserSessionModel
         $stmt->execute();
     }
 
+    public function anonymiseByID($I_id){
+        $O_model = Model::get();
+
+        $stmt = $O_model->prepare("UPDATE RECIPE SET AUTHOR_ID = NULL WHERE AUTHOR_ID = :id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+
+        $stmt = $O_model->prepare("UPDATE APPRECIATION SET AUTHOR_ID = NULL WHERE AUTHOR_ID = :id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+    }
+
     public function deleteByID($I_id){
+        self::anonymiseByID($I_id);
+        
         $O_model = Model::get();
         $stmt = $O_model->prepare("DELETE FROM USER WHERE ID=:id");
         $stmt->bindParam("id", $I_id);

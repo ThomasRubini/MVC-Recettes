@@ -129,15 +129,37 @@ final class UserController
     
     public function deleteAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
+        if (count($A_urlParams) ==0 ) {
+            self::userDeleteAction($A_urlParams, $A_postParams);
+        }else{
+            self::adminDeleteAction($A_urlParams, $A_postParams);
+        }
+    }
+
+    private function userDeleteAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
         Session::login_or_die();
 
         $O_userModel = new UserModel();
-
         $O_userModel->deleteByID($_SESSION["ID"]);
 
         Session::destroy_session();
 
         header("Location: /");
+    }
+
+    private function adminDeleteAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        Session::admin_or_die();
+        
+        $I_user_id = Utils::intOrDie($A_urlParams[0]);
+
+
+        $O_userModel = new UserModel();
+        $O_userModel->deleteByID($I_user_id);
+
+        echo "Le compte à été supprimé avec succès";
+
     }
     
 }
