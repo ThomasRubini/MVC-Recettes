@@ -18,7 +18,7 @@
     <?php
         foreach ($A_view["APPRS"] as $A_appr){
             $A_appr["SHOW_REMOVE_BUTTON"] = $A_view["ADMIN"];
-            View::show("appreciations/appreciation", $A_appr);
+            View::show("appreciations/view_single", $A_appr);
         }
     ?>
 </section>
