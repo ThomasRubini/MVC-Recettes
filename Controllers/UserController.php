@@ -188,9 +188,17 @@ final class UserController
         $O_userModel = new UserModel();
         $A_user = $O_userModel->getUserByID($A_urlParams[0]);
 
-        header("Content-Type: image/png");
+        if (!isset($A_user)) {
+            die();
+        }
 
-        echo $A_user["PROFILE_PIC"];
+        header("Content-Type: image/png");
+        if ($A_user["PROFILE_PIC"] === null) {
+            echo file_get_contents(Constants::rootDir()."/static/img/generic_user.jpg");
+        } else {
+            echo $A_user["PROFILE_PIC"];
+        }
+
 
         return Utils::RETURN_RAW;
     }
