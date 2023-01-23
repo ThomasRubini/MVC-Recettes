@@ -2,7 +2,7 @@
 
 <main>
 
-    <img src="<?= $A_view["IMAGE_URL"] ?>" alt="Image d'illustration de la recette">
+    <img src="<?= $A_view["IMAGE_LINK"] ?>" alt="Image d'illustration de la recette">
 
     <section class="infosRecette">
         <header>
