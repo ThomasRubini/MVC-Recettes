@@ -9,7 +9,7 @@
 
     <a href="/user/logout">Se déconnecter</a>
 
-    <form action="/user/update" method="post">
+    <form action="/user/update" method="post" enctype="multipart/form-data">
         <label for="profilPicture">Changer l'image de profil&nbsp;</label>
         <input type="file" name="profilPicture" id="profilPicture" accept="image/*">
 

@@ -111,6 +111,25 @@ final class UserController
 
         $O_userModel = new UserModel();
 
+        // TODO harmonize error handling here
+        if (isset($_FILES["profilPicture"])) {
+            
+            if ($_FILES['profilPicture']['error'] !== UPLOAD_ERR_OK) {
+                die("Upload failed with error code " . $_FILES['profilPicture']['error']);
+            }
+
+            $info = getimagesize($_FILES['profilPicture']['tmp_name']);
+            if ($info === false) {
+                die("Unable to determine image type of uploaded file");
+            }
+
+            if (($info[2] !== IMAGETYPE_JPEG) && ($info[2] !== IMAGETYPE_PNG)) {
+                die("Not a jpeg/png");
+            }
+            
+            $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
+            $O_userModel->updateProfilePicByID($_SESSION["ID"], $fp);
+        }
         if (isset($_POST["email"])) {
             $S_email = $_POST["email"];
             if (!empty($S_email) && filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
@@ -124,7 +143,7 @@ final class UserController
             }
         }
 
-        header("Location: /user");
+        // header("Location: /user");
     }
     
     public function deleteAction(Array $A_urlParams = null, Array $A_postParams = null)
