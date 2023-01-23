@@ -3,7 +3,8 @@ function getOrEmpty($A_Dict, $S_keyName) {
     if (isset($A_Dict[$S_keyName])) {
         return $A_Dict[$S_keyName];
     } else {
-        if($S_keyName == "recipeType" || $S_keyName == "recipeIngredients")
+        echo "$S_keyName EMPTY";
+        if($S_keyName == "TYPE" || $S_keyName == "INGREDIENTS")
             return array();
         return "";
     }
@@ -18,36 +19,36 @@ function getOrEmpty($A_Dict, $S_keyName) {
         <input type="file" name="recipeImage" id="recipeImage" required>
 
         <label for="recipeName">Nom de la recette&nbsp;:</label>
-        <input type="text" name="recipeName" id="recipeName" placeholder="Nom du plat" value="<?= getOrEmpty($A_view, "recipeName") ?>" required>
+        <input type="text" name="recipeName" id="recipeName" placeholder="Nom du plat" value="<?= getOrEmpty($A_view, "NAME") ?>" required>
         </br>
         <label for="recipeDescription">Description de la recette</label>
         </br>
-        <textarea name="recipeDescription" id="recipeDescription"><?= getOrEmpty($A_view, "recipeDescription") ?></textarea>
+        <textarea name="recipeDescription" id="recipeDescription"><?= getOrEmpty($A_view, "DESC") ?></textarea>
 
         <section>
             <h1>Informations alimentaires</h1>
 
             <label for="recipeFifficulte">Niveau de difficulé&nbsp;:</label>
             <select name="recipeDifficulte" id="recipeDifficulte" required>
-                <option value="tresFacile" <?= getOrEmpty($A_view, "recipeDifficutly")=="Très facile"? 'selected="selected"' : "" ?> >Très facile</option>
-                <option value="facile" <?= getOrEmpty($A_view, "recipeDifficutly")=="Facile"? 'selected="selected"' : "" ?>>Facile</option>
-                <option value="moyen" <?= getOrEmpty($A_view, "recipeDifficutly")=="Moyen"? 'selected="selected"' : "" ?>>Moyen</option>
-                <option value="difficile" <?= getOrEmpty($A_view, "recipeDifficutly")=="Difficle"? 'selected="selected"' : "" ?>>Difficile</option>
+                <option value="tresFacile" <?= getOrEmpty($A_view, "DIFFICULTY_NAME")=="Très facile"? 'selected="selected"' : "" ?> >Très facile</option>
+                <option value="facile" <?= getOrEmpty($A_view, "DIFFICULTY_NAME")=="Facile"? 'selected="selected"' : "" ?>>Facile</option>
+                <option value="moyen" <?= getOrEmpty($A_view, "DIFFICULTY_NAME")=="Moyen"? 'selected="selected"' : "" ?>>Moyen</option>
+                <option value="difficile" <?= getOrEmpty($A_view, "DIFFICULTY_NAME")=="Difficle"? 'selected="selected"' : "" ?>>Difficile</option>
             </select>
 
 
             <legend>Type de plat&nbsp;:</legend>
-            <input type="checkbox" name="recipeVegan" id="recipeVegan" <?= in_array("Végan", getOrEmpty($A_view, "recipeType"))? "checked":"" ?> >
+            <input type="checkbox" name="recipeVegan" id="recipeVegan" <?= in_array("Végan", getOrEmpty($A_view, "TYPE"))? "checked":"" ?> >
             <label for="recipeVegan">Végan</label>
-            <input type="checkbox" name="recipeLactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", getOrEmpty($A_view, "recipeType"))? "checked":"" ?> >
+            <input type="checkbox" name="recipeLactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", getOrEmpty($A_view, "TYPE"))? "checked":"" ?> >
             <label for="recipeLactoseFree">Sans lactose</label>
-            <input type="checkbox" name="recipeGlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", getOrEmpty($A_view, "recipeType"))? "checked":"" ?> >
+            <input type="checkbox" name="recipeGlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", getOrEmpty($A_view, "TYPE"))? "checked":"" ?> >
             <label for="recipeGlutenFree">Sans gluten</label>
 
             </br>
 
             <label for="recipeTime">Temps de préparation&nbsp;:</label>
-            <input type="number" name="recipeTime" id="recipeTime" min="5" max="1500" step="5" placeholder="Temps de préparation" value="<?= getOrEmpty($A_view, "recipeTime") ?>" required>
+            <input type="number" name="recipeTime" id="recipeTime" min="5" max="1500" step="5" placeholder="Temps de préparation" value="<?= getOrEmpty($A_view, "TIME") ?>" required>
             <label for="recipeTime">minutes</label>
 
         </section>
@@ -59,15 +60,15 @@ function getOrEmpty($A_Dict, $S_keyName) {
 
             <ul class="recipeIngredients">
                 <?php
-                $ingredients = getOrEmpty($A_view, "recipeIngredients");
+                $ingredients = getOrEmpty($A_view, "INGREDIENTS");
                 if(sizeof($ingredients) > 0) {
                     $i = 1;
-                    foreach($ingredients as $ingredientName => $ingredientValue) {
+                    foreach($ingredients as $ingredient) {
                         echo '<li>
                             <label for="recipeIngredient'.$i.'">Ingrédient&nbsp;:</label>
-                            <input type="text" name="recipeIngredient'.$i.'" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$ingredientName.'">
+                            <input type="text" name="recipeIngredient'.$i.'" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$ingredient["NAME"].'">
                             <label for="recipeQuantity'.$i.'">Quantité&nbsp;:</label>
-                            <input type="text" name="recipeQuantity'.$i.'" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$ingredientValue.'">
+                            <input type="text" name="recipeQuantity'.$i.'" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$ingredient["QUANTITY"].'">
                         </li>';
                         $i++;
                     }
@@ -97,7 +98,7 @@ function getOrEmpty($A_Dict, $S_keyName) {
 
             <ol class="recipeInstructions">
                 <?php
-                    $preparation = getOrEmpty($A_view, "recipeInstructions");
+                    $preparation = getOrEmpty($A_view, "RECIPE");
                     if(!empty($preparation)) {
                         $steps = explode("\n", $preparation);
                         $i = 1;
