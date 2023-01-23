@@ -2,7 +2,7 @@
 
 <main>
 
-    <img src="<?= $A_view["IMAGE_LINK"] ?>" alt="Image d'illustration de la recette">
+    <img src="<?= $A_view["IMG_LINK"] ?>" alt="Image d'illustration de la recette">
 
     <section class="infosRecette">
         <header>
@@ -39,7 +39,7 @@
             "appreciations/view",
             array(
                 "APPRS" => $A_view["APPRS"],
-                "ADMIN" => $A_view["ADMIN"] 
+                "ADMIN" => $A_view["ADMIN"]
             )
         );
     ?>

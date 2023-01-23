@@ -12,11 +12,11 @@ final class ApprModel {
         ");
         $stmt->bindParam("recipe_id", $I_recipe_id);
         $stmt->execute();
-        
+
         $rows = $stmt->fetchAll();
-       
+
         foreach($rows as &$row) {
-            $row["AUTHOR_IMG_LINK"] = "/static/img/user.jpg";
+            $row["AUTHOR_IMG_LINK"] = "/static/img/users/1.jpg";
         }
 
         return $rows;
