@@ -2,7 +2,7 @@
 $array_header = array(
     '<img src="/static/img/logo.png" alt="Logo">' => "/",
     "Recette" => "/Recipe/view/36",
-    "+" => "/recipe/edit",
+    "+" => "/recipe/new",
     "Rechercher" => "rechercher",
     '<img src="/static/img/default_user.svg" type="image/svg+xml">' => "/user/view"
 );
