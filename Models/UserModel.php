@@ -142,6 +142,5 @@ final class UserModel extends UserSessionModel
     public static function deleteByID($I_id){
         //TODO Make static
         User::getByID($I_id)->delete();
-    }
 
 }
