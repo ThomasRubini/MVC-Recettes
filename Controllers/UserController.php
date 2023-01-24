@@ -84,6 +84,8 @@ final class UserController
         $O_user = new UserModel($S_email, $S_username, $S_password_hash, null, date("Y-m-d"), 0, 0);
         $O_user->insert();
 
+        Session::set_login($O_user->I_ID);
+
         self::redirectToPreviousPage($A_postParams);
     }
 
