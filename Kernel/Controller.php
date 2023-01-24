@@ -55,11 +55,11 @@ final class controller
     public function execute()
     {
         if (!class_exists($this->_A_urlParts['controller'])) {
-            throw new ControllerException("Controller " . $this->_A_urlParts['controller'] . " is not valid.");
+            throw new NotFoundException("Controller " . $this->_A_urlParts['controller'] . " is not valid.");
         }
 
         if (!method_exists($this->_A_urlParts['controller'], $this->_A_urlParts['action'])) {
-            throw new ControllerException("Action " . $this->_A_urlParts['action'] . " of controller " .
+            throw new NotFoundException("Action " . $this->_A_urlParts['action'] . " of controller " .
                 $this->_A_urlParts['controller'] . " is not valid.");
         }
 

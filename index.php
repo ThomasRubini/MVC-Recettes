@@ -16,6 +16,8 @@
 
     View::openBuffer();
 
+    $ret = Utils::RETURN_HTML;
+
     try
     {
         $O_controller = new Controller($S_url, $A_postParams, $A_getParams);
@@ -23,19 +25,18 @@
     }
     catch (ControleurException $O_exception)
     {
-        echo ('An error occured: ' . $O_exception->getMessage());
+        View::openBuffer();
+        View::show("errors/500", $O_exception->getMessage());
+    }
+    catch (NotFoundException $O_exception)
+    {
+        View::openBuffer();
+        View::show("errors/404");
     }
     catch (HTTPSpecialCaseException $O_exception)
     {
-        // drop old buffer
-        View::closeBuffer();
         View::openBuffer();
-
         View::show("errors/".$O_exception->getHTTPCode(), $O_exception->getMsg());
-
-        $content = View::closeBuffer();
-        View::show('html', array('body' => $content));
-        return;
     }
 
 
