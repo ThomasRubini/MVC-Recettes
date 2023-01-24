@@ -197,18 +197,13 @@ final class UserController
         $O_userModel = new UserModel();
         $A_user = $O_userModel->getUserByID($A_urlParams[0]);
 
-        if (!isset($A_user)) {
-            throw new HTTPSpecialCaseException(404);
-        }
-
-        if ($A_user["PROFILE_PIC"] === null) {
-            header("Content-Type: image/svg+xml");
-            echo file_get_contents(Constants::rootDir()."/static/img/default_user.svg");
-        } else {
+        if (isset($A_user) && $A_user["PROFILE_PIC"] !== null) {
             header("Content-Type: image");
             echo $A_user["PROFILE_PIC"];
+        } else {
+            header("Content-Type: image/svg+xml");
+            echo file_get_contents(Constants::rootDir()."/static/img/default_user.svg");
         }
-
 
         return Utils::RETURN_RAW;
     }
