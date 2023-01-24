@@ -94,7 +94,7 @@ final class UserController
     public function defaultAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         if(count($A_urlParams)!=0){
-            return View::show("errors/404");
+            throw new HTTPSpecialCaseException(404);
         }
 
         Session::login_or_die();
@@ -111,20 +111,25 @@ final class UserController
 
         $O_userModel = new UserModel();
 
-        // TODO harmonize error handling here
         if (isset($_FILES["profilPicture"])) {
             
             if ($_FILES['profilPicture']['error'] !== UPLOAD_ERR_OK) {
-                die("Upload failed with error code " . $_FILES['profilPicture']['error']);
+                throw new HTTPSpecialCaseException(
+                    400,
+                    "Upload failed with error code " . $_FILES['profilPicture']['error']
+                );
             }
 
             $info = getimagesize($_FILES['profilPicture']['tmp_name']);
             if ($info === false) {
-                die("Unable to determine image type of uploaded file");
+                throw new HTTPSpecialCaseException(
+                    400,
+                    "Unable to determine image type of uploaded file"
+                );
             }
 
             if (($info[2] !== IMAGETYPE_JPEG) && ($info[2] !== IMAGETYPE_PNG)) {
-                die("Not a jpeg/png");
+                throw new HTTPSpecialCaseException(400, "Not a jpeg/png");
             }
             
             $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
@@ -134,12 +139,16 @@ final class UserController
             $S_email = $_POST["email"];
             if (!empty($S_email) && filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
                 $O_userModel->updateEmailByID($_SESSION["ID"], $_POST["email"]);
+            }else{
+                throw new HTTPSpecialCaseException(400, "invalid email");
             }
         }
         if (isset($_POST["username"])) {
             $S_username = $_POST["username"];
             if (!empty($S_username)) {
                 $O_userModel->updateUsernameByID($_SESSION["ID"], $_POST["username"]);
+            }else{
+                throw new HTTPSpecialCaseException(400, "invalid username");
             }
         }
 
@@ -183,13 +192,13 @@ final class UserController
 
     public function profilePicAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        if (count($A_urlParams) !== 1 ) die();
+        if (count($A_urlParams) !== 1 ) throw new HTTPSpecialCaseException(404);
 
         $O_userModel = new UserModel();
         $A_user = $O_userModel->getUserByID($A_urlParams[0]);
 
         if (!isset($A_user)) {
-            die();
+            throw new HTTPSpecialCaseException(404);
         }
 
         header("Content-Type: image/png");
