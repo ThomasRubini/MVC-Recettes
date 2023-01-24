@@ -35,21 +35,21 @@ final class RecipeController
         }
 
         $O_recipeModel = new RecipeModel();
-        $A_returnArray = $O_recipeModel->getFullRecipe($A_urlParams[0]);
-        if ($A_returnArray === null) {
+        $A_recipe = $O_recipeModel->getFullRecipe($A_urlParams[0]);
+        if ($A_recipe === null) {
             throw new HTTPSpecialCaseException(404);
         }
 
-        if ($A_returnArray["AUTHOR_ID"] !== $_SESSION["ID"]) {
+        if ($A_recipe["AUTHOR_ID"] !== $_SESSION["ID"]) {
             throw new HTTPSpecialCaseException(400, "You are not the owner of this recipe");
         }
 
-        View::show("recipe/edit", $A_returnArray);
+        View::show("recipe/edit", array("POST_URI" => "/recipe/update", "RECIPE" => $A_recipe));
     }
 
     public function newAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        View::show("recipe/edit", array());
+        View::show("recipe/edit", array("POST_URI" => "/recipe/create", "RECIPE" => array()));
     }
 
     public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
