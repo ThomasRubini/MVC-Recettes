@@ -7,7 +7,7 @@ ini_set("session.cookie_lifetime", $__SESSION_TIMEOUT);
 final class UserController
 {
 
-    public function loginAction(Array $A_urlParams = null, Array $A_postParams = null)
+    public function loginAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
         if (Session::is_login()) {
             header("Location: /user/view");
@@ -17,10 +17,22 @@ final class UserController
                 $S_errmsg = $_SESSION["errmsg"];
                 unset($_SESSION["errmsg"]);
             }
-            View::show("user/login", array("errmsg" => $S_errmsg));
+
+            $S_return_uri = "";
+            if (isset($A_getParams["return_uri"])) {
+                $S_return_uri = $A_getParams["return_uri"];
+            }
+            View::show("user/login", array("errmsg" => $S_errmsg, "return_uri" => $S_return_uri));
         }
     }
 
+    private function redirectToPreviousPage(Array $A_postParams = null){
+        if (isset($A_postParams["return_uri"])) {
+            header("Location: ".$A_postParams["return_uri"]);
+        } else {
+            header("Location: /");
+        }
+    }
     public function signInAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         $S_email = Utils::getOrDie($A_postParams, "email");
@@ -43,8 +55,7 @@ final class UserController
 
         Session::set_login($O_user->I_ID);
         
-        
-        header("Location: /");
+        self::redirectToPreviousPage($A_postParams);
     }
 
     public function signUpAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -72,7 +83,8 @@ final class UserController
         
         $O_user = new UserModel($S_email, $S_username, $S_password_hash, null, date("Y-m-d"), 0, 0);
         $O_user->insert();
-        return header("Location: /");
+
+        self::redirectToPreviousPage($A_postParams);
     }
 
 
