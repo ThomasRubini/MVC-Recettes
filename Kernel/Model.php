@@ -17,7 +17,7 @@ final class Model
         try{
             self::$conn = new PDO($PDO_URI, $_ENV["DB_USERNAME"], $_ENV["DB_PASSWORD"]);
         }catch(PDOException $e){
-            die("Connection to the database failed");
+            throw new HTTPSpecialCaseException(500, "Connection to the database failed");
         } 
     }
 }
