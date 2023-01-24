@@ -3,7 +3,6 @@ function getOrEmpty($A_Dict, $S_keyName) {
     if (isset($A_Dict[$S_keyName])) {
         return $A_Dict[$S_keyName];
     } else {
-        echo "$S_keyName EMPTY";
         if($S_keyName == "TYPE" || $S_keyName == "INGREDIENTS")
             return array();
         return "";
