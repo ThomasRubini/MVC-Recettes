@@ -47,6 +47,11 @@ final class RecipeController
         View::show("recipe/edit", $A_returnArray);
     }
 
+    public function newAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        View::show("recipe/edit", array());
+    }
+
     public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
         if (isset($A_getParams["query"])) {
