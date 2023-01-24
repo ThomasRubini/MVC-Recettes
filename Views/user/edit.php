@@ -1,7 +1,10 @@
+<?php
+$O_user = $A_view["USER"];
+?>
 <main>
 
     <?php
-        if ($A_view["ADMIN"]) {
+        if ($O_user->B_ADMIN) {
             echo "<p>Compte administrateur</p>";
             echo "<a href='/manageUser'>Gestion des utilisateurs</a>";
         }
@@ -14,10 +17,10 @@
         <input type="file" name="profilPicture" id="profilPicture" accept="image/*">
 
         <label for="username">Changer le nom d'utilisateur&nbsp;</label>
-        <input type="text" name="username" id="username" placeholder="<?= $A_view["USERNAME"] ?>">
+        <input type="text" name="username" id="username" placeholder="<?= $O_user->S_USERNAME ?>">
 
         <label for="email">Changer d'e-mail&nbsp;</label>
-        <input type="email" name="email" id="email" placeholder="<?= $A_view["EMAIL"] ?>">
+        <input type="email" name="email" id="email" placeholder="<?= $O_user->S_EMAIL ?>">
 
         <input type="submit" value="Enregistrer">
     </form>

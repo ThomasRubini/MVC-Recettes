@@ -100,7 +100,7 @@ final class UserController
         $O_user = UserModel::getByID($_SESSION["ID"]);
         
         //TODO Convert User into array
-        return View::show("user/edit", $O_user);
+        return View::show("user/edit", array("USER" => $O_user));
     }
 
     public function updateAction(Array $A_urlParams = null, Array $A_postParams = null)
