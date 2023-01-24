@@ -6,13 +6,13 @@ final class RecipeController
     public function viewAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         if(count($A_urlParams)!=1){
-            return View::show("errors/404");
+            throw new HTTPSpecialCaseException(404);
         }
 
         $O_recipeModel = new RecipeModel();
         $A_returnArray = $O_recipeModel->getFullRecipeWithApprs($A_urlParams[0]);
         if ($A_returnArray === null) {
-            return View::show("errors/404");
+            throw new HTTPSpecialCaseException(404);
         }
 
         $A_returnArray["ADMIN"] = Session::is_admin();
@@ -31,17 +31,17 @@ final class RecipeController
         Session::login_or_die();
 
         if(count($A_urlParams)!=1){
-            return View::show("errors/404");
+            throw new HTTPSpecialCaseException(404);
         }
 
         $O_recipeModel = new RecipeModel();
         $A_returnArray = $O_recipeModel->getFullRecipe($A_urlParams[0]);
         if ($A_returnArray === null) {
-            return View::show("errors/404");
+            throw new HTTPSpecialCaseException(404);
         }
 
         if ($A_returnArray["AUTHOR_ID"] !== $_SESSION["ID"]) {
-            die("You are not the owner of this recipe");
+            throw new HTTPSpecialCaseException(400, "You are not the owner of this recipe");
         }
 
         View::show("recipe/edit", $A_returnArray);

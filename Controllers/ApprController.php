@@ -26,8 +26,7 @@ final class ApprController
         $A_appr = $O_apprModel->getApprById($I_appr_id);
 
         if ($A_appr === null) {
-            echo "404";
-            return;
+            throw new HTTPSpecialCaseException(404);
         }
         
         if ($A_appr["AUTHOR_ID"] !== $_SESSION["ID"]) {

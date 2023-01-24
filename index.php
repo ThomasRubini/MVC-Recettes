@@ -16,6 +16,10 @@
 
     View::openBuffer();
 
+    $ret = Utils::RETURN_HTML;
+    $I_err_httpCode = null;
+    $S_err_msg = null;
+
     try
     {
         $O_controller = new Controller($S_url, $A_postParams, $A_getParams);
@@ -23,7 +27,30 @@
     }
     catch (ControleurException $O_exception)
     {
-        echo ('An error occured: ' . $O_exception->getMessage());
+        View::openBuffer();
+        $I_err_httpCode = 500;
+        $S_err_msg = $O_exception->getMsg();
+    }
+    catch (NotFoundException $O_exception)
+    {
+        View::openBuffer();
+        $I_err_httpCode = 404;
+    }
+    catch (HTTPSpecialCaseException $O_exception)
+    {
+        View::openBuffer();
+        $I_err_httpCode = $O_exception->getHTTPCode();
+        $S_err_msg = $O_exception->getMsg();
+    }
+
+    if ($I_err_httpCode !== null) {
+        http_response_code($I_err_httpCode);
+
+        if($I_err_httpCode === 500 || $I_err_httpCode === 400) {
+            header_remove("Location");
+        }
+
+        View::show("errors/".$I_err_httpCode, $S_err_msg);
     }
 
 

@@ -61,7 +61,7 @@ final class Session
     {
         if (!self::is_login()) {
             header("Location: /user/login?return_uri=".$_SERVER["REQUEST_URI"]);
-            die();
+            throw new HTTPSpecialCaseException(403);
         }
     }
 
@@ -76,8 +76,7 @@ final class Session
         Session::login_or_die();
 
         if (!self::is_admin()) {
-            header("Location: /");
-            die();
+            throw new HTTPSpecialCaseException(403);
         }
     }
 
