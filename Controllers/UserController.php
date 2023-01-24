@@ -25,14 +25,13 @@ final class UserController
     {
         $S_email = Utils::getOrDie($A_postParams, "email");
         $S_password = Utils::getOrDie($A_postParams, "password");
-
-        $O_userModel = new UserModel();
-        $A_user = $O_userModel->getUserByEmail($S_email);
-        if ($A_user == null) {
+    
+        $O_user = UserModel::getByEmail($S_email);
+        if ($O_user == null) {
             $S_errmsg = "No user with this email";
-        }else if (!password_verify($S_password, $A_user["PASS_HASH"])) {
+        }else if (!password_verify($S_password,$O_user->S_PASSWORD_HASH)) {
             $S_errmsg = "Invalid password";
-        }else if ($A_user["DISABLED"]) {
+        }else if ($O_user->B_DISABLED) {
             $S_errmsg = "This account is disabled";
         }
 
@@ -42,7 +41,7 @@ final class UserController
             return header("Location: /user/login");
         }
 
-        Session::set_login($A_user["ID"]);
+        Session::set_login($O_user->I_ID);
         
         
         header("Location: /");
@@ -54,13 +53,12 @@ final class UserController
         $S_username = Utils::getOrDie($A_postParams, "username");
         $S_password = Utils::getOrDie($A_postParams, "password");
 
-        $O_userModel = new UserModel();
 
         if (!filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
             $S_errmsg = "invalid email";
         } else if( strlen($S_password) < 8 || strlen($S_password) > 150 ) {
             $S_errmsg = "password must be between 8 and 150 characters";
-        } else if($O_userModel->isEmailInDatabase($S_email)) {
+        } else if(UserModel::isEmailInDatabase($S_email)) {
             $S_errmsg = "An user with this email is already registered";
         }
 
@@ -71,9 +69,9 @@ final class UserController
         }
 
         $S_password_hash = password_hash($S_password, PASSWORD_DEFAULT);
-
-        $O_userModel->createUser($S_email, $S_username, $S_password_hash);
         
+        $O_user = new UserModel($S_email, $S_username, $S_password_hash, null, date("Y-m-d"), 0, 0);
+        $O_user->insert();
         return header("Location: /");
     }
 
@@ -99,17 +97,17 @@ final class UserController
 
         Session::login_or_die();
 
-        $O_userModel = new UserModel();
-        $A_user = $O_userModel->getUserByID($_SESSION["ID"]);
-
-        return View::show("user/edit", $A_user);
+        $O_user = UserModel::getByID($_SESSION["ID"]);
+        
+        //TODO Convert User into array
+        return View::show("user/edit", array("USER" => $O_user));
     }
 
     public function updateAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         Session::login_or_die();
 
-        $O_userModel = new UserModel();
+        $O_user = UserModel::getByID($_SESSION["ID"]);
 
         if (isset($_FILES["profilPicture"])) {
             
@@ -133,12 +131,13 @@ final class UserController
             }
             
             $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
-            $O_userModel->updateProfilePicByID($_SESSION["ID"], $fp);
+            $O_user->updateProfilePic($fp);
         }
         if (isset($_POST["email"])) {
             $S_email = $_POST["email"];
             if (!empty($S_email) && filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
-                $O_userModel->updateEmailByID($_SESSION["ID"], $_POST["email"]);
+                $O_user->S_EMAIL = $_POST["email"];
+                $O_user->update();
             }else{
                 throw new HTTPSpecialCaseException(400, "invalid email");
             }
@@ -146,7 +145,8 @@ final class UserController
         if (isset($_POST["username"])) {
             $S_username = $_POST["username"];
             if (!empty($S_username)) {
-                $O_userModel->updateUsernameByID($_SESSION["ID"], $_POST["username"]);
+                $O_user->S_USERNAME = $_POST["username"];
+                $O_user->update();
             }else{
                 throw new HTTPSpecialCaseException(400, "invalid username");
             }
@@ -168,8 +168,7 @@ final class UserController
     {
         Session::login_or_die();
 
-        $O_userModel = new UserModel();
-        $O_userModel->deleteByID($_SESSION["ID"]);
+        UserModel::deleteByID($_SESSION["ID"]);
 
         Session::destroy_session();
 
@@ -182,9 +181,7 @@ final class UserController
         
         $I_user_id = Utils::intOrDie($A_urlParams[0]);
 
-
-        $O_userModel = new UserModel();
-        $O_userModel->deleteByID($I_user_id);
+        UserModel::deleteByID($I_user_id);
 
         echo "Le compte à été supprimé avec succès";
 
@@ -194,18 +191,19 @@ final class UserController
     {
         if (count($A_urlParams) !== 1 ) throw new HTTPSpecialCaseException(404);
 
-        $O_userModel = new UserModel();
-        $A_user = $O_userModel->getUserByID($A_urlParams[0]);
-
-        if (isset($A_user) && $A_user["PROFILE_PIC"] !== null) {
-            header("Content-Type: image");
-            echo $A_user["PROFILE_PIC"];
-        } else {
-            header("Content-Type: image/svg+xml");
-            echo file_get_contents(Constants::rootDir()."/static/img/default_user.svg");
-        }
-
+        $O_user = UserModel::getByID($A_urlParams[0]);
+        
+        if (isset($O_user)) {
+            $S_pfp = $O_user->getProfilePic();
+            if($S_pfp !== null) {
+                header("Content-Type: image");
+                echo $S_pfp;
+                return Utils::RETURN_RAW;
+            }
+        }            
+            
+        header("Content-Type: image/svg+xml");
+        echo file_get_contents(Constants::rootDir()."/static/img/default_user.svg");
         return Utils::RETURN_RAW;
     }
-    
 }

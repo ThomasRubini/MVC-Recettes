@@ -25,11 +25,10 @@ final class RecipeModel
         $O_ingredientModel = new IngredientModel();
         $A_recipe["INGREDIENTS"] = $O_ingredientModel->searchByRecipe($A_recipe["ID"]);
 
-        $O_userModel = new UserModel();
-        $A_recipe["AUTHOR_USERNAME"] = $O_userModel->getUsernameByID($A_recipe["AUTHOR_ID"]);
+        $A_recipe["AUTHOR_USERNAME"] = UserModel::getByID($A_recipe["AUTHOR_ID"])->S_USERNAME;
 
-        $O_userModel = new DifficultyModel();
-        $A_recipe["DIFFICULTY_NAME"] = $O_userModel->getByID($A_recipe["DIFFICULTY_ID"]);
+        $O_difficultyModel = new DifficultyModel();
+        $A_recipe["DIFFICULTY_NAME"] = $O_difficultyModel->getByID($A_recipe["DIFFICULTY_ID"]);
 
         return $A_recipe;
     }
