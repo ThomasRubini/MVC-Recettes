@@ -50,10 +50,10 @@ final class ManageUserController
         $O_user = UserModel::getByID($I_user_id);
 
         if (isset($A_postParams["enable"])) {
-            $O_user->B_DISABLED = false;
+            $O_user->B_DISABLED = 0;
             $O_user->update();
         }else if (isset($A_postParams["disable"])) {
-            $O_user->B_DISABLED = true;
+            $O_user->B_DISABLED = 1;
             $O_user->update();
         }else if (isset($A_postParams["delete"])) {
             $O_user->delete();
