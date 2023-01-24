@@ -12,5 +12,3 @@
         ?>
     </section>
 </main>
-
-

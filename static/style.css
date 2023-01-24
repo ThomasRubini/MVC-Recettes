@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap');
+
+:root {
+    font-family: 'Nunito', 'Arial';
+    /* vars */
+    /*--principal-pastel:     hsl(341, 100%, 95%);*/
+    /*--principal-brightest:  hsl(341, 85%, 89%);*/
+    /*--principal-light:      hsl(342, 95%, 79%);*/
+    --principal-neurtal:    hsl(341, 94%, 65%);
+    /*--principal-dark:       hsl(342, 72%, 49%);*/
+    /*--principal-darker:     hsl(342, 62%, 37%);*/
+    /*--principal-darkest:    hsl(342, 78%, 19%);*/
+
+    --secondary-pastel:     hsl(30, 33%, 98%);
+    /*--secondary-brightest:  hsl(29, 56%, 91%);*/
+    /*--secondary-light:      hsl(30, 59%, 83%);*/
+    /*--secondary-neurtal:    hsl(31, 54%, 69%);*/
+    /*--secondary-dark:       hsl(30, 66%, 63%);*/
+    /*--secondary-darker:     hsl(30, 46%, 46%);*/
+    /*--secondary-darkest:    hsl(30, 64%, 29%);*/
+
+    --grey-dark: hsl(340, 2%, 63%);
+
+    --size-1: 1px;
+    --size-xs: 3px;
+    --size-s: 5px;
+    --size-m: 10px;
+    --size-l: 16px;
+    --size-xl: 26px;
+    --size-max: 52px;
+
+    --border-radius: var(--size-l);
+    --border: solid var(--size-xs); /* don't forget to choose a color after */
+
+    --shadow: 2px 2px 18px -2px rgba(0,0,0,0.4), 2px 2px 4px 2px rgba(0,0,0,0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--secondary-pastel);
+}
+
+body > header {
+    height: var(--size-max);
+    box-shadow: var(--shadow);
+    padding: var(--size-m);
+    font-size: var(--size-xl);
+    background: var(--secondary-pastel);
+    position: sticky;
+    top: 0;
+}
+
+body > main {
+    min-height: calc(100vh - 200px - var(--size-max) - 2*var(--size-m));
+}
+
+body > header > nav {
+    height: 100%;
+}
+
+body > header > nav > ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--size-m);
+    height: 100%;
+}
+
+body > header > nav > ul > li::marker {
+    content: none;
+}
+body > header > nav > ul > li {
+    background: var(--principal-neurtal);
+    border-radius: var(--border-radius);
+    height: 100%;
+    padding-left: var(--size-l);
+    padding-right: var(--size-l);
+}
+body > header > nav > ul > li:first-child {
+    background: none;
+    border-radius: none;
+    flex: 1;
+}
+
+body > header > nav > ul > li {
+    display: flex;
+    align-items: center; /* aligns the contents of the <a> element vertically */
+    height: 100%; /* sets the height of the <a> element to 100% of the parent <li> element */
+}
+
+body > header > nav > ul > li > a {
+    color: var(--secondary-pastel);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+body > header > nav > ul > li:first-child > a > img {
+    height: var(--size-max);
+}
+body > header > nav > ul > li:last-child {
+    border: var(--border) var(--principal-neurtal);
+    background: none;
+}
+body > header > nav > ul > li:last-child > a > img {
+    height: calc(var(--size-max) - var(--size-xl));
+}
+
+
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-max);
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100vw;
+    background: var(--grey-dark);
+    color: var(--secondary-pastel);
+    font-size: var(--size-xl);
+}
