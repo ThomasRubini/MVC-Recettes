@@ -27,11 +27,11 @@
                 }
 
                 echo '</ul>
-            <form method="POST" action="manage_users">
-                <input id="accounts_to_manage" type="text" hidden>
+            <form method="POST" action="/manageUser/update">
+                <input type="hidden" name="user_id" value="'.$O_user->I_ID.'" id="accounts_to_manage">
                 <input type="submit" name="enable" value="Activer">
                 <input type="submit" name="disable" value="Désactiver">
-                <input type="submit" value="Supprimer">
+                <input type="submit" name="delete" value="Supprimer">
             </form>';
             }
         }
