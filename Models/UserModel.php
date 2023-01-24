@@ -33,7 +33,7 @@ final class UserModel extends UserSessionModel
     }
     public function update(){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("UPDATE USER SET EMAIL=:email, USERNAME=:username, PASSWORD_HASH=:password_hash, FIRST_SEEN:first_seen, LAST_SEEN:last_seen, ADMIN=:admin, DISABLED=:disabled) WHERE ID=:id");
+        $stmt = $O_model->prepare("UPDATE USER SET EMAIL=:email, USERNAME=:username, PASSWORD_HASH=:password_hash, FIRST_SEEN:first_seen, LAST_SEEN:last_seen, ADMIN=:admin, DISABLED=:disabled WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);
         $stmt->bindParam("email", $this->S_EMAIL);
         $stmt->bindParam("username", $this->S_USERNAME);
