@@ -51,6 +51,8 @@ final class RecipeController
 
     public function newAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
+        Session::login_or_die();
+
         View::show("recipe/edit", array("POST_URI" => "/recipe/create", "RECIPE" => array()));
     }
 
