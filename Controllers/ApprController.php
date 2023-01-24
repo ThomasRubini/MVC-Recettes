@@ -9,10 +9,10 @@ final class ApprController
 
         $I_recipe_id = Utils::intOrDie(Utils::getOrDie($A_postParams, "recipe_id"));
         $S_comment = Utils::getOrDie($A_postParams, "comment");
-        $I_score = Utils::intOrDie(Utils::getOrDie($A_postParams, "score"));
+        $I_note = Utils::intOrDie(Utils::getOrDie($A_postParams, "note"));
 
         $O_apprModel = new ApprModel();
-        $O_apprModel->createAppr($_SESSION["ID"], $I_recipe_id, $S_comment, $I_score);
+        $O_apprModel->createAppr($_SESSION["ID"], $I_recipe_id, $S_comment, $I_note);
         
         header("Location: ".$_SERVER['HTTP_REFERER']);
     }

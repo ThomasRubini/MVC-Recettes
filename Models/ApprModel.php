@@ -29,14 +29,14 @@ final class ApprModel {
         return $stmt->fetchAll();
     }
 
-    public function createAppr($I_user_id, $I_recipe_id, $S_Comment, $I_score)
+    public function createAppr($I_user_id, $I_recipe_id, $S_Comment, $I_note)
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("
-            INSERT INTO APPRECIATION (COMMENT,SCORE,DATE,AUTHOR_ID,RECIPE_ID) VALUES (:comment, :score, :date, :author_id, :recipe_id)
+            INSERT INTO APPRECIATION (COMMENT,NOTE,DATE,AUTHOR_ID,RECIPE_ID) VALUES (:comment, :note, :date, :author_id, :recipe_id)
         ");
         $stmt->bindParam("comment",$S_Comment);
-        $stmt->bindParam("score",$I_score);
+        $stmt->bindParam("note",$I_note);
         $_date = date("Y-m-d");
         $stmt->bindParam("date",$_date);
         $stmt->bindParam("author_id",$I_user_id);

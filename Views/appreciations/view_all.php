@@ -1,6 +1,6 @@
 <section>
     <h1> Appréciations: </h1>
-    <form method="POST" action="/">
+    <form method="POST" action="/appr/create">
         <label for="comment">Entrez votre commentaire :</label>
         <input type="text" name="comment" id="comment" placeholder="Commentaire">
 
@@ -11,6 +11,8 @@
         <input type="radio" name="note" id="note" value="3" title="3" required> 3
         <input type="radio" name="note" id="note" value="4" title="4"> 4
         <input type="radio" name="note" id="note" value="5" title="5"> 5
+
+        <input type="hidden" name="recipe_id" value="<?= $A_view["ID"] ?>">
 
         <input type="submit" value="Envoyer">
     </form>
