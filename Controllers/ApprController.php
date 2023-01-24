@@ -13,7 +13,8 @@ final class ApprController
 
         $O_apprModel = new ApprModel();
         $O_apprModel->createAppr($_SESSION["ID"], $I_recipe_id, $S_comment, $I_score);
-
+        
+        header("Location: ".$_SERVER['HTTP_REFERER']);
     }
 
     public function deleteAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -35,8 +36,6 @@ final class ApprController
 
         $O_apprModel->deleteAppr($I_appr_id);
 
-        echo "Appreciation $I_appr_id supprimée avec succès";
+        header("Location: ".$_SERVER['HTTP_REFERER']);
     }
-    
-
 }

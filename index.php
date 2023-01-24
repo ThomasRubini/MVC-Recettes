@@ -44,8 +44,13 @@
     }
 
     if ($I_err_httpCode !== null) {
-        http_response_code($I_err_httpCode);
+        
+        // do not disable redirects
+        if(http_response_code() !== 302) {
+            http_response_code($I_err_httpCode);
+        }
 
+        // Make the user see the error in these cases
         if($I_err_httpCode === 500 || $I_err_httpCode === 400) {
             header_remove("Location");
         }
