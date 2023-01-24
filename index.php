@@ -25,6 +25,18 @@
     {
         echo ('An error occured: ' . $O_exception->getMessage());
     }
+    catch (HTTPSpecialCaseException $O_exception)
+    {
+        // drop old buffer
+        View::closeBuffer();
+        View::openBuffer();
+
+        View::show("errors/".$O_exception->getHTTPCode(), $O_exception->getMsg());
+
+        $content = View::closeBuffer();
+        View::show('html', array('body' => $content));
+        return;
+    }
 
 
     $content = View::closeBuffer();
