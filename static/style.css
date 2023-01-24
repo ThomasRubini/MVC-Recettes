@@ -21,16 +21,16 @@
 
     --grey-dark: hsl(340, 2%, 63%);
 
-    --size-0: 1px;
-    --size-1: 3px;
-    --size-2: 5px;
-    --size-3: 10px;
-    --size-4: 16px;
-    --size-5: 26px;
-    --size-6: 52px;
+    --size-1: 1px;
+    --size-xs: 3px;
+    --size-s: 5px;
+    --size-m: 10px;
+    --size-l: 16px;
+    --size-xl: 26px;
+    --size-max: 52px;
 
-    --border-radius: var(--size-4);
-    --border: solid var(--size-1); /* don't forget to choose a color after */
+    --border-radius: var(--size-l);
+    --border: solid var(--size-xs); /* don't forget to choose a color after */
 
     --shadow: 2px 2px 18px -2px rgba(0,0,0,0.4), 2px 2px 4px 2px rgba(0,0,0,0.3);
 }
@@ -45,11 +45,17 @@ body {
 }
 
 body > header {
-    height: var(--size-6);
+    height: var(--size-max);
     box-shadow: var(--shadow);
-    padding: var(--size-3);
-    font-size: var(--size-5);
+    padding: var(--size-m);
+    font-size: var(--size-xl);
     background: var(--secondary-pastel);
+    position: sticky;
+    top: 0;
+}
+
+body > main {
+    min-height: calc(100vh - 200px - var(--size-max) - 2*var(--size-m));
 }
 
 body > header > nav {
@@ -61,7 +67,7 @@ body > header > nav > ul {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: var(--size-3);
+    gap: var(--size-m);
     height: 100%;
 }
 
@@ -72,8 +78,8 @@ body > header > nav > ul > li {
     background: var(--principal-neurtal);
     border-radius: var(--border-radius);
     height: 100%;
-    padding-left: var(--size-4);
-    padding-right: var(--size-4);
+    padding-left: var(--size-l);
+    padding-right: var(--size-l);
 }
 body > header > nav > ul > li:first-child {
     background: none;
@@ -94,26 +100,26 @@ body > header > nav > ul > li > a {
 }
 
 body > header > nav > ul > li:first-child > a > img {
-    height: var(--size-6);
+    height: var(--size-max);
 }
 body > header > nav > ul > li:last-child {
     border: var(--border) var(--principal-neurtal);
     background: none;
 }
 body > header > nav > ul > li:last-child > a > img {
-    height: calc(var(--size-6) - var(--size-5));
+    height: calc(var(--size-max) - var(--size-xl));
 }
 
 
 footer {
     display: flex;
     flex-direction: column;
-    gap: var(--size-6);
+    gap: var(--size-max);
     justify-content: center;
     align-items: center;
     height: 200px;
     width: 100vw;
     background: var(--grey-dark);
     color: var(--secondary-pastel);
-    font-size: var(--size-5);
+    font-size: var(--size-xl);
 }
