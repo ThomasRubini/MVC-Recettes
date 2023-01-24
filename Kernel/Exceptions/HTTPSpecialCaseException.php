@@ -17,7 +17,7 @@ class HTTPSpecialCaseException extends Exception {
     }
 
     public function getMsg(){
-        return $this->code;
+        return $this->msg;
     }
 
 }
