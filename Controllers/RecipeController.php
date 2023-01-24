@@ -18,12 +18,6 @@ final class RecipeController
         $A_returnArray["ADMIN"] = Session::is_admin();
 
         View::show("recipe/view", $A_returnArray);
-
-        // print_r($A_urlParams);
-        // $O_recetteModel = new RecipeIngredientsModel();
-        // $O_recetteModel->getByID("");
-        // View::show('helloworld/testform', array('formData' =>  $A_postParams));
-
     }
 
     public function editAction(Array $A_urlParams = null, Array $A_postParams = null)
