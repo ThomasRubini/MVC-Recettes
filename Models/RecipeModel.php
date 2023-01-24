@@ -27,8 +27,7 @@ final class RecipeModel
 
         $A_recipe["AUTHOR_USERNAME"] = UserModel::getByID($A_recipe["AUTHOR_ID"])->S_USERNAME;
 
-        $O_difficultyModel = new DifficultyModel();
-        $A_recipe["DIFFICULTY_NAME"] = $O_difficultyModel->getByID($A_recipe["DIFFICULTY_ID"]);
+        $A_recipe["DIFFICULTY_NAME"] = DifficultyModel::getByID($A_recipe["DIFFICULTY_ID"])->S_NAME;
 
         return $A_recipe;
     }
