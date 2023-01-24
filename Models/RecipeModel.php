@@ -65,7 +65,10 @@ final class RecipeModel
         )
 
         -- get a row per occurrence and sort by occurrences number
-        select RECIPE.ID, RECIPE.NAME
+        select RECIPE.ID, RECIPE.NAME,
+        CONCAT('/recipe/view/', RECIPE.ID) AS RECIPE_LINK,
+        CONCAT('/static/img/recipes/', RECIPE.ID) AS IMG_LINK,
+        1 AS NOTE
         from CTE
                 JOIN RECIPE
         WHERE CTE.NAME is not null
