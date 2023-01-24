@@ -37,6 +37,7 @@ final class RecipeModel
     public function getFullRecipeWithApprs($I_id)
     {
         $A_recipe = self::getFullRecipe($I_id);
+        if ($A_recipe === null)return null;
 
         $O_apprModel = new ApprModel();
         
