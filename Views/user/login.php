@@ -10,6 +10,7 @@
             <input type="email" name="email" id="email" placeholder="Email" required>
             <label for="password">Entrez votre mot de passe</label>
             <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+            <input type="hidden" name="return_uri" value="<?= $A_view["return_uri"] ?>">
             <input type="submit" value="Envoyer">
         </form>
     </section>
@@ -24,6 +25,7 @@
             <input type="password" name="password" id="password" placeholder="Mot de passe" required>
             <label for="password_confirm">Confirmez le mot de passe</label>
             <input type="password" name="password_confirm" id="password_confirm" placeholder="Confirmer le mot de passe" required>
+            <input type="hidden" name="return_uri" value="<?= $A_view["return_uri"] ?>">
             <input type="submit" value="Envoyer">
         </form>
     </section>
