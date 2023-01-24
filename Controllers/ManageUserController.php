@@ -20,19 +20,19 @@ final class ManageUserController
     
     private function searchViewAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
-        View::show("manageUser/search");
+        View::show("manageUser/manage_users", array("QUERY" => null));
     }
     
     private function searchQueryViewAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
         $S_query = $A_getParams["query"];
-        
-        $A_results = UserModel::searchUsers($S_query);
-        var_dump($A_results);
-        
-        echo "Terme de recherche choisi: $S_query";
 
-        View::show("manageUser/search");
+        $A_results = UserModel::searchUsers($S_query);
+
+        View::show("manageUser/manage_users", array(
+            "QUERY" => $S_query,
+            "RESULTS" => $A_results)
+        );
     }
 
 }
