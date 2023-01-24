@@ -55,4 +55,12 @@ final class DifficultyModel
         if ($row === false) return null;
         return DifficultyModel::getByID($row['ID']);
     }
+    public static function deleteByID($I_id)
+    {
+        $O_model = Model::get();
+        UserModel::anonymiseByID($I_id);
+        $stmt = $O_model->prepare("DELETE FROM DIFFICULTY WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+    }
 }
