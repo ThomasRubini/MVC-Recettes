@@ -1,10 +1,6 @@
 <?php
-//TODO: sample data, replace by real data and real keys
-$username_requested = "A username";
-$user_accounts_results = array(
-    array("NAME" => "A name",
-        "AVATAR" => '/static/img/users/1.jpg',
-        "USER_ID" => 4234273));
+$username_requested = $A_view["QUERY"];
+$user_accounts_results = $A_view["RESULTS"];
 ?>
 <main>
     <h1 class="accounts_management_title">Gestion de comptes</h1>
@@ -18,6 +14,7 @@ $user_accounts_results = array(
             echo '<h2 class="username_required_title">Nom d\'utilisateur requis</h2>
         <p class="username_required_description">Un nom d\'utilisateur est requis pour gérer des utilisateurs.</p>';
         } else {
+            echo '<h3 class="username_searched">' . $username_requested . '</h3>';
             if (empty($user_accounts_results)) {
                 echo '<h2 class="no_user_results_title">Aucun résultat</h2>
             <p class="no_user_results_description">Vérifiez l\'orthographe et la casse de votre saisie.</p>';
