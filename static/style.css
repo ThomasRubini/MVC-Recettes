@@ -21,12 +21,13 @@
 
     --grey-dark: hsl(340, 2%, 63%);
 
-    --size-1: 2px;
-    --size-2: 4px;
-    --size-3: 8px;
-    --size-4: 12px;
-    --size-5: 24px;
-    --size-6: 48px;
+    --size-0: 1px;
+    --size-1: 3px;
+    --size-2: 5px;
+    --size-3: 10px;
+    --size-4: 16px;
+    --size-5: 26px;
+    --size-6: 52px;
 
     --border-radius: var(--size-4);
     --border: solid var(--size-1); /* don't forget to choose a color after */
