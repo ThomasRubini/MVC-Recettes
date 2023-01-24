@@ -20,6 +20,8 @@
     --color-2-6: hsl(30, 46%, 46%);
     --color-2-7: hsl(30, 64%, 29%);
 
+    --color-g-1: hsl(340, 2%, 63%);
+
     --size-1: 2px;
     --size-2: 4px;
     --size-3: 8px;
@@ -36,6 +38,10 @@
 * {
     margin: 0;
     padding: 0;
+}
+
+body {
+    background: var(--color-2-1);
 }
 
 body > header {
@@ -96,4 +102,18 @@ body > header > nav > ul > li:last-child {
 }
 body > header > nav > ul > li:last-child > a > img {
     height: calc(var(--size-6) - var(--size-5));
+}
+
+
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-6);
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100vw;
+    background: var(--color-g-1);
+    color: var(--color-2-1);
+    font-size: var(--size-5);
 }
