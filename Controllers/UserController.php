@@ -201,10 +201,11 @@ final class UserController
             throw new HTTPSpecialCaseException(404);
         }
 
-        header("Content-Type: image/png");
         if ($A_user["PROFILE_PIC"] === null) {
-            echo file_get_contents(Constants::rootDir()."/static/img/generic_user.jpg");
+            header("Content-Type: image/svg+xml");
+            echo file_get_contents(Constants::rootDir()."/static/img/default_user.svg");
         } else {
+            header("Content-Type: image");
             echo $A_user["PROFILE_PIC"];
         }
 

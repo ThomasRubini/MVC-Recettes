@@ -4,7 +4,7 @@ $array_header = array(
     "Recette" => "/Recipe/view/36",
     "+" => "/recipe/edit",
     "Rechercher" => "rechercher",
-    '<img src="/static/img/defaultProfil.svg" type="image/svg+xml">' => "/user/view"
+    '<img src="/static/img/default_user.svg" type="image/svg+xml">' => "/user/view"
 );
 ?>
 <header>
