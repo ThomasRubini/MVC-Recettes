@@ -66,6 +66,12 @@ final class UserModel extends UserSessionModel
         $stmt->execute();
     }
 
+    private static function createFromRow($A_row, $I_ID){
+        $O_user = new UserModel($A_row["EMAIL"],$A_row["USERNAME"],$A_row["PASS_HASH"],$A_row["LAST_SEEN"],$A_row["FIRST_SEEN"],$A_row["ADMIN"],$A_row["DISABLED"]);
+        $O_user->I_ID = $I_ID;
+        return $O_user;
+    }
+
     public static function getByID($I_id){
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT * FROM USER WHERE ID=:id");
@@ -75,9 +81,7 @@ final class UserModel extends UserSessionModel
         $row = $stmt->fetch();
         if ($row === false) return null;
         
-        $O_user = new UserModel($row["EMAIL"],$row["USERNAME"],$row["PASS_HASH"],$row["LAST_SEEN"],$row["FIRST_SEEN"],$row["ADMIN"],$row["DISABLED"]);
-        $O_user->I_ID = $I_id;
-        return $O_user;
+        return self::createFromRow($row, $I_id);
     }
 
     public static function isEmailInDatabase($S_email){
@@ -125,7 +129,7 @@ final class UserModel extends UserSessionModel
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("
-        SELECT ID, EMAIL, USERNAME
+        SELECT *
         FROM USER
         WHERE USER.USERNAME LIKE :full_query
         OR USER.EMAIL LIKE :full_query
@@ -134,8 +138,13 @@ final class UserModel extends UserSessionModel
         $S_full_query = "%".$S_query."%";
         $stmt->bindParam("full_query", $S_full_query);
         $stmt->execute();
-        $rows = $stmt->fetchAll();
-        return $rows;
+        
+        $A_users = array();
+        foreach($stmt->fetchAll() as $row){
+            array_push($A_users, self::createFromRow($row, $row["ID"]));
+        }
+
+        return $A_users;
     }
 
     public static function anonymiseByID($I_id){
