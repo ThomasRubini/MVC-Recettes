@@ -35,13 +35,7 @@
     <p>By <?= $A_view["AUTHOR_USERNAME"] ?></p>
 
     <?php
-        View::show(
-            "appreciations/view_all",
-            array(
-                "APPRS" => $A_view["APPRS"],
-                "ADMIN" => $A_view["ADMIN"]
-            )
-        );
+        View::show("appreciations/view_all", $A_view)
     ?>
 
 </main>
