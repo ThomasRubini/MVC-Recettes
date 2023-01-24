@@ -117,6 +117,10 @@ final class UserModel extends UserSessionModel
         return $row["PROFILE_PIC"];
     }
 
+    public function getProfilePicLink(){
+        return "/user/profilePic/".$this->I_ID;
+    }
+
     public static function searchUsers($S_query)
     {
         $O_model = Model::get();
