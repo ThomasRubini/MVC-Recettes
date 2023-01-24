@@ -73,4 +73,27 @@ final class RecipeController
         ));
     }
 
+    public function imgAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
+    {
+        if (count($A_urlParams) !== 1 ) throw new HTTPSpecialCaseException(404);
+
+        $O_recipeModel = new RecipeModel();
+        $A_recipe = $O_recipeModel->getRecipeByID($A_urlParams[0]);
+
+        if (!isset($A_recipe)) {
+            throw new HTTPSpecialCaseException(404);
+        }
+
+        header("Content-Type: image");
+        if ($A_recipe["IMG"] === null) {
+            echo file_get_contents(Constants::rootDir()."/static/img/default_recipe.jpg");
+        } else {
+            echo $A_recipe["IMG"];
+        }
+
+
+
+        return Utils::RETURN_RAW;
+    }
+
 }
