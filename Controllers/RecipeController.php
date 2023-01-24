@@ -41,7 +41,9 @@ final class RecipeController
         }
 
         if ($A_recipe["AUTHOR_ID"] !== $_SESSION["ID"]) {
-            throw new HTTPSpecialCaseException(400, "You are not the owner of this recipe");
+            if(!Session::is_admin()){
+                throw new HTTPSpecialCaseException(400, "You are not the owner of this recipe");
+            }
         }
 
         View::show("recipe/edit", array("POST_URI" => "/recipe/update", "RECIPE" => $A_recipe));
