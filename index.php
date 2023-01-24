@@ -26,7 +26,7 @@
     catch (ControleurException $O_exception)
     {
         View::openBuffer();
-        View::show("errors/500", $O_exception->getMessage());
+        View::show("errors/500", $O_exception->getMsg());
     }
     catch (NotFoundException $O_exception)
     {
