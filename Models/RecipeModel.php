@@ -25,7 +25,6 @@ final class RecipeModel
         $O_ingredientModel = new IngredientModel();
         $A_recipe["INGREDIENTS"] = $O_ingredientModel->searchByRecipe($A_recipe["ID"]);
 
-        
         $A_recipe["AUTHOR_USERNAME"] = UserModel::getByID($A_recipe["AUTHOR_ID"])->S_USERNAME;
 
         $O_difficultyModel = new DifficultyModel();

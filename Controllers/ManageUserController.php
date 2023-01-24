@@ -28,7 +28,6 @@ final class ManageUserController
         $S_query = $A_getParams["query"];
         
         $A_results = UserModel::searchUsers($S_query);
-        //TODO: User to Array
         var_dump($A_results);
         
         echo "Terme de recherche choisi: $S_query";

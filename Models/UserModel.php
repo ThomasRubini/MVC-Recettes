@@ -12,7 +12,7 @@ final class UserModel extends UserSessionModel
     public $B_DISABLED = 0;
 
     public function __construct($S_EMAIL, $S_USERNAME,$S_PASSWORD_HASH,$S_LAST_SEEN,$S_FIRST_SEEN,$B_ADMIN,$B_DISABLED)
-    {
+    {   
         $this->S_EMAIL = $S_EMAIL;
         $this->S_USERNAME = $S_USERNAME;
         $this->S_PASSWORD_HASH = $S_PASSWORD_HASH;
@@ -29,7 +29,7 @@ final class UserModel extends UserSessionModel
         $stmt->bindParam("password_hash", $this->S_PASSWORD_HASH);
         $stmt->bindParam("first_seen", $this->S_FIRST_SEEN);
         $stmt->execute();
-        #TODO instantly get the created user's id, for everything else to work
+        $this->I_ID = Model::get()->lastInsertId();
     }
     public function update(){
         $O_model = Model::get();
@@ -74,9 +74,10 @@ final class UserModel extends UserSessionModel
         
         $row = $stmt->fetch();
         if ($row === false) return null;
-        return $row;
-        //TODO create an user object and return it
-        // return new User()
+        
+        $O_user = new UserModel($row["EMAIL"],$row["USERNAME"],$row["PASS_HASH"],$row["LAST_SEEN"],$row["FIRST_SEEN"],$row["ADMIN"],$row["DISABLED"]);
+        $O_user->I_ID = $I_id;
+        return $O_user;
     }
 
     public static function isEmailInDatabase($S_email){
@@ -96,9 +97,7 @@ final class UserModel extends UserSessionModel
         
         $row = $stmt->fetch();
         if ($row === false) return null;
-        return $row;
-        #TODO create an user object and return it
-        //return UserModel::getById()
+        return UserModel::getById($row["ID"]);
     }
     public function updateProfilePic($profile_pic_fp){
         $O_model = Model::get();
@@ -115,7 +114,7 @@ final class UserModel extends UserSessionModel
         $stmt->execute();
         $row = $stmt->fetch();
         if ($row === false) return null;
-        return $row;
+        return $row["PROFILE_PIC"];
     }
 
     public static function searchUsers($S_query)
@@ -136,11 +135,23 @@ final class UserModel extends UserSessionModel
     }
 
     public static function anonymiseByID($I_id){
-        User::getByID($I_id)->anonymise();
+        $O_model = Model::get();
+
+        $stmt = $O_model->prepare("UPDATE RECIPE SET AUTHOR_ID = NULL WHERE AUTHOR_ID = :id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+
+        $stmt = $O_model->prepare("UPDATE APPRECIATION SET AUTHOR_ID = NULL WHERE AUTHOR_ID = :id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
     }
 
-    public static function deleteByID($I_id){
-        //TODO Make static
-        User::getByID($I_id)->delete();
-
+    public static function deleteByID($I_id)
+    {
+        $O_model = Model::get();
+        UserModel::anonymiseByID($I_id);
+        $stmt = $O_model->prepare("DELETE FROM USER WHERE ID=:id");
+        $stmt->bindParam("id", $I_id);
+        $stmt->execute();
+    }
 }

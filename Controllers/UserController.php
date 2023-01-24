@@ -25,14 +25,13 @@ final class UserController
     {
         $S_email = Utils::getOrDie($A_postParams, "email");
         $S_password = Utils::getOrDie($A_postParams, "password");
-
-        
+    
         $O_user = UserModel::getByEmail($S_email);
         if ($O_user == null) {
             $S_errmsg = "No user with this email";
-        }else if (!password_verify($S_password,$O_user->PASS_HASH)) {
+        }else if (!password_verify($S_password,$O_user->S_PASSWORD_HASH)) {
             $S_errmsg = "Invalid password";
-        }else if ($O_user->DISABLED) {
+        }else if ($O_user->B_DISABLED) {
             $S_errmsg = "This account is disabled";
         }
 
@@ -42,7 +41,7 @@ final class UserController
             return header("Location: /user/login");
         }
 
-        Session::set_login($O_user->ID);
+        Session::set_login($O_user->I_ID);
         
         
         header("Location: /");
@@ -193,16 +192,18 @@ final class UserController
         if (count($A_urlParams) !== 1 ) throw new HTTPSpecialCaseException(404);
 
         $O_user = UserModel::getByID($A_urlParams[0]);
-
-        if (isset($A_user) && $A_user["PROFILE_PIC"] !== null) {
-            header("Content-Type: image");
-            echo $A_user["PROFILE_PIC"];
-        } else {
-            header("Content-Type: image/svg+xml");
-            echo file_get_contents(Constants::rootDir()."/static/img/default_user.svg");
-        }
-
+        
+        if (isset($A_user)) {
+            $S_pfp = $O_user->getProfilePic();
+            if($S_pfp !== null) {
+                header("Content-Type: image");
+                echo $A_user["PROFILE_PIC"];
+                return Utils::RETURN_RAW;
+            }
+        }            
+            
+        header("Content-Type: image/svg+xml");
+        echo file_get_contents(Constants::rootDir()."/static/img/default_user.svg");
         return Utils::RETURN_RAW;
     }
-    
 }
