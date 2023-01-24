@@ -1,7 +1,3 @@
-<?php
-$username_requested = $A_view["QUERY"];
-$user_accounts_results = $A_view["RESULTS"];
-?>
 <main>
     <h1 class="accounts_management_title">Gestion de comptes</h1>
     <form method="GET" action="manage_users">
@@ -10,10 +6,12 @@ $user_accounts_results = $A_view["RESULTS"];
     </form>
     <section>
         <?php
+        $username_requested = $A_view["QUERY"];
         if ($username_requested === null) {
             echo '<h2 class="username_required_title">Nom d\'utilisateur requis</h2>
         <p class="username_required_description">Un nom d\'utilisateur est requis pour gérer des utilisateurs.</p>';
         } else {
+            $user_accounts_results = $A_view["RESULTS"];
             echo '<h3 class="username_searched">' . $username_requested . '</h3>';
             if (empty($user_accounts_results)) {
                 echo '<h2 class="no_user_results_title">Aucun résultat</h2>

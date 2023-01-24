@@ -20,7 +20,7 @@ final class ManageUserController
     
     private function searchViewAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
-        View::show("manageUser/manage_users");
+        View::show("manageUser/manage_users", array("QUERY" => null));
     }
     
     private function searchQueryViewAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
@@ -31,7 +31,8 @@ final class ManageUserController
 
         View::show("manageUser/manage_users", array(
             "QUERY" => $S_query,
-            "RESULTS" => $A_results));
+            "RESULTS" => $A_results)
+        );
     }
 
 }
