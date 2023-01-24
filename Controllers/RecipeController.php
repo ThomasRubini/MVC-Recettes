@@ -80,18 +80,12 @@ final class RecipeController
         $O_recipeModel = new RecipeModel();
         $A_recipe = $O_recipeModel->getRecipeByID($A_urlParams[0]);
 
-        if (!isset($A_recipe)) {
-            throw new HTTPSpecialCaseException(404);
-        }
-
         header("Content-Type: image");
-        if ($A_recipe["IMG"] === null) {
-            echo file_get_contents(Constants::rootDir()."/static/img/default_recipe.jpg");
-        } else {
+        if (isset($A_recipe) && $A_recipe["IMG"] !== null) {
             echo $A_recipe["IMG"];
+        } else {
+            echo file_get_contents(Constants::rootDir()."/static/img/default_recipe.jpg");
         }
-
-
 
         return Utils::RETURN_RAW;
     }
