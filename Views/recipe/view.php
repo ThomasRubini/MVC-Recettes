@@ -4,7 +4,7 @@ $O_recipe = $A_view["RECIPE"];
 <main>
     <?php View::show("common/category_list") ?>
     <article>
-        <img src="<?= $O_recipe->getImageLink() ?>" alt="Image d'illustration de la recette">
+        <img src="<?= $O_recipe->getImgLink() ?>" alt="Image d'illustration de la recette">
 
         <section class="infosRecette">
             <header>

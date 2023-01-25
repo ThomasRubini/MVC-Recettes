@@ -111,7 +111,7 @@ final class UserModel extends UserSessionModel
         $stmt->execute();
     }
 
-    public function getProfilePic(){
+    public function queryProfilePic(){
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT PROFILE_PIC FROM USER WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);

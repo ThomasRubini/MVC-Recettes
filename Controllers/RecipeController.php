@@ -85,8 +85,8 @@ final class RecipeController
         $O_recipe = RecipeModel::getRecipeByID($A_urlParams[0]);
 
         header("Content-Type: image");
-        if (isset($O_recipe) && $O_recipe->getImage() !== null) {
-            echo $O_recipe->getImage();
+        if (isset($O_recipe) && $O_recipe->queryImg() !== null) {
+            echo $O_recipe->queryImg();
         } else {
             echo file_get_contents(Constants::rootDir()."/static/img/default_recipe.jpg");
         }
