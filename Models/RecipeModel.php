@@ -15,14 +15,23 @@ final class RecipeModel
     public $A_APPRS = null;
     public $A_INGREDIENTS = null;
     
-    public function __construct($S_NAME, $I_TIME, $S_DESCR, $S_RECIPE, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
+    private function __construct(){}
+
+    public static function createEmpty()
     {
-        $this->S_NAME = $S_NAME;
-        $this->I_TIME = $I_TIME;
-        $this->S_DESCR = $S_DESCR;
-        $this->S_RECIPE = $S_RECIPE;
-        $this->I_DIFFICULTY_ID = $I_DIFFICULTY_ID;
-        $this->I_AUTHOR_ID = $I_AUTHOR_ID;        
+        return new RecipeModel();
+    }
+
+    public static function createFull($S_NAME, $I_TIME, $S_DESCR, $S_RECIPE, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
+    {
+        $O_recipe = new RecipeModel();
+        $O_recipe->S_NAME = $S_NAME;
+        $O_recipe->I_TIME = $I_TIME;
+        $O_recipe->S_DESCR = $S_DESCR;
+        $O_recipe->S_RECIPE = $S_RECIPE;
+        $O_recipe->I_DIFFICULTY_ID = $I_DIFFICULTY_ID;
+        $O_recipe->I_AUTHOR_ID = $I_AUTHOR_ID;
+        return $O_recipe;
     }
 
     public function insert()
@@ -59,7 +68,7 @@ final class RecipeModel
     }
 
     private static function createFromRow($A_row, $I_ID){
-        $O_recipe = new RecipeModel($A_row["NAME"], $A_row["TIME"], $A_row["DESCR"], $A_row["RECIPE"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
+        $O_recipe = RecipeModel::createFull($A_row["NAME"], $A_row["TIME"], $A_row["DESCR"], $A_row["RECIPE"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
         $O_recipe->I_ID = $I_ID;
         return $O_recipe;
     }
