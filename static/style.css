@@ -120,6 +120,7 @@ main:has(aside) {
     gap: var(--size-max);
     margin-top: var(--size-xl);
     width: 100vw;
+    margin-left: var(--size-xl);
 }
 
 aside {
@@ -129,6 +130,7 @@ aside {
     padding-left: calc(var(--size-xl) * 1.5);
     box-shadow: var(--shadow);
     height: fit-content;
+    min-width: fit-content;
 }
 aside ul {
     display: flex;
@@ -154,9 +156,42 @@ aside a:hover {
 
 body > main > article > section > h1 {
     font-size: var(--size-xl);
-    width: 100%;
     border-bottom: var(--border) var(--principal-neutral);
     margin-bottom: var(--size-xl);
+}
+
+body > main > article > section > ul {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-l);
+    flex-wrap: wrap;
+}
+
+body > main > article > section > ul > li {
+    width: fit-content;
+    max-width: 250px;
+}
+
+body > main > article > section > ul > li::marker {
+    content: none;
+}
+
+.recipe {
+    background: var(--secondary-pastel);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    color: black;
+    text-decoration: none;
+}
+.recipe > section {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--size-l);
+    padding: var(--size-m);
 }
 
 footer {
