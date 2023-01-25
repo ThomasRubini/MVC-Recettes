@@ -35,7 +35,14 @@ $O_recipe = $A_view["RECIPE"];
             </ol>
         </section>
 
-        <p>By <?= $O_recipe->getAuthor()->S_USERNAME ?></p>
+        <?php
+        $O_author = $O_recipe->getAuthor();
+        if($O_author === null) {
+            echo '<p>By an anonymous user</p>';
+        } else {
+            echo '<p>By '.$O_author->S_USERNAME.' </p>';
+        }
+        ?>
 
         <?php
             View::show("appreciations/view_all", $A_view)
