@@ -85,13 +85,15 @@ final class RecipeController
         $O_recipe = RecipeModel::getRecipeByID($A_urlParams[0]);
 
         header("Content-Type: image");
-        if (isset($O_recipe) && $O_recipe->queryImg() !== null) {
-            echo $O_recipe->queryImg();
-        } else {
-            echo file_get_contents(Constants::rootDir()."/static/img/default_recipe.jpg");
+        if (isset($O_recipe)) {
+            $S_img = $O_recipe->queryImg();
+            if ($S_img !== null) {
+                echo $S_img;
+                return Utils::RETURN_RAW;
+            }
         }
-
+        
+        echo file_get_contents(Constants::rootDir()."/static/img/default_recipe.jpg");
         return Utils::RETURN_RAW;
     }
-
 }
