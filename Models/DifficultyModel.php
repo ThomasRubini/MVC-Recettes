@@ -47,13 +47,16 @@ final class DifficultyModel
     }
     public static function getByName($S_name){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT ID FROM DIFFICULTY WHERE NAME=:name");
+        $stmt = $O_model->prepare("SELECT * FROM DIFFICULTY WHERE NAME=:name");
         $stmt->bindParam("name", $S_name);
         $stmt->execute();
         
         $row = $stmt->fetch();
         if ($row === false) return null;
-        return DifficultyModel::getByID($row['ID']);
+
+        $O_diff = new DifficultyModel($row["NAME"]);
+        $O_diff->I_ID = $I_id;
+        return $O_diff;
     }
     public static function deleteByID($I_id)
     {
