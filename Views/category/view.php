@@ -8,23 +8,22 @@ $allCategory = array(
     "Sans lactose" => "sans_lactose");
 ?>
 
-<?php
-    View::show("common/category_list");
-?>
-
 <main>
-    <?php
-    foreach ($A_view as $categoryName => $recipes) {
-        echo '<section id="'.$allCategory[$categoryName].'">
-            <h1>'.$categoryName.'</h1>
-            <ul>';
-                foreach ($recipes as $recipe) {
-                    echo '<li>';
-                        View::show("common/recipe", $recipe);
-                    echo '</li>';
-                }
-            echo '</ul>
-        </section>';
-    }
-    ?>
+    <?= View::show("common/category_list"); ?>
+    <article>
+        <?php
+        foreach ($A_view as $categoryName => $recipes) {
+            echo '<section id="'.$allCategory[$categoryName].'">
+                <h1>'.$categoryName.'</h1>
+                <ul>';
+                    foreach ($recipes as $recipe) {
+                        echo '<li>';
+                            View::show("common/recipe", $recipe);
+                        echo '</li>';
+                    }
+                echo '</ul>
+            </section>';
+        }
+        ?>
+    </article>
 </main>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap');
 
 :root {
     font-family: 'Nunito', 'Arial';
@@ -6,7 +6,7 @@
     /*--principal-pastel:     hsl(341, 100%, 95%);*/
     /*--principal-brightest:  hsl(341, 85%, 89%);*/
     /*--principal-light:      hsl(342, 95%, 79%);*/
-    --principal-neurtal:    hsl(341, 94%, 65%);
+    --principal-neutral:    hsl(341, 94%, 65%);
     /*--principal-dark:       hsl(342, 72%, 49%);*/
     /*--principal-darker:     hsl(342, 62%, 37%);*/
     /*--principal-darkest:    hsl(342, 78%, 19%);*/
@@ -14,7 +14,7 @@
     --secondary-pastel:     hsl(30, 33%, 98%);
     /*--secondary-brightest:  hsl(29, 56%, 91%);*/
     /*--secondary-light:      hsl(30, 59%, 83%);*/
-    /*--secondary-neurtal:    hsl(31, 54%, 69%);*/
+    /*--secondary-neutral:    hsl(31, 54%, 69%);*/
     /*--secondary-dark:       hsl(30, 66%, 63%);*/
     /*--secondary-darker:     hsl(30, 46%, 46%);*/
     /*--secondary-darkest:    hsl(30, 64%, 29%);*/
@@ -42,6 +42,9 @@
 
 body {
     background: var(--secondary-pastel);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
 body > header {
@@ -75,7 +78,7 @@ body > header > nav > ul > li::marker {
     content: none;
 }
 body > header > nav > ul > li {
-    background: var(--principal-neurtal);
+    background: var(--principal-neutral);
     border-radius: var(--border-radius);
     height: 100%;
     padding-left: var(--size-l);
@@ -103,13 +106,95 @@ body > header > nav > ul > li:first-child > a > img {
     height: var(--size-max);
 }
 body > header > nav > ul > li:last-child {
-    border: var(--border) var(--principal-neurtal);
+    border: var(--border) var(--principal-neutral);
     background: none;
 }
 body > header > nav > ul > li:last-child > a > img {
     height: calc(var(--size-max) - var(--size-xl));
 }
 
+main:has(aside) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--size-max);
+    margin-top: var(--size-xl);
+    width: 100vw;
+    margin-left: var(--size-xl);
+}
+
+aside {
+    background: var(--secondary-pastel);
+    border-radius: var(--border-radius);
+    padding: var(--size-xl);
+    padding-left: calc(var(--size-xl) * 1.5);
+    box-shadow: var(--shadow);
+    height: fit-content;
+    min-width: fit-content;
+    position: sticky;
+    top: calc(var(--size-xl) * 4);
+}
+aside ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-s);
+}
+aside li:has(h3)::marker{
+    content: none;
+}
+aside li h3 {
+    font-size: var(--size-xl);
+    font-weight: 700;
+    color: var(--principal-neutral);
+    margin-bottom: var(--size-m);
+}
+aside a {
+    color: black;
+    text-decoration: none;
+}
+aside a:hover {
+    text-decoration: underline;
+}
+
+body > main > article > section > h1 {
+    font-size: var(--size-xl);
+    border-bottom: var(--border) var(--principal-neutral);
+    margin-bottom: var(--size-xl);
+}
+
+body > main > article > section > ul {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-l);
+    flex-wrap: wrap;
+}
+
+body > main > article > section > ul > li {
+    width: fit-content;
+    max-width: 250px;
+}
+
+body > main > article > section > ul > li::marker {
+    content: none;
+}
+
+.recipe {
+    background: var(--secondary-pastel);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    color: black;
+    text-decoration: none;
+}
+.recipe > section {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--size-l);
+    padding: var(--size-m);
+}
 
 footer {
     display: flex;

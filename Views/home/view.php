@@ -6,11 +6,15 @@
     <article>
         <section>
             <h1> Nos idées recettes: </h1>
-            <?php
-                foreach ($A_view["RECIPES"] as $O_recipe){
-                    View::show("common/recipe", array("RECIPE" => $O_recipe));
-                }
-            ?>
+            <ul>
+                <?php
+                    foreach ($A_view["RECIPES"] as $O_recipe){
+                        echo '<li>';
+                        View::show("common/recipe", array("RECIPE" => $O_recipe));
+                        echo '</li>';
+                    }
+                ?>
+            </ul>
         </section>
     </article>
 </main>
