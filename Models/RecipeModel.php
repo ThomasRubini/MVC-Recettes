@@ -50,7 +50,7 @@ final class RecipeModel
     public function update()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, DESCR=:descr, RECIPE:recipe, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
+        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, DESCR=:descr, RECIPE=:recipe, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
@@ -73,7 +73,7 @@ final class RecipeModel
         return $O_recipe;
     }
 
-    public static function getRecipeByID($I_id)
+    public static function getByID($I_id)
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT * FROM RECIPE WHERE ID=:id");
@@ -157,7 +157,7 @@ final class RecipeModel
 
     public static function getFullRecipeById($I_id)
     {
-        $O_recipe = self::getRecipeByID($I_id);
+        $O_recipe = self::getByID($I_id);
         $O_recipe->getFullRecipe();
         return $O_recipe;
     }

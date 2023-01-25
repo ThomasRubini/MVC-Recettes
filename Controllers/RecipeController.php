@@ -41,7 +41,7 @@ final class RecipeController
             }
         }
         
-        View::show("recipe/edit", array("POST_URI" => "/recipe/update", "RECIPE" => $O_recipe));
+        View::show("recipe/edit", array("POST_URI" => "/recipe/update/".$O_recipe->I_ID, "RECIPE" => $O_recipe));
     }
 
     public function newAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -79,9 +79,13 @@ final class RecipeController
 
     public function updateAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
+        if(count($A_urlParams)!=1){
+            throw new HTTPSpecialCaseException(404);
+        }
+        
         Session::login_or_die();
 
-        $O_recipe = RecipeModel::getByID(Utils::getOrDie($A_postParams, "recipeID"));
+        $O_recipe = RecipeModel::getByID(Utils::intOrDie($A_urlParams[0]));
         
         if ($O_recipe->I_AUTHOR_ID !== $_SESSION["ID"]) {
             if(!Session::is_admin()){
@@ -126,7 +130,7 @@ final class RecipeController
         if (count($A_urlParams) !== 1 ) throw new HTTPSpecialCaseException(404);
 
         
-        $O_recipe = RecipeModel::getRecipeByID($A_urlParams[0]);
+        $O_recipe = RecipeModel::getByID($A_urlParams[0]);
 
         header("Content-Type: image");
         if (isset($O_recipe)) {
