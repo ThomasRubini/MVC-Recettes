@@ -81,6 +81,14 @@ final class RecipeModel
         return self::createFromRow($row, $I_id);
     }
 
+    public function getImageLink(){
+        return '/static/img/recipes/'.$this->I_ID;
+    }
+
+    public function getLink(){
+        return '/recipe/view/'.$this->I_ID;
+    }
+
     public function getImage(){
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT IMG FROM RECIPE WHERE ID=:id");
@@ -162,9 +170,7 @@ final class RecipeModel
         )
 
         -- get a row per occurrence and sort by occurrences number
-        select RECIPE.*,
-        CONCAT('/recipe/view/', RECIPE.ID) AS RECIPE_LINK,
-        CONCAT('/static/img/recipes/', RECIPE.ID) AS IMG_LINK,
+        select RECIPE.*
         1 AS NOTE
         from CTE
                 JOIN RECIPE
