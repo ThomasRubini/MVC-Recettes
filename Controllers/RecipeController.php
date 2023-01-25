@@ -55,13 +55,15 @@ final class RecipeController
     {
         Session::login_or_die();
 
-        $O_difficulty = DifficultyModel::getByName($A_postParams["recipeDifficulty"]);
+        $O_difficulty = DifficultyModel::getByName(Utils::getOrDie($A_postParams, "recipeDifficulty"));
         if($O_difficulty === null){
             throw new HTTPSpecialCaseException(400, "Invalid difficulty");
         }
 
         $O_recipe = new RecipeModel(
-            $A_postParams["recipeName"], $A_postParams["recipeTime"], $A_postParams["recipeDescription"],
+            Utils::getOrDie($A_postParams, "recipeName"),
+            Utils::getOrDie($A_postParams, "recipeTime"),
+            Utils::getOrDie($A_postParams, "recipeDescription"),
             null, $O_difficulty->I_ID, $_SESSION["ID"]
         );
         $O_recipe->insert();
