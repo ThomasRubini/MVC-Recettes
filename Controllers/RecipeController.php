@@ -9,8 +9,8 @@ final class RecipeController
             throw new HTTPSpecialCaseException(404);
         }
 
-        $O_recipeModel = new RecipeModel();
-        $A_returnArray = $O_recipeModel->getFullRecipeWithApprs($A_urlParams[0]);
+        //TODO MAKE THE VIEW USE THE NEW DATA FORMAT
+        $A_returnArray = RecipeModel::getFullRecipeWithApprs($A_urlParams[0]);
         if ($A_returnArray === null) {
             throw new HTTPSpecialCaseException(404);
         }
@@ -28,19 +28,19 @@ final class RecipeController
             throw new HTTPSpecialCaseException(404);
         }
 
-        $O_recipeModel = new RecipeModel();
-        $A_recipe = $O_recipeModel->getFullRecipe($A_urlParams[0]);
-        if ($A_recipe === null) {
+        
+        $O_recipe = RecipeModel::getFullRecipeById($A_urlParams[0]);
+        if ($O_recipe === null) {
             throw new HTTPSpecialCaseException(404);
         }
 
-        if ($A_recipe["AUTHOR_ID"] !== $_SESSION["ID"]) {
+        if ($O_recipe->I_AUTHOR_ID !== $_SESSION["ID"]) {
             if(!Session::is_admin()){
                 throw new HTTPSpecialCaseException(400, "You are not the owner of this recipe");
             }
         }
-
-        View::show("recipe/edit", array("POST_URI" => "/recipe/update", "RECIPE" => $A_recipe));
+        //TODO MAKE THE VIEW USE THE NEW DATA FORMAT
+        View::show("recipe/edit", array("POST_URI" => "/recipe/update", "RECIPE" => $O_recipe));
     }
 
     public function newAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -67,8 +67,8 @@ final class RecipeController
     private function searchQueryView(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
 
-        $O_recipeModel = new RecipeModel();
-        $A_results = $O_recipeModel->searchRecipesByName($A_getParams["query"]);
+        //TODO change this when the function will return object array
+        $A_results = RecipeModel::searchRecipesByName($A_getParams["query"]);
         
         View::show("recipe/search", array(
             "QUERY" => $A_getParams["query"],
@@ -80,12 +80,12 @@ final class RecipeController
     {
         if (count($A_urlParams) !== 1 ) throw new HTTPSpecialCaseException(404);
 
-        $O_recipeModel = new RecipeModel();
-        $A_recipe = $O_recipeModel->getRecipeByID($A_urlParams[0]);
+        
+        $O_recipe = RecipeModel::getRecipeByID($A_urlParams[0]);
 
         header("Content-Type: image");
-        if (isset($A_recipe) && $A_recipe["IMG"] !== null) {
-            echo $A_recipe["IMG"];
+        if (isset($O_recipe) && $O_recipe->getImage() !== null) {
+            echo $O_recipe->getImage();
         } else {
             echo file_get_contents(Constants::rootDir()."/static/img/default_recipe.jpg");
         }

@@ -3,7 +3,7 @@
 final class IngredientModel
 {
 
-    public function searchByRecipe($I_recipe_id)
+    public static function searchByRecipe($I_recipe_id)
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("
