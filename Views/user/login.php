@@ -3,9 +3,10 @@
         echo "<p> Error: {$A_view["errmsg"]} </p>";
     }
 ?>
-<main>
+<main class="registerPage">
     <section>
         <form method="POST" action="/user/signin">
+            <h2>Connexion</h2>
             <label for="email">Entrez votre email</label>
             <input type="email" name="email" id="email" placeholder="Email" required>
             <label for="password">Entrez votre mot de passe</label>
@@ -17,6 +18,7 @@
     <hr>
     <section>
         <form method="POST" action="/user/signup" id="signin">
+            <h2>Inscription</h2>
             <label for="email">Entrez votre email</label>
             <input type="email" name="email" id="email" placeholder="Email" required>
             <label for="text">Entrez votre nom d'utilisateur</label>
