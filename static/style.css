@@ -119,8 +119,8 @@ main:has(aside) {
     justify-content: center;
     gap: var(--size-max);
     margin-top: var(--size-xl);
-    width: 100vw;
     margin-left: var(--size-xl);
+    margin-right: var(--size-xl);
 }
 
 aside {
@@ -165,7 +165,7 @@ body > main > article > section > h1 {
 body > main > article > section > ul {
     display: flex;
     flex-direction: row;
-    gap: var(--size-l);
+    gap: var(--size-xl);
     flex-wrap: wrap;
 }
 
