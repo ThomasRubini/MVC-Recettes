@@ -191,4 +191,23 @@ final class RecipeModel
 
         return $A_recipes;
     }
+
+    public static function getRandomRecipes($I_n)
+    {
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("
+        SELECT * FROM RECIPE
+        ORDER BY RAND()
+        LIMIT :n
+        ");
+        $stmt->bindParam("n", $I_n, PDO::PARAM_INT);
+        $stmt->execute();
+  
+        $A_recipes = array();
+        foreach($stmt->fetchAll() as $row){
+            array_push($A_recipes, self::createFromRow($row, $row["ID"]));
+        }
+
+        return $A_recipes;
+    }
 }
