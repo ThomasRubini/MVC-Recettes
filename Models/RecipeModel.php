@@ -30,11 +30,11 @@ final class RecipeModel
     public function insert()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("INSERT INTO RECIPE (NAME, TIME, COST, DESCR, RECIPE ,DIFFICULTY_ID, AUTHOR_ID) VALUES(:name, :time, :cost, :desc, :recipe, :difficulty_id, :author_id)");
+        $stmt = $O_model->prepare("INSERT INTO RECIPE (NAME, TIME, COST, DESCR, RECIPE ,DIFFICULTY_ID, AUTHOR_ID) VALUES(:name, :time, :cost, :descr, :recipe, :difficulty_id, :author_id)");
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("cost", $this->I_COST);
-        $stmt->bindParam("desc", $this->S_DESCR);
+        $stmt->bindParam("descr", $this->S_DESCR);
         $stmt->bindParam("recipe", $this->S_RECIPE);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
@@ -44,12 +44,12 @@ final class RecipeModel
     public function update()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, COST=:cost, DESCR=:desc, RECIPE:recipe, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
+        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, COST=:cost, DESCR=:descr, RECIPE:recipe, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("cost", $this->I_COST);
-        $stmt->bindParam("desc", $this->S_DESCR);
+        $stmt->bindParam("descr", $this->S_DESCR);
         $stmt->bindParam("recipe", $this->S_RECIPE);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
