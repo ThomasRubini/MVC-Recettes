@@ -18,7 +18,7 @@ function getOrEmpty($A_Dict, $S_keyName) {
     <form action="<?= $A_view["POST_URI"] ?>" method="post">
 
         <label for="recipeImage">Entrez l'image de haut de page&nbsp;:</label>
-        <input type="file" name="recipeImage" id="recipeImage" required>
+        <input type="file" name="recipeImage" id="recipeImage">
 
         <label for="recipeName">Nom de la recette&nbsp;:</label>
         <input type="text" name="recipeName" id="recipeName" placeholder="Nom du plat" value="<?= getOrEmpty($A_recipe, "NAME") ?>" required>
