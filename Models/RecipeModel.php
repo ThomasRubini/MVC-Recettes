@@ -73,7 +73,7 @@ final class RecipeModel
         return $O_recipe;
     }
 
-    public static function getRecipeByID($I_id)
+    public static function getByID($I_id)
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT * FROM RECIPE WHERE ID=:id");
@@ -157,7 +157,7 @@ final class RecipeModel
 
     public static function getFullRecipeById($I_id)
     {
-        $O_recipe = self::getRecipeByID($I_id);
+        $O_recipe = self::getByID($I_id);
         $O_recipe->getFullRecipe();
         return $O_recipe;
     }

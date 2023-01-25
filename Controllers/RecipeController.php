@@ -126,7 +126,7 @@ final class RecipeController
         if (count($A_urlParams) !== 1 ) throw new HTTPSpecialCaseException(404);
 
         
-        $O_recipe = RecipeModel::getRecipeByID($A_urlParams[0]);
+        $O_recipe = RecipeModel::getByID($A_urlParams[0]);
 
         header("Content-Type: image");
         if (isset($O_recipe)) {
