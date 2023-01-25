@@ -5,6 +5,6 @@ $O_recipe = $A_view["RECIPE"];
     <img src="<?= $O_recipe->getImgLink() ?>" alt="<?= $O_recipe->S_NAME ?>">
     <section>
         <h2> <?= $O_recipe->S_NAME ?> </h2>
-        <p> <?= $O_recipe->queryNote() ?> </p>
+        <p> <?= $O_recipe->queryNote() ?>/5 </p>
     </section>
 </a>
