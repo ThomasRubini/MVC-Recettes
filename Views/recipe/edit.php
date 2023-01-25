@@ -31,7 +31,7 @@ function getOrEmpty($A_Dict, $S_keyName) {
             <h1>Informations alimentaires</h1>
 
             <label for="recipeFifficulte">Niveau de difficulé&nbsp;:</label>
-            <select name="recipeDifficulte" id="recipeDifficulte" required>
+            <select name="recipeDifficulty" id="recipeDifficulte" required>
                 <option value="tresFacile" <?= getOrEmpty($A_recipe, "DIFFICULTY_NAME")=="Très facile"? 'selected="selected"' : "" ?> >Très facile</option>
                 <option value="facile" <?= getOrEmpty($A_recipe, "DIFFICULTY_NAME")=="Facile"? 'selected="selected"' : "" ?>>Facile</option>
                 <option value="moyen" <?= getOrEmpty($A_recipe, "DIFFICULTY_NAME")=="Moyen"? 'selected="selected"' : "" ?>>Moyen</option>
@@ -39,12 +39,12 @@ function getOrEmpty($A_Dict, $S_keyName) {
             </select>
 
 
-            <legend>Type de plat&nbsp;:</legend>
-            <input type="checkbox" name="recipeVegan" id="recipeVegan" <?= in_array("Végan", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
+            <legend>Particularités du plat&nbsp;:</legend>
+            <input type="checkbox" name="part_Vegan" id="recipeVegan" <?= in_array("Végan", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
             <label for="recipeVegan">Végan</label>
-            <input type="checkbox" name="recipeLactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
+            <input type="checkbox" name="part_LactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
             <label for="recipeLactoseFree">Sans lactose</label>
-            <input type="checkbox" name="recipeGlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
+            <input type="checkbox" name="part_GlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
             <label for="recipeGlutenFree">Sans gluten</label>
 
             </br>
