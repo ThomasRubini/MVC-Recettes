@@ -125,35 +125,20 @@ final class UserController
 
         if (isset($_FILES["profilPicture"])) {
             
-            if ($_FILES['profilPicture']['error'] !== UPLOAD_ERR_OK) {
-                throw new HTTPSpecialCaseException(
-                    400,
-                    "Upload failed with error code " . $_FILES['profilPicture']['error']
-                );
-            }
-
-            $info = getimagesize($_FILES['profilPicture']['tmp_name']);
-            if ($info === false) {
-                throw new HTTPSpecialCaseException(
-                    400,
-                    "Unable to determine image type of uploaded file"
-                );
-            }
-
-            if (($info[2] !== IMAGETYPE_JPEG) && ($info[2] !== IMAGETYPE_PNG)) {
-                throw new HTTPSpecialCaseException(400, "Not a jpeg/png");
+            if ($_FILES['profilPicture']['error'] === UPLOAD_ERR_OK) {
+                $info = getimagesize($_FILES['profilPicture']['tmp_name']);
+                if ($info !== false && ($info[2] === IMAGETYPE_JPEG || $info[2] !== IMAGETYPE_PNG)) {
+                    $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
+                    $O_user->updateProfilePic($fp);
+                }
             }
             
-            $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
-            $O_user->updateProfilePic($fp);
         }
         if (isset($_POST["email"])) {
             $S_email = $_POST["email"];
             if (!empty($S_email) && filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
                 $O_user->S_EMAIL = $_POST["email"];
                 $O_user->update();
-            }else{
-                throw new HTTPSpecialCaseException(400, "invalid email");
             }
         }
         if (isset($_POST["username"])) {
@@ -161,8 +146,6 @@ final class UserController
             if (!empty($S_username)) {
                 $O_user->S_USERNAME = $_POST["username"];
                 $O_user->update();
-            }else{
-                throw new HTTPSpecialCaseException(400, "invalid username");
             }
         }
 
