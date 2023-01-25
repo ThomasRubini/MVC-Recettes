@@ -131,6 +131,8 @@ aside {
     box-shadow: var(--shadow);
     height: fit-content;
     min-width: fit-content;
+    position: sticky;
+    top: calc(var(--size-xl) * 4);
 }
 aside ul {
     display: flex;
