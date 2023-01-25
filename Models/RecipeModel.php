@@ -134,10 +134,10 @@ final class RecipeModel
         return $this->A_INGREDIENTS;
     }
     public function getDifficulty(){
-        if($this->O_AUTHOR === null){
-            $this->O_AUTHOR = DifficultyModel::getByID($this->I_DIFFICULTY_ID);
+        if($this->O_DIFFICULTY === null){
+            $this->O_DIFFICULTY = DifficultyModel::getByID($this->I_DIFFICULTY_ID);
         }
-        return $this->O_AUTHOR;
+        return $this->O_DIFFICULTY;
     }
 
     public function getApprs(){
