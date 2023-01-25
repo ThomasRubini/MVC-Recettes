@@ -47,8 +47,26 @@ final class RecipeController
     public function newAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         Session::login_or_die();
-
+        
         View::show("recipe/edit", array("POST_URI" => "/recipe/create", "RECIPE" => array()));
+    }
+
+    public function createAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        Session::login_or_die();
+
+        $O_difficulty = DifficultyModel::getByName($A_postParams["recipeDifficulty"]);
+        if($O_difficulty === null){
+            throw new HTTPSpecialCaseException(400, "Invalid difficulty");
+        }
+
+        $O_recipe = new RecipeModel(
+            $A_postParams["recipeName"], $A_postParams["recipeTime"], $A_postParams["recipeDescription"],
+            null, $O_difficulty->I_ID, $_SESSION["ID"]
+        );
+        $O_recipe->insert();
+
+        header("Location: /recipe/view/".$O_recipe->I_ID);
     }
 
     public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
