@@ -62,6 +62,12 @@ final class RecipeModel
         $stmt->execute();
     }
 
+    private static function createFromRow($A_row, $I_ID){
+        $O_recipe = new RecipeModel($A_row["NAME"], $A_row["TIME"], $A_row["COST"], $A_row["DESCR"], $A_row["RECIPE"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
+        $O_recipe->I_ID = $I_ID;
+        return $O_recipe;
+    }
+
     public static function getRecipeByID($I_id)
     {
         $O_model = Model::get();
@@ -72,10 +78,7 @@ final class RecipeModel
         $row = $stmt->fetch();
         if ($row === false) return null;
 
-        $O_recipe = new RecipeModel($row["NAME"], $row["TIME"], $row["COST"], $row["DESCR"], $row["RECIPE"], $row["DIFFICULTY_ID"], $row["AUTHOR_ID"]);
-
-        $O_recipe->I_ID = $I_id;
-        return $O_recipe;
+        return self::createFromRow($row, $I_id);
     }
 
     public function getImage(){
