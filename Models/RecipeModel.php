@@ -99,6 +99,22 @@ final class RecipeModel
         return $row["IMG"];
     }
 
+    public function queryNote(){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("
+            SELECT avg(NOTE) AS AVG FROM APPRECIATION
+            WHERE RECIPE_ID = :id
+        ");
+        $stmt->bindParam("id", $this->I_ID);
+        $stmt->execute();
+
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+        $avg = $row["AVG"];
+        
+        return round($avg*2)/2;
+    }
+
     public function getAuthor(){
         if($this->O_AUTHOR === null){
             $this->O_AUTHOR = UserModel::getByID($this->I_AUTHOR_ID);
@@ -133,6 +149,7 @@ final class RecipeModel
         $this->getDifficulty();
         $this->getIngredients();
     }
+
     public static function getFullRecipeById($I_id)
     {
         $O_recipe = self::getRecipeByID($I_id);
