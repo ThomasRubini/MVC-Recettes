@@ -40,7 +40,7 @@ final class RecipeController
                 throw new HTTPSpecialCaseException(400, "You are not the owner of this recipe");
             }
         }
-        //TODO MAKE THE VIEW USE THE NEW DATA FORMAT
+        
         View::show("recipe/edit", array("POST_URI" => "/recipe/update", "RECIPE" => $O_recipe));
     }
 
@@ -48,25 +48,49 @@ final class RecipeController
     {
         Session::login_or_die();
         
-        View::show("recipe/edit", array("POST_URI" => "/recipe/create", "RECIPE" => array()));
+        View::show("recipe/edit", array("POST_URI" => "/recipe/create", "RECIPE" => null));
+    }
+
+    private static function fillRecipeFromPostParams($O_recipe, Array $A_postParams)
+    {
+        $O_difficulty = DifficultyModel::getByName(Utils::getOrDie($A_postParams, "recipeDifficulty"));
+        if($O_difficulty === null){
+            throw new HTTPSpecialCaseException(400, "Invalid difficulty");
+        }
+
+        $O_recipe->S_NAME = Utils::getOrDie($A_postParams, "recipeName");
+        $O_recipe->I_TIME = Utils::intOrDie(Utils::getOrDie($A_postParams, "recipeTime"));
+        $O_recipe->S_DESCR = Utils::getOrDie($A_postParams, "recipeDescription");
+        $O_recipe->S_RECIPE = null; // TODO
+        $O_recipe->I_DIFFICULTY_ID = $O_difficulty->I_ID;
+        $O_recipe->I_AUTHOR_ID = $_SESSION["ID"];
     }
 
     public function createAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         Session::login_or_die();
 
-        $O_difficulty = DifficultyModel::getByName(Utils::getOrDie($A_postParams, "recipeDifficulty"));
-        if($O_difficulty === null){
-            throw new HTTPSpecialCaseException(400, "Invalid difficulty");
+        $O_recipe = RecipeModel::createEmpty();
+        self::fillRecipeFromPostParams($O_recipe, $A_postParams);
+        $O_recipe->insert();
+
+        header("Location: /recipe/view/".$O_recipe->I_ID);
+    }
+
+    public function updateAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        Session::login_or_die();
+
+        $O_recipe = RecipeModel::getByID(Utils::getOrDie($A_postParams, "recipeID"));
+        
+        if ($O_recipe->I_AUTHOR_ID !== $_SESSION["ID"]) {
+            if(!Session::is_admin()){
+                throw new HTTPSpecialCaseException(400, "You are not the owner of this recipe");
+            }
         }
 
-        $O_recipe = new RecipeModel(
-            Utils::getOrDie($A_postParams, "recipeName"),
-            Utils::getOrDie($A_postParams, "recipeTime"),
-            Utils::getOrDie($A_postParams, "recipeDescription"),
-            null, $O_difficulty->I_ID, $_SESSION["ID"]
-        );
-        $O_recipe->insert();
+        self::fillRecipeFromPostParams($O_recipe, $A_postParams);
+        $O_recipe->update();
 
         header("Location: /recipe/view/".$O_recipe->I_ID);
     }

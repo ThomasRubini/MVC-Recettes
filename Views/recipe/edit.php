@@ -1,15 +1,22 @@
 <?php
+$O_recipe = $A_view["RECIPE"];
 
-$A_recipe = $A_view["RECIPE"];
-
-function getOrEmpty($A_Dict, $S_keyName) {
-    if (isset($A_Dict[$S_keyName])) {
-        return $A_Dict[$S_keyName];
-    } else {
-        if($S_keyName == "TYPE" || $S_keyName == "INGREDIENTS")
-            return array();
-        return "";
-    }
+if ($O_recipe === null) {
+    $S_name = null;
+    $I_time = null;
+    $S_descr = null;
+    $S_recipe = null;
+    $S_difficultyName = null;
+    $A_parts = array();
+    $A_ingredients = array();
+} else {
+    $S_name = $O_recipe->S_NAME;
+    $I_time = $O_recipe->I_TIME;
+    $S_descr = $O_recipe->S_DESCR;
+    $S_recipe = $O_recipe->S_RECIPE;
+    $S_difficultyName = $O_recipe->getDifficulty()->S_NAME;
+    $A_parts = array(); // TODO
+    $A_ingredients = $O_recipe->getIngredients();
 }
 ?>
 
@@ -21,36 +28,36 @@ function getOrEmpty($A_Dict, $S_keyName) {
         <input type="file" name="recipeImage" id="recipeImage">
 
         <label for="recipeName">Nom de la recette&nbsp;:</label>
-        <input type="text" name="recipeName" id="recipeName" placeholder="Nom du plat" value="<?= getOrEmpty($A_recipe, "NAME") ?>" required>
+        <input type="text" name="recipeName" id="recipeName" placeholder="Nom du plat" value="<?= $S_name ?>" required>
         </br>
         <label for="recipeDescription">Description de la recette</label>
         </br>
-        <textarea name="recipeDescription" id="recipeDescription"><?= getOrEmpty($A_recipe, "DESC") ?></textarea>
+        <textarea name="recipeDescription" id="recipeDescription"><?= $S_descr ?></textarea>
 
         <section>
             <h1>Informations alimentaires</h1>
 
             <label for="recipeFifficulte">Niveau de difficulé&nbsp;:</label>
             <select name="recipeDifficulty" id="recipeDifficulte" required>
-                <option value="tresFacile" <?= getOrEmpty($A_recipe, "DIFFICULTY_NAME")=="Très facile"? 'selected="selected"' : "" ?> >Très facile</option>
-                <option value="facile" <?= getOrEmpty($A_recipe, "DIFFICULTY_NAME")=="Facile"? 'selected="selected"' : "" ?>>Facile</option>
-                <option value="moyen" <?= getOrEmpty($A_recipe, "DIFFICULTY_NAME")=="Moyen"? 'selected="selected"' : "" ?>>Moyen</option>
-                <option value="difficile" <?= getOrEmpty($A_recipe, "DIFFICULTY_NAME")=="Difficle"? 'selected="selected"' : "" ?>>Difficile</option>
+                <option value="tresFacile" <?= $S_difficultyName==="Très facile"? 'selected="selected"' : "" ?> >Très facile</option>
+                <option value="facile" <?= $S_difficultyName==="Facile"? 'selected="selected"' : "" ?>>Facile</option>
+                <option value="moyen" <?= $S_difficultyName==="Moyen"? 'selected="selected"' : "" ?>>Moyen</option>
+                <option value="difficile" <?= $S_difficultyName==="Difficle"? 'selected="selected"' : "" ?>>Difficile</option>
             </select>
 
 
             <legend>Particularités du plat&nbsp;:</legend>
-            <input type="checkbox" name="part_Vegan" id="recipeVegan" <?= in_array("Végan", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
+            <input type="checkbox" name="part_Vegan" id="recipeVegan" <?= in_array("Végan", $A_parts)? "checked":"" ?> >
             <label for="recipeVegan">Végan</label>
-            <input type="checkbox" name="part_LactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
+            <input type="checkbox" name="part_LactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", $A_parts)? "checked":"" ?> >
             <label for="recipeLactoseFree">Sans lactose</label>
-            <input type="checkbox" name="part_GlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", getOrEmpty($A_recipe, "TYPE"))? "checked":"" ?> >
+            <input type="checkbox" name="part_GlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", $A_parts)? "checked":"" ?> >
             <label for="recipeGlutenFree">Sans gluten</label>
 
             </br>
 
             <label for="recipeTime">Temps de préparation&nbsp;:</label>
-            <input type="number" name="recipeTime" id="recipeTime" min="5" max="1500" step="5" placeholder="Temps de préparation" value="<?= getOrEmpty($A_recipe, "TIME") ?>" required>
+            <input type="number" name="recipeTime" id="recipeTime" min="5" max="1500" step="5" placeholder="Temps de préparation" value="<?= $I_time ?>" required>
             <label for="recipeTime">minutes</label>
 
         </section>
@@ -62,15 +69,14 @@ function getOrEmpty($A_Dict, $S_keyName) {
 
             <ul class="recipeIngredients">
                 <?php
-                $ingredients = getOrEmpty($A_recipe, "INGREDIENTS");
-                if(sizeof($ingredients) > 0) {
+                if(sizeof($A_ingredients) > 0) {
                     $i = 1;
-                    foreach($ingredients as $ingredient) {
+                    foreach($A_ingredients as $O_ingredient) {
                         echo '<li>
                             <label for="recipeIngredient'.$i.'">Ingrédient&nbsp;:</label>
-                            <input type="text" name="recipeIngredient'.$i.'" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$ingredient["NAME"].'">
+                            <input type="text" name="recipeIngredient'.$i.'" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$O_ingredient["NAME"].'">
                             <label for="recipeQuantity'.$i.'">Quantité&nbsp;:</label>
-                            <input type="text" name="recipeQuantity'.$i.'" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$ingredient["QUANTITY"].'">
+                            <input type="text" name="recipeQuantity'.$i.'" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$O_ingredient["QUANTITY"].'">
                         </li>';
                         $i++;
                     }
@@ -100,9 +106,8 @@ function getOrEmpty($A_Dict, $S_keyName) {
 
             <ol class="recipeInstructions">
                 <?php
-                    $preparation = getOrEmpty($A_recipe, "RECIPE");
-                    if(!empty($preparation)) {
-                        $steps = explode("\n", $preparation);
+                    if(!empty($S_recipe)) {
+                        $steps = explode("\n", $S_recipe);
                         $i = 1;
                         foreach($steps as $step) {
                             echo '<li>
