@@ -1,7 +1,10 @@
-<a href="<?= $A_view["RECIPE_LINK"]?>">
-    <img src="<?= $A_view["IMG_LINK"] ?>" alt="<?= $A_view["NAME"]?>">
+<?php
+$O_recipe = $A_view["RECIPE"];
+?>
+<a href="<?= $O_recipe->getLink() ?>">
+    <img src="<?= $O_recipe->getImageLink() ?>" alt="<?= $O_recipe->S_NAME ?>">
     <section>
-        <h2> <?= $A_view["NAME"]?> </h2>
-        <p> <?= $A_view["NOTE"]?> </p>
+        <h2> <?= $O_recipe->S_NAME ?> </h2>
+        <p> <?= $O_recipe->I_NOTE ?> </p>
     </section>
 </a>

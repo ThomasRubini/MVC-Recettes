@@ -7,8 +7,8 @@
         <section>
             <h1> Nos idées recettes: </h1>
             <?php
-                foreach ($A_view as $recipe){
-                    View::show("common/recipe", $recipe);
+                foreach ($A_view["RECIPES"] as $O_recipe){
+                    View::show("common/recipe", array("RECIPE" => $O_recipe));
                 }
             ?>
         </section>
