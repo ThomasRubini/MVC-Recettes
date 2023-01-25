@@ -6,7 +6,7 @@ final class RecipeModel
     public $S_NAME = null;
     public $I_TIME = null;
     public $I_COST = null;
-    public $S_DESCR = null;
+    public $S_DESC = null;
     public $S_RECIPE = null;
     public $I_DIFFICULTY_ID = null;
     public $I_AUTHOR_ID = null;
@@ -16,12 +16,12 @@ final class RecipeModel
     public $A_APPRS = null;
     public $A_INGREDIENTS = null;
     
-    public function __construct($S_NAME, $I_TIME, $I_COST, $S_DESCR, $S_RECIPE, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
+    public function __construct($S_NAME, $I_TIME, $I_COST, $S_DESC, $S_RECIPE, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
     {
         $this->S_NAME = $S_NAME;
         $this->I_TIME = $I_TIME;
         $this->I_COST = $I_COST;
-        $this->S_DESCR = $S_DESCR;
+        $this->S_DESC = $S_DESC;
         $this->S_RECIPE = $S_RECIPE;
         $this->I_DIFFICULTY_ID = $I_DIFFICULTY_ID;
         $this->I_AUTHOR_ID = $I_AUTHOR_ID;        
@@ -34,7 +34,7 @@ final class RecipeModel
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("cost", $this->I_COST);
-        $stmt->bindParam("desc", $this->S_DESCR);
+        $stmt->bindParam("desc", $this->S_DESC);
         $stmt->bindParam("recipe", $this->S_RECIPE);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
@@ -49,7 +49,7 @@ final class RecipeModel
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("cost", $this->I_COST);
-        $stmt->bindParam("desc", $this->S_DESCR);
+        $stmt->bindParam("desc", $this->S_DESC);
         $stmt->bindParam("recipe", $this->S_RECIPE);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
@@ -62,6 +62,12 @@ final class RecipeModel
         $stmt->execute();
     }
 
+    private static function createFromRow($A_row, $I_ID){
+        $O_recipe = new RecipeModel($A_row["NAME"], $A_row["TIME"], $A_row["COST"], $A_row["DESC"], $A_row["RECIPE"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
+        $O_recipe->I_ID = $I_ID;
+        return $O_recipe;
+    }
+
     public static function getRecipeByID($I_id)
     {
         $O_model = Model::get();
@@ -72,10 +78,15 @@ final class RecipeModel
         $row = $stmt->fetch();
         if ($row === false) return null;
 
-        $O_recipe = new RecipeModel($row["NAME"], $row["TIME"], $row["COST"], $row["DESCR"], $row["RECIPE"], $row["DIFFICULTY_ID"], $row["AUTHOR_ID"]);
+        return self::createFromRow($row, $I_id);
+    }
 
-        $O_recipe->I_ID = $I_id;
-        return $O_recipe;
+    public function getImageLink(){
+        return '/static/img/recipes/'.$this->I_ID;
+    }
+
+    public function getLink(){
+        return '/recipe/view/'.$this->I_ID;
     }
 
     public function getImage(){
@@ -159,9 +170,7 @@ final class RecipeModel
         )
 
         -- get a row per occurrence and sort by occurrences number
-        select RECIPE.ID, RECIPE.NAME,
-        CONCAT('/recipe/view/', RECIPE.ID) AS RECIPE_LINK,
-        CONCAT('/static/img/recipes/', RECIPE.ID) AS IMG_LINK,
+        select RECIPE.*
         1 AS NOTE
         from CTE
                 JOIN RECIPE
@@ -174,7 +183,12 @@ final class RecipeModel
 
         $stmt->bindParam("query", $S_query);
         $stmt->execute();
+        
+        $A_recipes = array();
+        foreach($stmt->fetchAll() as $row){
+            array_push($A_recipes, self::createFromRow($row, $row["ID"]));
+        }
 
-        return $stmt->fetchAll();
+        return $A_recipes;
     }
 }

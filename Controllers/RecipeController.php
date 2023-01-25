@@ -10,14 +10,15 @@ final class RecipeController
         }
 
         //TODO MAKE THE VIEW USE THE NEW DATA FORMAT
-        $A_returnArray = RecipeModel::getFullRecipeWithApprs($A_urlParams[0]);
-        if ($A_returnArray === null) {
+        $O_recipe = RecipeModel::getFullRecipeWithApprs($A_urlParams[0]);
+        if ($O_recipe === null) {
             throw new HTTPSpecialCaseException(404);
         }
 
-        $A_returnArray["ADMIN"] = Session::is_admin();
-
-        View::show("recipe/view", $A_returnArray);
+        View::show("recipe/view", array(
+            "ADMIN" => Session::is_admin(),
+            "RECIPE" => $O_recipe
+        ));
     }
 
     public function editAction(Array $A_urlParams = null, Array $A_postParams = null)
