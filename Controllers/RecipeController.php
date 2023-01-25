@@ -65,6 +65,8 @@ final class RecipeController
             null, $O_difficulty->I_ID, $_SESSION["ID"]
         );
         $O_recipe->insert();
+
+        header("Location: /recipe/view/".$O_recipe->I_ID);
     }
 
     public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
