@@ -11,7 +11,7 @@ $O_recipe = $A_view["RECIPE"];
                 <h1><?= $O_recipe->S_NAME ?></h1>
                 <p><?= $O_recipe->I_TIME ?>&nbsp;—&nbsp;<?= $O_recipe->O_DIFFICULTY->S_NAME ?></p>
             </header>
-            <p><?= $O_recipe->S_DESC ?></p>
+            <p><?= $O_recipe->S_DESCR ?></p>
         </section>
 
         <section class="ingredientsRecette">
@@ -35,7 +35,14 @@ $O_recipe = $A_view["RECIPE"];
             </ol>
         </section>
 
-        <p>By <?= $O_recipe->getAuthor()->S_USERNAME ?></p>
+        <?php
+        $O_author = $O_recipe->getAuthor();
+        if($O_author === null) {
+            echo '<p>By an anonymous user</p>';
+        } else {
+            echo '<p>By '.$O_author->S_USERNAME.' </p>';
+        }
+        ?>
 
         <?php
             View::show("appreciations/view_all", $A_view)
