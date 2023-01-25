@@ -162,7 +162,7 @@ final class RecipeModel
         )
 
         -- get a row per occurrence and sort by occurrences number
-        select RECIPE.ID, RECIPE.NAME,
+        select RECIPE.*,
         CONCAT('/recipe/view/', RECIPE.ID) AS RECIPE_LINK,
         CONCAT('/static/img/recipes/', RECIPE.ID) AS IMG_LINK,
         1 AS NOTE
@@ -177,7 +177,12 @@ final class RecipeModel
 
         $stmt->bindParam("query", $S_query);
         $stmt->execute();
+        
+        $A_recipes = array();
+        foreach($stmt->fetchAll() as $row){
+            array_push($A_recipes, self::createFromRow($row, $row["ID"]));
+        }
 
-        return $stmt->fetchAll();
+        return $A_recipes;
     }
 }
