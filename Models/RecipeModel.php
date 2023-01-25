@@ -81,7 +81,7 @@ final class RecipeModel
         return self::createFromRow($row, $I_id);
     }
 
-    public function getImageLink(){
+    public function getImgLink(){
         return '/static/img/recipes/'.$this->I_ID;
     }
 
@@ -89,7 +89,7 @@ final class RecipeModel
         return '/recipe/view/'.$this->I_ID;
     }
 
-    public function getImage(){
+    public function queryImg(){
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT IMG FROM RECIPE WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);
