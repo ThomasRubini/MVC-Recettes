@@ -6,7 +6,7 @@ final class RecipeModel
     public $S_NAME = null;
     public $I_TIME = null;
     public $I_COST = null;
-    public $S_DESC = null;
+    public $S_DESCR = null;
     public $S_RECIPE = null;
     public $I_DIFFICULTY_ID = null;
     public $I_AUTHOR_ID = null;
@@ -16,12 +16,12 @@ final class RecipeModel
     public $A_APPRS = null;
     public $A_INGREDIENTS = null;
     
-    public function __construct($S_NAME, $I_TIME, $I_COST, $S_DESC, $S_RECIPE, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
+    public function __construct($S_NAME, $I_TIME, $I_COST, $S_DESCR, $S_RECIPE, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
     {
         $this->S_NAME = $S_NAME;
         $this->I_TIME = $I_TIME;
         $this->I_COST = $I_COST;
-        $this->S_DESC = $S_DESC;
+        $this->S_DESCR = $S_DESCR;
         $this->S_RECIPE = $S_RECIPE;
         $this->I_DIFFICULTY_ID = $I_DIFFICULTY_ID;
         $this->I_AUTHOR_ID = $I_AUTHOR_ID;        
@@ -30,11 +30,11 @@ final class RecipeModel
     public function insert()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("INSERT INTO RECIPE (NAME, TIME, COST, DESCR, RECIPE ,DIFFICULTY_ID, AUTHOR_ID) VALUES(:name, :time, :cost, :desc, :recipe, :difficulty_id, :author_id)");
+        $stmt = $O_model->prepare("INSERT INTO RECIPE (NAME, TIME, COST, DESCR, RECIPE ,DIFFICULTY_ID, AUTHOR_ID) VALUES(:name, :time, :cost, :descr, :recipe, :difficulty_id, :author_id)");
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("cost", $this->I_COST);
-        $stmt->bindParam("desc", $this->S_DESC);
+        $stmt->bindParam("descr", $this->S_DESCR);
         $stmt->bindParam("recipe", $this->S_RECIPE);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
@@ -44,12 +44,12 @@ final class RecipeModel
     public function update()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, COST=:cost, DESCR=:desc, RECIPE:recipe, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
+        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, COST=:cost, DESCR=:descr, RECIPE:recipe, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("cost", $this->I_COST);
-        $stmt->bindParam("desc", $this->S_DESC);
+        $stmt->bindParam("descr", $this->S_DESCR);
         $stmt->bindParam("recipe", $this->S_RECIPE);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
@@ -63,7 +63,7 @@ final class RecipeModel
     }
 
     private static function createFromRow($A_row, $I_ID){
-        $O_recipe = new RecipeModel($A_row["NAME"], $A_row["TIME"], $A_row["COST"], $A_row["DESC"], $A_row["RECIPE"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
+        $O_recipe = new RecipeModel($A_row["NAME"], $A_row["TIME"], $A_row["COST"], $A_row["DESCR"], $A_row["RECIPE"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
         $O_recipe->I_ID = $I_ID;
         return $O_recipe;
     }
