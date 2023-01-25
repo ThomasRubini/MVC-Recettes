@@ -19,6 +19,7 @@
     /*--secondary-darker:     hsl(30, 46%, 46%);*/
     /*--secondary-darkest:    hsl(30, 64%, 29%);*/
 
+    --grey-light: hsl(20, 5%, 88%);
     --grey-dark: hsl(340, 2%, 63%);
 
     --size-1: 1px;
@@ -32,7 +33,7 @@
     --border-radius: var(--size-l);
     --border: solid var(--size-xs); /* don't forget to choose a color after */
 
-    --shadow: 2px 2px 18px -2px rgba(0,0,0,0.4), 2px 2px 4px 2px rgba(0,0,0,0.3);
+    --shadow: 2px 2px 16px -2px rgba(0,0,0,0.2), 1px 1px 4px 1px rgba(0,0,0,0.2)
 }
 
 * {
@@ -194,6 +195,66 @@ body > main > article > section > ul > li::marker {
     justify-content: space-between;
     gap: var(--size-l);
     padding: var(--size-m);
+}
+
+main.registerPage {
+    padding: var(--size-max);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-xl);
+}
+main.registerPage > hr {
+    height: 250px;
+    border: none;
+    border-right: var(--border) var(--principal-neutral);
+    border-radius: var(--border-radius);
+}
+
+main.registerPage > section > form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-xl);
+    min-width: 300px;
+    align-items: center;
+}
+
+main.registerPage > section > form > h2 {
+    font-size: var(--size-xl);
+}
+
+main.registerPage > section > form > label {
+    display: none;
+}
+
+main.registerPage > section > form > input {
+    font-family: 'Nunito', 'Arial';
+}
+
+main.registerPage > section > form > input[type=text], input[type=email], input[type=password] {
+    height: var(--size-xl);
+    border-radius: var(--border-radius);
+    padding: var(--size-l);
+    border: none;
+    background: var(--grey-light);
+    font-size: var(--size-xl);
+}
+
+main.registerPage > section > form > :is(input[type=text], input[type=email], input[type=password])::placeholder {
+    color: var(--grey-dark);
+}
+
+
+main.registerPage > section > form > input[type=submit] {
+    background: var(--principal-neutral);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--secondary-pastel);
+    padding: var(--size-m);
+    font-size: var(--size-xl);
+    width: calc(100% - var(--size-max));
+    box-shadow: var(--shadow);
 }
 
 footer {
