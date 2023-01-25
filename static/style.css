@@ -205,6 +205,13 @@ main.registerPage {
     justify-content: center;
     gap: var(--size-xl);
 }
+
+body:has(main.registerPage) > p {
+    display: flex;
+    justify-content: center;
+    font-size: var(--size-xl);
+}
+
 main.registerPage > hr {
     height: 250px;
     border: none;
