@@ -55,7 +55,7 @@ final class DifficultyModel
         if ($row === false) return null;
 
         $O_diff = new DifficultyModel($row["NAME"]);
-        $O_diff->I_ID = $I_id;
+        $O_diff->I_ID = $row["ID"];
         return $O_diff;
     }
     public static function deleteByID($I_id)
