@@ -39,10 +39,11 @@ if ($O_recipe === null) {
 
             <label for="recipeFifficulte">Niveau de difficulé&nbsp;:</label>
             <select name="recipeDifficulty" id="recipeDifficulte" required>
-                <option value="tresFacile" <?= $S_difficultyName==="Très facile"? 'selected="selected"' : "" ?> >Très facile</option>
-                <option value="facile" <?= $S_difficultyName==="Facile"? 'selected="selected"' : "" ?>>Facile</option>
-                <option value="moyen" <?= $S_difficultyName==="Moyen"? 'selected="selected"' : "" ?>>Moyen</option>
-                <option value="difficile" <?= $S_difficultyName==="Difficle"? 'selected="selected"' : "" ?>>Difficile</option>
+                <?php
+                $A_difficulties = array("Très facile", "Facile", "Moyen", "Difficile");
+                foreach($A_difficulties as $S_difficulty){?>
+                    <option value="<?=$S_difficulty?>" <?= $S_difficultyName===$S_difficulty? 'selected="selected"' : "" ?> ><?=$S_difficulty?></option>
+                <?php } ?>
             </select>
 
 
