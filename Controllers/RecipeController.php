@@ -118,6 +118,40 @@ final class RecipeController
         self::fillRecipeFromPostParams($O_recipe, $A_postParams);
         $O_recipe->update();
 
+        $A_ingredientNames = Utils::getOrDie($A_postParams, "recipeIngredientNames");
+        $A_ingredientQuantities = Utils::getOrDie($A_postParams, "recipeIngredientQuantities");
+
+        $A_ingrsInDB = IngredientModel::searchByRecipe($O_recipe->I_ID);
+
+        for($i=0; $i<count($A_ingredientNames); $i++) {
+            $O_ingr = null;
+
+            // search ingredient in DB's list
+            foreach($A_ingrsInDB as $O_ingr_loop) {
+                if($O_ingr_loop->S_NAME === $A_ingredientNames[$i]) {
+                    $O_ingr = $O_ingr_loop;
+                    break;
+                }
+            }
+
+            if($O_ingr === null) {
+                // if not present, create if and insert it
+                $O_ingr = new IngredientModel(
+                    $O_recipe->I_ID,
+                    $A_ingredientNames[$i],
+                    $A_ingredientQuantities[$i]
+                );
+                $O_ingr->insert();
+            } else {
+                $O_ingr->S_QUANTITY = $A_ingredientQuantities[$i];
+                $O_ingr->update();
+                // if already present, update it and remove it from $A_ingrsInDB
+
+                $ingr_key = array_search($O_ingr, $A_ingrsInDB, true);
+                unset($A_ingrsInDB[$ingr_key]);
+            }
+        }
+
         header("Location: /recipe/view/".$O_recipe->I_ID);
     }
 
