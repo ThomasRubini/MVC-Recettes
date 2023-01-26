@@ -5,7 +5,7 @@ if ($O_recipe === null) {
     $S_name = null;
     $I_time = null;
     $S_descr = null;
-    $A_steps = array();
+    $A_instructions = array();
     $S_difficultyName = null;
     $A_parts = array();
     $A_ingredients = array();
@@ -13,7 +13,7 @@ if ($O_recipe === null) {
     $S_name = $O_recipe->S_NAME;
     $I_time = $O_recipe->I_TIME;
     $S_descr = $O_recipe->S_DESCR;
-    $A_steps = $O_recipe->getSteps();
+    $A_instructions = $O_recipe->getSplitInstructions();
     $S_difficultyName = $O_recipe->getDifficulty()->S_NAME;
     $A_parts = array(); // TODO
     $A_ingredients = $O_recipe->getIngredients();
@@ -110,7 +110,7 @@ if ($O_recipe === null) {
 
             <ol class="recipeInstructions">
                 <?php
-                    if (count($A_steps) === 0) {
+                    if (count($A_instructions) === 0) {
                         echo '<li>
                         <label for="recipeInstruction1">Étape 1&nbsp;:</label>
                         <input type="text" name="recipeInstructions[]" id="recipeInstruction1" placeholder="Battre les oeufs et la farine dans un grand saladier.">
@@ -120,10 +120,10 @@ if ($O_recipe === null) {
                         $numberOfInstructions = 1;
                     } else {
                         $i = 1;
-                        foreach($A_steps as $S_step) {
+                        foreach($A_instructions as $S_instr) {
                             echo '<li>
                                 <label for="recipeInstruction'.$i.'">Étape '.$i.'&nbsp;:</label>
-                                <input type="text" name="recipeInstructions[]" id="recipeInstruction'.$i.'" placeholder="Battre les oeufs et la farine dans un grand saladier." value="'.$S_step.'">
+                                <input type="text" name="recipeInstructions[]" id="recipeInstruction'.$i.'" placeholder="Battre les oeufs et la farine dans un grand saladier." value="'.$S_instr.'">
                             </li>';
                             $i++;
                         }
