@@ -87,7 +87,7 @@ final class RecipeModel
     }
 
     public function getImgLink(){
-        return '/static/img/recipes/'.$this->I_ID;
+        return '/recipe/img/'.$this->I_ID;
     }
 
     public function getLink(){
