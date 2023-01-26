@@ -302,7 +302,7 @@ main.userView > form > label {
     font-size: var(--size-l);
 }
 
-main.userView > form > :is(input[type=text], input[type=email]) {
+:is(main.userView > form, main.search > article > form) > :is(input[type=text], input[type=email]) {
     height: var(--size-l);
     border-radius: var(--border-radius);
     padding: var(--size-l);
@@ -311,7 +311,7 @@ main.userView > form > :is(input[type=text], input[type=email]) {
     font-size: var(--size-l);
 }
 
-main.userView > form > input[type=submit] {
+:is(main.userView > form, main.search > article > form) > input[type=submit] {
     background: var(--principal-neutral);
     border: none;
     border-radius: var(--border-radius);
@@ -320,6 +320,29 @@ main.userView > form > input[type=submit] {
     font-size: var(--size-l);
     width: min-content;
     box-shadow: var(--shadow);
+}
+
+main.search > article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-max);
+    max-width: 700px;
+}
+
+main.search > article > form {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-l);
+}
+main.search > article > form > label {
+    display: none;
+}
+
+main.search > article > section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--size-xl);
 }
 
 footer {
