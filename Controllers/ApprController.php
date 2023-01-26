@@ -11,9 +11,8 @@ final class ApprController
         $S_comment = Utils::getOrDie($A_postParams, "comment");
         $I_note = Utils::intOrDie(Utils::getOrDie($A_postParams, "note"));
 
-        $O_apprModel = new ApprModel();
-        $O_apprModel->createAppr($_SESSION["ID"], $I_recipe_id, $S_comment, $I_note);
-        
+        $O_appr = new ApprModel($S_comment, $I_note,date("Y-m-d"),$_SESSION["ID"],$I_recipe_id);
+        $O_appr->insert();
         header("Location: ".$_SERVER['HTTP_REFERER']);
     }
 
@@ -23,18 +22,17 @@ final class ApprController
 
         $I_appr_id = Utils::intOrDie($A_urlParams[0]);
 
-        $O_apprModel = new ApprModel();
-        $A_appr = $O_apprModel->getApprById($I_appr_id);
+        $O_appr = ApprModel::getApprById($I_appr_id);
 
-        if ($A_appr === null) {
+        if ($O_appr === null) {
             throw new HTTPSpecialCaseException(404);
         }
         
-        if ($A_appr["AUTHOR_ID"] !== $_SESSION["ID"]) {
+        if ($O_appr->I_AUTHOR_ID !== $_SESSION["ID"]) {
             Session::admin_or_die();
         }
 
-        $O_apprModel->deleteAppr($I_appr_id);
+        $O_appr->delete();
 
         header("Location: ".$_SERVER['HTTP_REFERER']);
     }
