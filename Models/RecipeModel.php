@@ -147,6 +147,10 @@ final class RecipeModel
         return $this->A_APPRS;
     }
 
+    public function getSteps(){
+        return explode("\n\n", str_replace("\r", "", $this->S_RECIPE));
+    }
+
     //TODO: return array object
     public static function searchRecipesByName($S_query)
     {

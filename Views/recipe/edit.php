@@ -5,7 +5,7 @@ if ($O_recipe === null) {
     $S_name = null;
     $I_time = null;
     $S_descr = null;
-    $S_recipe = null;
+    $A_steps = array();
     $S_difficultyName = null;
     $A_parts = array();
     $A_ingredients = array();
@@ -13,7 +13,7 @@ if ($O_recipe === null) {
     $S_name = $O_recipe->S_NAME;
     $I_time = $O_recipe->I_TIME;
     $S_descr = $O_recipe->S_DESCR;
-    $S_recipe = $O_recipe->S_RECIPE;
+    $A_steps = $O_recipe->getSteps();
     $S_difficultyName = $O_recipe->getDifficulty()->S_NAME;
     $A_parts = array(); // TODO
     $A_ingredients = $O_recipe->getIngredients();
@@ -109,28 +109,25 @@ if ($O_recipe === null) {
 
             <ol class="recipeInstructions">
                 <?php
-                    if(!empty($S_recipe)) {
-                        $steps = explode("\n", $S_recipe);
-                        $i = 1;
-                        foreach($steps as $step) {
+                    if (count($A_steps) === 0) {
+                        echo '<li>
+                        <label for="recipeInstruction1">Étape 1&nbsp;:</label>
+                        <input type="text" name="recipeInstruction1" id="recipeInstruction1" placeholder="Battre les oeufs et la farine dans un grand saladier.">
+                        </li>
+                        </ol>
+                        <button type="button" disabled="disabled" id="recipeButtonInstructionLess">-</button>';
+                        $numberOfInstructions = 1;
+                    } else {
+                        foreach($A_steps as $S_step) {
                             echo '<li>
                                 <label for="recipeInstruction'.$i.'">Étape '.$i.'&nbsp;:</label>
-                                <input type="text" name="recipeInstruction'.$i.'" id="recipeInstruction'.$i.'" placeholder="Battre les oeufs et la farine dans un grand saladier." value="'.$step.'">
+                                <input type="text" name="recipeInstruction'.$i.'" id="recipeInstruction'.$i.'" placeholder="Battre les oeufs et la farine dans un grand saladier." value="'.$S_step.'">
                             </li>';
                             $i++;
                         }
                         $numberOfInstructions = $i-1;
                         echo '</ol>
                         <button type="button" id="recipeButtonInstructionLess">-</button>';
-                    } else {
-                        echo '<li>
-                            <label for="recipeInstruction1">Étape 1&nbsp;:</label>
-                            <input type="text" name="recipeInstruction1" id="recipeInstruction1" placeholder="Battre les oeufs et la farine dans un grand saladier.">
-                        </li>
-                    </ol>
-                    <button type="button" disabled="disabled" id="recipeButtonInstructionLess">-</button>';
-                    $numberOfIngredients = 1;
-                    $numberOfInstructions = 1;
                     }
                 ?>
             <button type="button" id="recipeButtonInstructionPlus">+</button>
