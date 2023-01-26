@@ -27,7 +27,7 @@ final class UserController
     }
 
     private function redirectToPreviousPage(Array $A_postParams = null){
-        if (isset($A_postParams["return_uri"])) {
+        if (isset($A_postParams["return_uri"]) && !empty($A_postParams["return_uri"])) {
             header("Location: ".$A_postParams["return_uri"]);
         } else {
             header("Location: /");
