@@ -604,10 +604,50 @@ main.manageUser > form > input[type=submit] {
 }
 main.manageUser > section > ul {
     display: flex;
-    flex-direction: column;
-    gap: var(--size-l);
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--size-xl);
 }
-
+main.manageUser > section > ul > li::marker {
+    content: none;
+}
+main.manageUser > section > ul > li {
+    background: var(--secondary-pastel);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+main.manageUser > section > ul > li > section {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-m);
+    padding: var(--size-m);
+    background: var(--grey-light);
+    border-radius: var(--border-radius);
+    align-items: center;
+}
+main.manageUser > section > ul > li > section > img {
+    width: var(--size-max);
+    height: var(--size-max);
+    border-radius: var(--size-m);
+}
+main.manageUser > section > ul > li > form {
+    padding: var(--size-m);
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-m);
+    justify-content: space-evenly;
+}
+main.manageUser > section > ul > li > form > input {
+    background: var(--principal-neutral);
+    border-radius: var(--border-radius);
+    border: none;
+    color: var(--secondary-pastel);
+    padding-left: var(--size-m);
+    padding-right: var(--size-m);
+    padding-top: var(--size-s);
+    padding-bottom: var(--size-s);
+}
 
 footer {
     display: flex;
