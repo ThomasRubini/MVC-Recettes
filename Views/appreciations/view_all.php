@@ -21,9 +21,12 @@ $O_recipe = $A_view["RECIPE"];
     </form>
 
     <?php
-        foreach ($A_view["APPRS"] as $A_appr){
-            $A_appr["SHOW_REMOVE_BUTTON"] = $A_view["ADMIN"];
-            View::show("appreciations/view_single", $A_appr);
+        foreach ($O_recipe->getApprs() as $O_appr){
+            View::show("appreciations/view_single", array(
+                "ADMIN" => $A_view["ADMIN"],
+                "USER_ID" => $A_view["USER_ID"],
+                "APPR" => $O_appr
+            ));
         }
     ?>
 </section>

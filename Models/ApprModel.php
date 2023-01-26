@@ -18,7 +18,7 @@ final class ApprModel {
         $this->I_AUTHOR_ID = $I_AUTHOR_ID;
         $this->I_RECIPE_ID = $I_RECIPE_ID;
     }
-    private function createFromRow($A_row,$I_id){
+    private static function createFromRow($A_row,$I_id){
         $O_appr = new ApprModel($A_row["COMMENT"], $A_row["NOTE"], $A_row["DATE"], $A_row["AUTHOR_ID"], $A_row["RECIPE_ID"]);
         $O_appr->I_ID = $I_id;
         return $O_appr;
