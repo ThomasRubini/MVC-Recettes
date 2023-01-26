@@ -142,8 +142,7 @@ final class RecipeModel
 
     public function getApprs(){
         if ($this->A_APPRS === null) {
-            $O_apprModel = new ApprModel();
-            $this->A_APPRS = $O_apprModel->searchRecipeApprsWithAuthors($this->I_ID);
+            $this->A_APPRS = ApprModel::searchRecipeApprs($this->I_ID);
         }
         return $this->A_APPRS;
     }
