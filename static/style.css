@@ -316,7 +316,8 @@ main.userView > form > label {
 }
 
 :is(main.userView > form,
-    main.search > article > form)
+    main.search > article > form,
+    main.recipeView > article > section > form)
 > input[type=submit] {
     background: var(--principal-neutral);
     border: none;
@@ -350,6 +351,143 @@ main.search > article > section {
     flex-wrap: wrap;
     gap: var(--size-xl);
 }
+
+main.recipeView > article {
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-xl);
+}
+main.recipeView > article > img {
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 150px;
+    object-fit: none;
+    object-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+main.recipeView > article > section.infosRecette > header {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    border-bottom: var(--border) var(--principal-neutral);
+    justify-content: space-between;
+    margin-bottom: var(--size-l);
+    align-items: baseline;
+}
+main.recipeView > article > section.infosRecette > header > h1 {
+    font-size: var(--size-max);
+}
+main.recipeView > article > section.infosRecette > header > p {
+    font-size: var(--size-l);
+}
+main.recipeView > article > section > h2 {
+    font-size: var(--size-xl);
+    border-bottom: var(--border) var(--principal-neutral);
+    margin-bottom: var(--size-l);
+}
+main.recipeView > article > section > :is(ul, ol) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-s);
+}
+main.recipeView > article > section > :is(ul, ol) > li {
+    margin-left: var(--size-l);
+}
+main.recipeView > article > section > ul > li::marker {
+    content: "- ";
+}
+main.recipeView > article > p {
+    color: var(--grey-dark);
+}
+main.recipeView > article > section.buttonsEditRecipe {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-xl);
+}
+main.recipeView > article > section.buttonsEditRecipe > a {
+    display: flex;
+    align-items: center;
+    font-size: var(--size-l);
+    color: var(--secondary-pastel);
+    background: var(--principal-neutral);
+    height: calc(1.5 * var(--size-xl));
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    padding-left: var(--size-m);
+    padding-right: var(--size-m);
+    box-shadow: var(--shadow);
+}
+main.recipeView > article > section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-l);
+}
+main.recipeView > article > section > form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-s);
+}
+main.recipeView > article > section > form > label {
+    display: none;
+}
+main.recipeView > article > section > form > label:first-child {
+    display: block;
+    font-size: var(--size-xl);
+}
+main.recipeView > article > section > form > textarea {
+    font-family: 'Nunito', 'Arial';
+    background: var(--grey-light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--size-m);
+    font-size: var(--size-l);
+}
+main.recipeView > article > section > form > textarea:focus-visible {
+    outline: none;
+}
+main.recipeView > article > section > form > section.appreciationNoteValue {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-s);
+}
+main.recipeView > article > section.apprecitations > section {
+    background: var(--secondary-pastel);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+main.recipeView > article > section.apprecitations > section > header {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-m);
+    background: var(--grey-light);
+    padding: var(--size-m);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    align-items: baseline;
+    justify-content: space-between;
+}
+main.recipeView > article > section.apprecitations > section > :not(header) {
+    padding: var(--size-m);
+}
+main.recipeView > article > section.apprecitations > section > header > img {
+    width: var(--size-max);
+    height: var(--size-max);
+    border-radius: var(--size-m);
+}
+main.recipeView > article > section.apprecitations > section > header > a {
+    background: var(--principal-neutral);
+    border-radius: var(--border-radius);
+    color: var(--secondary-pastel);
+    text-decoration: none;
+    padding: var(--size-m);
+}
+
+
 
 main.editRecipe {
     min-width: 300px;
