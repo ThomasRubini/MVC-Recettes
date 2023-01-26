@@ -4,7 +4,7 @@
 ?>
 
 
-<main>
+<main class="hasAside">
     <?php View::show("common/category_list") ?>
     <article>
         <!-- Inclure les catégories -->
