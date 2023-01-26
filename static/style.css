@@ -316,7 +316,8 @@ main.userView > form > label {
 }
 
 :is(main.userView > form,
-    main.search > article > form)
+    main.search > article > form,
+    main.recipeView > article > section > form)
 > input[type=submit] {
     background: var(--principal-neutral);
     border: none;
@@ -417,6 +418,36 @@ main.recipeView > article > section.buttonsEditRecipe > a {
     padding-left: var(--size-m);
     padding-right: var(--size-m);
     box-shadow: var(--shadow);
+}
+main.recipeView > article > section > form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-m);
+}
+main.recipeView > article > section > form > label {
+    display: none;
+}
+main.recipeView > article > section > form > label:first-child {
+    display: block;
+    font-size: var(--size-xl);
+}
+main.recipeView > article > section > form > textarea {
+    font-family: 'Nunito', 'Arial';
+    background: var(--grey-light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--size-m);
+    font-size: var(--size-l);
+}
+main.recipeView > article > section > form > textarea:focus-visible {
+    outline: none;
+}
+main.recipeView > article > section > form > section.appreciationNoteValue {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-s);
+}
+main.recipeView > article > section > form > input[type=submit] {
 
 }
 
