@@ -21,15 +21,10 @@ final class ParticularityModel
     
     public function insert(){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT 1 FROM PARTICULARITY WHERE :name=name");
+        $stmt = $O_model->prepare("SELECT ID FROM PARTICULARITY WHERE :name=name");
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->execute();
-        if($stmt->rowCount() === 0){
-            $stmt = $O_model->prepare("INSERT INTO PARTICULARITY (NAME) VALUES(:name)");
-            $stmt->bindParam("name", $this->S_NAME);
-            $stmt->execute();
-            $this->I_PARTICULARITY_ID = Model::get()->lastInsertId();
-        }
+        $this->I_PARTICULARITY_ID = $stmt->fetch()["ID"];
         $stmt = $O_model->prepare("INSERT INTO RECIPE_PARTICULARITY VALUES(:recipe_id, :particularity_id)");
         $stmt->bindParam("recipe_id", $this->I_RECIPE_ID);
         $stmt->bindParam("particularity_id", $this->I_PARTICULARITY_ID);
@@ -67,8 +62,15 @@ final class ParticularityModel
         $stmt->bindParam("id", $this->I_PARTICULARITY_ID);
         $stmt->execute();
         $stmt = $O_model->prepare("DELETE FROM RECIPE_PARTICULARITY WHERE PARTICULARITY_ID=:id");
-        $stmt->execute();
         $stmt->bindParam("id", $this->I_PARTICULARITY_ID);
+        $stmt->execute();
+    }
+
+
+    public static function removeByRecipe($I_recipe_id){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("DELETE FROM RECIPE_PARTICULARITY WHERE RECIPE_ID=:id");
+        $stmt->bindParam("id",$I_recipe_id);
         $stmt->execute();
     }
 
