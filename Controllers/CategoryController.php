@@ -5,34 +5,13 @@ final class CategoryController
 
     public function defaultAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
-        $A_array_recipes_Type_de_cuisson = array( //test
-            array(
-                "RECIPE_LINK" => "/recipe/view/2",
-                "IMG_LINK" => "/static/img/recipes/2.jpg",
-                "NAME" => "Croissant",
-                "NOTE" => "4.5"
-            ),
-            array(
-                "RECIPE_LINK" => "/recipe/view/2",
-                "IMG_LINK" => "/static/img/recipes/2.jpg",
-                "NAME" => "Croissant",
-                "NOTE" => "4.5"
-            ),
-            array(
-                "RECIPE_LINK" => "/recipe/view/2",
-                "IMG_LINK" => "/static/img/recipes/2.jpg",
-                "NAME" => "Croissant",
-                "NOTE" => "4.5"
-            )
-        );
-
+        $A_recipes = RecipeModel::getRandomRecipes(3);
+        
+        // TODO actually fill out by particularity instead
         $A_array_categories = array(
-            "Type de cuisson" => $A_array_recipes_Type_de_cuisson,
-            "Temps de préparation" => $A_array_recipes_Type_de_cuisson,
-            "Difficulté" => $A_array_recipes_Type_de_cuisson,
-            "Végan" => $A_array_recipes_Type_de_cuisson,
-            "Sans gluten" => $A_array_recipes_Type_de_cuisson,
-            "Sans lactose" => $A_array_recipes_Type_de_cuisson
+            "Végan" => $A_recipes,
+            "Sans gluten" => $A_recipes,
+            "Sans lactose" => $A_recipes
         );
 
         View::show("category/view", $A_array_categories);
