@@ -170,7 +170,6 @@ final class RecipeModel
         return explode("\n\n", str_replace("\r", "", $this->S_INSTRUCTIONS));
     }
 
-    //TODO: return array object
     public static function searchRecipesByName($S_query)
     {
 

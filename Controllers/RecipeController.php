@@ -9,7 +9,6 @@ final class RecipeController
             throw new HTTPSpecialCaseException(404);
         }
 
-        //TODO MAKE THE VIEW USE THE NEW DATA FORMAT
         $O_recipe = RecipeModel::getByID($A_urlParams[0]);
         if ($O_recipe === null) {
             throw new HTTPSpecialCaseException(404);
@@ -209,7 +208,6 @@ final class RecipeController
     private function searchQueryView(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
 
-        //TODO change this when the function will return object array
         $A_results = RecipeModel::searchRecipesByName($A_getParams["query"]);
         
         View::show("recipe/search", array(
