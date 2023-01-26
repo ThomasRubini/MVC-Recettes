@@ -302,7 +302,10 @@ main.userView > form > label {
     font-size: var(--size-l);
 }
 
-:is(main.userView > form, main.search > article > form) > :is(input[type=text], input[type=email]) {
+:is(main.userView > form,
+    main.search > article > form)
+> :is(input[type=text],
+      input[type=email]) {
     height: var(--size-l);
     border-radius: var(--border-radius);
     padding: var(--size-l);
@@ -311,7 +314,9 @@ main.userView > form > label {
     font-size: var(--size-l);
 }
 
-:is(main.userView > form, main.search > article > form) > input[type=submit] {
+:is(main.userView > form,
+    main.search > article > form)
+> input[type=submit] {
     background: var(--principal-neutral);
     border: none;
     border-radius: var(--border-radius);
@@ -344,6 +349,85 @@ main.search > article > section {
     flex-wrap: wrap;
     gap: var(--size-xl);
 }
+
+main.editRecipe {
+    min-width: 300px;
+    width: 600px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+main.editRecipe > form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-l);
+    margin-top: var(--size-xl);
+    margin-bottom: var(--size-xl);
+}
+main.editRecipe > form > label {
+    display: none;
+}
+main.editRecipe > form > label:first-child {
+    display: block;
+}
+main.editRecipe > form > :is(input, textarea) {
+    font-family: 'Nunito', 'Arial';
+}
+main.editRecipe > form > input#recipeName {
+    font-weight: 600;
+    font-size: var(--size-xl);
+    background: var(--secondary-pastel);
+    border: none;
+    border-bottom: var(--border) var(--principal-neutral);
+    padding-bottom: var(--size-m);
+    padding-left: var(--size-m);
+}
+main.editRecipe > form > input#recipeName:focus-visible {
+    outline: none;
+}
+main.editRecipe > form > textarea#recipeDescription {
+    font-size: var(--size-l);
+    border: none;
+    background: var(--secondary-pastel);
+}
+main.editRecipe > form > textarea#recipeDescription:focus-visible {
+    outline: none;
+}
+main.editRecipe > form > section > h1 {
+    color: var(--principal-neutral);
+    font-size: var(--size-xl);
+    padding-bottom: var(--size-m);
+}
+main.editRecipe > form > section > :not(label.labelParticularite, h1) {
+    margin-left: var(--size-l);
+}
+main.editRecipe > form > section > button {
+    margin-top: var(--size-m);
+    width: var(--size-xl);
+    height: var(--size-xl);
+    background: var(--principal-neutral);
+    border-radius: var(--size-s);
+    box-shadow: var(--shadow);
+    border: none;
+    color: var(--secondary-pastel);
+}
+main.editRecipe > form > section > button:disabled {
+    background: var(--grey-light);
+    color: var(--grey-dark);
+}
+main.editRecipe > form > input[type=submit] {
+    color: var(--secondary-pastel);
+    font-size: var(--size-xl);
+    background: var(--principal-neutral);
+    height: var(--size-max);
+    border-radius: var(--border-radius);
+    border: none;
+    padding-left: var(--size-max);
+    padding-right: var(--size-max);
+    margin-top: var(--size-xl);
+    width: fit-content;
+}
+
 
 footer {
     display: flex;
