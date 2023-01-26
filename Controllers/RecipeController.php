@@ -72,11 +72,6 @@ final class RecipeController
             $i++;
         }
         $O_recipe->S_RECIPE = substr($S_recipe, 2);
-
-        $fp = Utils::tryProcessImg("recipeImage");
-        if($fp !== null) {
-            $O_recipe->updateImg($fp);
-        }
     }
 
     public function createAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -86,6 +81,11 @@ final class RecipeController
         $O_recipe = RecipeModel::createEmpty();
         self::fillRecipeFromPostParams($O_recipe, $A_postParams);
         $O_recipe->insert();
+
+        $fp = Utils::tryProcessImg("recipeImage");
+        if($fp !== null) {
+            $O_recipe->updateImg($fp);
+        }
 
         $A_ingredientNames = Utils::getOrDie($A_postParams, "recipeIngredientNames");
         $A_ingredientQuantities = Utils::getOrDie($A_postParams, "recipeIngredientQuantities");
@@ -122,6 +122,11 @@ final class RecipeController
 
         self::fillRecipeFromPostParams($O_recipe, $A_postParams);
         $O_recipe->update();
+
+        $fp = Utils::tryProcessImg("recipeImage");
+        if($fp !== null) {
+            $O_recipe->updateImg($fp);
+        }
 
         $A_ingredientNames = Utils::getOrDie($A_postParams, "recipeIngredientNames");
         $A_ingredientQuantities = Utils::getOrDie($A_postParams, "recipeIngredientQuantities");
