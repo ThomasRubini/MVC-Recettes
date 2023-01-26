@@ -47,6 +47,7 @@ final class RecipeModel
         $stmt->execute();
         $this->I_ID = Model::get()->lastInsertId();
     }
+
     public function update()
     {
         $O_model = Model::get();
@@ -60,6 +61,15 @@ final class RecipeModel
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
         $stmt->execute();
     }
+
+    public function updateImg($img_fp){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("UPDATE RECIPE SET IMG=:img WHERE ID=:id");
+        $stmt->bindParam("id", $this->I_ID);
+        $stmt->bindParam("img", $img_fp, PDO::PARAM_LOB);
+        $stmt->execute();
+    }
+
     public function delete(){
         $O_model = Model::get();
         $stmt = $O_model->prepare("DELETE FROM RECIPE WHERE ID=:id");

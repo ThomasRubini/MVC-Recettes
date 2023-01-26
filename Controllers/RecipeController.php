@@ -72,6 +72,11 @@ final class RecipeController
             $i++;
         }
         $O_recipe->S_RECIPE = substr($S_recipe, 2);
+
+        $fp = Utils::tryProcessImg("recipeImage");
+        if($fp !== null) {
+            $O_recipe->updateImg($fp);
+        }
     }
 
     public function createAction(Array $A_urlParams = null, Array $A_postParams = null)

@@ -27,7 +27,7 @@ if ($O_recipe === null) {
     <?php } ?>
 
 
-    <form action="<?= $A_view["POST_URI"] ?>" method="post">
+    <form action="<?= $A_view["POST_URI"] ?>" method="post" enctype="multipart/form-data">
 
         <label for="recipeImage">Ajoutez l'image de haut de page&nbsp;:</label>
         <input type="file" name="recipeImage" id="recipeImage">
