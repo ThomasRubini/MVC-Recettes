@@ -2,6 +2,8 @@
 
 final class UserModel extends UserSessionModel
 {
+    private static $O_ANONUSER = null;
+
     public $I_ID = null;
     public $S_EMAIL = null;
     public $S_USERNAME= null;
@@ -11,16 +13,36 @@ final class UserModel extends UserSessionModel
     public $B_ADMIN = 0;
     public $B_DISABLED = 0;
 
-    public function __construct($S_EMAIL, $S_USERNAME,$S_PASSWORD_HASH,$S_LAST_SEEN,$S_FIRST_SEEN,$B_ADMIN,$B_DISABLED)
+    private function __construct(){}
+
+    public static function createFull($S_EMAIL, $S_USERNAME,$S_PASSWORD_HASH,$S_LAST_SEEN,$S_FIRST_SEEN,$B_ADMIN,$B_DISABLED)
     {   
-        $this->S_EMAIL = $S_EMAIL;
-        $this->S_USERNAME = $S_USERNAME;
-        $this->S_PASSWORD_HASH = $S_PASSWORD_HASH;
-        $this->S_LAST_SEEN = $S_LAST_SEEN;
-        $this->S_FIRST_SEEN = $S_FIRST_SEEN;
-        $this->B_ADMIN = $B_ADMIN;
-        $this->B_DISABLED = $B_DISABLED;
+        $O_user = new UserModel();
+        $O_user->S_EMAIL = $S_EMAIL;
+        $O_user->S_USERNAME = $S_USERNAME;
+        $O_user->S_PASSWORD_HASH = $S_PASSWORD_HASH;
+        $O_user->S_LAST_SEEN = $S_LAST_SEEN;
+        $O_user->S_FIRST_SEEN = $S_FIRST_SEEN;
+        $O_user->B_ADMIN = $B_ADMIN;
+        $O_user->B_DISABLED = $B_DISABLED;
+
+        return $O_user;
     }
+
+    public static function createEmpty(){
+        $O_user = new UserModel();
+    }
+
+    public static function getAnonUser(){
+        if(self::$O_ANONUSER === null) {
+            self::$O_ANONUSER = new UserModel();
+            self::$O_ANONUSER->I_ID = 0;
+            self::$O_ANONUSER->S_EMAIL = "anonymous_user@example.fr";
+            self::$O_ANONUSER->S_USERNAME = "Anonymous user";
+        }
+        return self::$O_ANONUSER;
+    }
+    
     public function insert(){
         $O_model = Model::get();
         $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, USERNAME, PASS_HASH, FIRST_SEEN) VALUES(:email, :username, :password_hash, :first_seen)");
@@ -67,7 +89,7 @@ final class UserModel extends UserSessionModel
     }
 
     private static function createFromRow($A_row, $I_ID){
-        $O_user = new UserModel($A_row["EMAIL"],$A_row["USERNAME"],$A_row["PASS_HASH"],$A_row["LAST_SEEN"],$A_row["FIRST_SEEN"],$A_row["ADMIN"],$A_row["DISABLED"]);
+        $O_user = UserModel::createFull($A_row["EMAIL"],$A_row["USERNAME"],$A_row["PASS_HASH"],$A_row["LAST_SEEN"],$A_row["FIRST_SEEN"],$A_row["ADMIN"],$A_row["DISABLED"]);
         $O_user->I_ID = $I_ID;
         return $O_user;
     }

@@ -4,8 +4,8 @@
 
 <section>
     <header>
-        <img src="<?= $O_appr->getAuthor()->getProfilePicLink() ?>" alt="profile picture">
-        <h3> <?= $O_appr->getAuthor()->S_USERNAME ?> </h3>
+        <img src="<?= $O_appr->getAuthorOrAnon()->getProfilePicLink() ?>" alt="profile picture">
+        <h3> <?= $O_appr->getAuthorOrAnon()->S_USERNAME ?> </h3>
         <p>Le <?= $O_appr->S_DATE ?> </p>
         <p> <?= $O_appr->I_NOTE ?>/5 </p>
         <?php if ($A_view["ADMIN"] || $A_view["USER_ID"] === $O_appr->I_AUTHOR_ID) { ?>
