@@ -397,6 +397,28 @@ main.recipeView > article > section > :is(ul, ol) > li {
 main.recipeView > article > section > ul > li::marker {
     content: "- ";
 }
+main.recipeView > article > p {
+    color: var(--grey-dark);
+}
+main.recipeView > article > section.buttonsEditRecipe {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-xl);
+}
+main.recipeView > article > section.buttonsEditRecipe > a {
+    display: flex;
+    align-items: center;
+    font-size: var(--size-l);
+    color: var(--secondary-pastel);
+    background: var(--principal-neutral);
+    height: calc(1.5 * var(--size-xl));
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    padding-left: var(--size-m);
+    padding-right: var(--size-m);
+    box-shadow: var(--shadow);
+
+}
 
 main.editRecipe {
     min-width: 300px;
