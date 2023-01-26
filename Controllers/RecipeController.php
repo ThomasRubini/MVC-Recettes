@@ -169,6 +169,11 @@ final class RecipeController
             }
         }
 
+        // delete all remaining ingredients, they have been deleted by the user
+        foreach($A_ingrsInDB as $O_ingr){
+            $O_ingr->delete();
+        }
+
         header("Location: /recipe/view/".$O_recipe->I_ID);
     }
 

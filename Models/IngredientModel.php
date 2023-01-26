@@ -53,11 +53,7 @@ final class IngredientModel
 
     public function delete(){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("DELETE FROM INGREDIENT WHERE ID=:id");
-        $stmt->bindParam("id", $this->I_INGREDIENT_ID);
-        $stmt->execute();
         $stmt = $O_model->prepare("DELETE FROM RECIPE_INGREDIENT WHERE INGREDIENT_ID=:id");
-        $stmt->execute();
         $stmt->bindParam("id", $this->I_INGREDIENT_ID);
         $stmt->execute();
     }
