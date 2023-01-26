@@ -322,6 +322,13 @@ main.userView > form > label {
     box-shadow: var(--shadow);
 }
 
+main.search > article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-max);
+    max-width: 700px;
+}
+
 main.search > article > form {
     display: flex;
     flex-direction: row;
@@ -329,6 +336,13 @@ main.search > article > form {
 }
 main.search > article > form > label {
     display: none;
+}
+
+main.search > article > section {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--size-xl);
 }
 
 footer {
