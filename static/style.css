@@ -264,6 +264,64 @@ form.registerForm > input[type=submit] {
     box-shadow: var(--shadow);
 }
 
+main.userView {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+    gap: var(--size-l);
+}
+
+main.userView > p {
+    font-size: var(--size-xl);
+    font-weight: 700;
+}
+
+main.userView > a {
+    background: var(--principal-neutral);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--secondary-pastel);
+    padding: var(--size-m);
+    font-size: var(--size-l);
+    width: calc(100% - var(--size-max));
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    width: fit-content;
+}
+
+main.userView > form {
+    display: flex;
+    flex-direction: column;
+}
+main.userView > form > :not(label) {
+    margin-bottom: var(--size-l);
+}
+main.userView > form > label {
+    font-size: var(--size-l);
+}
+
+main.userView > form > :is(input[type=text], input[type=email]) {
+    height: var(--size-l);
+    border-radius: var(--border-radius);
+    padding: var(--size-l);
+    border: none;
+    background: var(--grey-light);
+    font-size: var(--size-l);
+}
+
+main.userView > form > input[type=submit] {
+    background: var(--principal-neutral);
+    border: none;
+    border-radius: var(--border-radius);
+    color: var(--secondary-pastel);
+    padding: var(--size-m);
+    font-size: var(--size-l);
+    width: min-content;
+    box-shadow: var(--shadow);
+}
+
 footer {
     display: flex;
     flex-direction: column;

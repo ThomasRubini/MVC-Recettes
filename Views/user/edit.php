@@ -1,7 +1,7 @@
 <?php
 $O_user = $A_view["USER"];
 ?>
-<main>
+<main class="userView">
 
     <?php
         if ($O_user->B_ADMIN) {
