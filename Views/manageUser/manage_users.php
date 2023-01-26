@@ -21,19 +21,20 @@
 
                 foreach ($A_results as $O_user) {
                     echo '<li class="user_account" data-id="' . $O_user->I_ID . '">
-                <img class="user_acccount_picture" src=' . $O_user->getProfilePicLink() . ' alt="Photo de profil de ' . $O_user->S_USERNAME . '">
-                <h3 class="user_account_name">' . $O_user->S_USERNAME . '</h3>
-                </li>';
+                    <section>
+                        <img class="user_acccount_picture" src=' . $O_user->getProfilePicLink() . ' alt="Photo de profil de ' . $O_user->S_USERNAME . '">
+                        <h3 class="user_account_name">' . $O_user->S_USERNAME . '</h3>
+                    </section>
 
-                    echo '</ul>
-                <form method="POST" action="/manageUser/update">
-                    <input type="hidden" name="user_id" value="'.$O_user->I_ID.'" id="accounts_to_manage">
-                    <input type="submit" name="enable" value="Activer">
-                    <input type="submit" name="disable" value="Désactiver">
-                    <input type="submit" name="delete" value="Supprimer">
-                </form>';
+                    <form method="POST" action="/manageUser/update">
+                        <input type="hidden" name="user_id" value="'.$O_user->I_ID.'" id="accounts_to_manage">
+                        <input type="submit" name="enable" value="Activer">
+                        <input type="submit" name="disable" value="Désactiver">
+                        <input type="submit" name="delete" value="Supprimer">
+                    </form>
+                    </li>';
                 }
-
+                echo '</ul>';
             }
         }
         ?>

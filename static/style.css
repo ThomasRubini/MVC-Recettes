@@ -602,6 +602,11 @@ main.manageUser > form > input[type=submit] {
     border: none;
     border-radius: var(--border-radius);
 }
+main.manageUser > section > ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-l);
+}
 
 
 footer {
