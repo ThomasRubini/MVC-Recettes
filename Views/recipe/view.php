@@ -40,7 +40,7 @@ $O_recipe = $A_view["RECIPE"];
         <?php
         $B_can_interact = (
             $A_view["ADMIN"] ||
-            ($A_view["USER_ID"] === $O_appr->I_AUTHOR_ID && $O_appr->I_AUTHOR_ID !== null)
+            ($A_view["USER_ID"] === $O_recipe->I_AUTHOR_ID && $O_recipe->I_AUTHOR_ID !== null)
         );
         if ($B_can_interact) { ?>
             <section class="buttonsEditRecipe">
