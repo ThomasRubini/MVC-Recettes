@@ -20,17 +20,27 @@
                 echo '<ul class="user_account_list">';
 
                 foreach ($A_results as $O_user) {
+                    $S_disabled = "";
+                    $S_admin="";
+                    if ($O_user->B_DISABLED) {
+                        $S_disabled = "(Désactivé)";
+                    }
+                    if ($O_user->B_ADMIN) {
+                        $S_admin = "(Administrateur)";
+                    }
                     echo '<li class="user_account" data-id="' . $O_user->I_ID . '">
                     <section>
                         <img class="user_acccount_picture" src=' . $O_user->getProfilePicLink() . ' alt="Photo de profil de ' . $O_user->S_USERNAME . '">
-                        <h3 class="user_account_name">' . $O_user->S_USERNAME . '</h3>
-                    </section>
+                        <h3 class="user_account_name">' . $O_user->S_USERNAME . $S_admin . $S_disabled . '</h3>
+                    </section>';
 
-                    <form method="POST" action="/manageUser/update">
-                        <input type="hidden" name="user_id" value="'.$O_user->I_ID.'" id="accounts_to_manage">
-                        <input type="submit" name="enable" value="Activer">
-                        <input type="submit" name="disable" value="Désactiver">
-                        <input type="submit" name="delete" value="Supprimer">
+                   echo' <form method="POST" action="/manageUser/update">
+                        <input type="hidden" name="user_id" value="'.$O_user->I_ID.'" id="accounts_to_manage">';
+                    if ($O_user->B_DISABLED) {echo' <input type="submit" name="enable" value="Activer">';}
+                    else{echo '<input type="submit" name="disable" value="Désactiver">';}
+                    if ($O_user->B_ADMIN) {echo '<input type="submit" name="deop" value="Enlever Admin">';}
+                    else {echo '<input type="submit" name="op" value="Rendre Admin">';}
+                    echo '<input type="submit" name="delete" value="Supprimer">
                     </form>
                     </li>';
                 }
