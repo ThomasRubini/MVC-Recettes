@@ -351,6 +351,19 @@ main.search > article > section {
     gap: var(--size-xl);
 }
 
+main.recipeView > article {
+    max-width: 600px;
+}
+main.recipeView > article > img {
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 150px;
+    object-fit: none;
+    object-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
 main.editRecipe {
     min-width: 300px;
     width: 600px;
