@@ -20,7 +20,7 @@ if ($O_recipe === null) {
 }
 ?>
 
-<main>
+<main class="editRecipe">
     <?php
     if ($O_recipe !== null) { ?>
         <a href="/recipe/view/<?= $O_recipe->I_ID ?>">Retour</a>
@@ -29,15 +29,12 @@ if ($O_recipe === null) {
 
     <form action="<?= $A_view["POST_URI"] ?>" method="post">
 
-        <label for="recipeImage">Entrez l'image de haut de page&nbsp;:</label>
+        <label for="recipeImage">Ajoutez l'image de haut de page&nbsp;:</label>
         <input type="file" name="recipeImage" id="recipeImage">
-
         <label for="recipeName">Nom de la recette&nbsp;:</label>
         <input type="text" name="recipeName" id="recipeName" placeholder="Nom du plat" value="<?= $S_name ?>" required>
-        </br>
         <label for="recipeDescription">Description de la recette</label>
-        </br>
-        <textarea name="recipeDescription" id="recipeDescription"><?= $S_descr ?></textarea>
+        <textarea name="recipeDescription" id="recipeDescription" placeholder="Faites une description appétissante ! 😋"><?= $S_descr ?></textarea>
 
         <section>
             <h1>Informations alimentaires</h1>
@@ -133,6 +130,7 @@ if ($O_recipe === null) {
                     </ol>
                     <button type="button" disabled="disabled" id="recipeButtonInstructionLess">-</button>';
                     $numberOfIngredients = 1;
+                    $numberOfInstructions = 1;
                     }
                 ?>
             <button type="button" id="recipeButtonInstructionPlus">+</button>
@@ -147,6 +145,7 @@ if ($O_recipe === null) {
 </main>
 
 <script>
+console.log("a");
 numberOfIngredients = <?= $numberOfIngredients ?>;
 const buttonIngredientPlus = document.querySelector("#recipeButtonIngredientPlus");
 const buttonIngredientLess = document.querySelector("#recipeButtonIngrdientLess");
