@@ -36,6 +36,30 @@ final class ParticularityModel
         $stmt->execute();
     }
     
+    public static function getByName($S_name){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT * FROM PARTICULARITY WHERE NAME=:name");
+        $stmt->bindParam("name", $S_name);
+        $stmt->execute();
+        
+        $row = $stmt->fetch();
+        if ($row === false) return null;
+
+        $O_part = new ParticularityModel($row["NAME"],null);
+        $O_part->I_PARTICULARITY_ID = $row["ID"];
+        return $O_part;
+    }
+    public function getRecipes(){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT RECIPE_ID FROM RECIPE_PARTICULARITY WHERE PARTICULARITY_ID=:id");
+        $stmt->bindParam("id", $this->I_PARTICULARITY_ID);
+        $stmt->execute();
+        $A_recipes = array();
+        foreach($stmt->fetchAll() as $row){
+            array_push($A_recipes, RecipeModel::getByID($row["RECIPE_ID"]));
+        }
+        return $A_recipes;
+    }
 
     public function delete(){
         $O_model = Model::get();
