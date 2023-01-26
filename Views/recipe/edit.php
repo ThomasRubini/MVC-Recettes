@@ -15,7 +15,10 @@ if ($O_recipe === null) {
     $S_descr = $O_recipe->S_DESCR;
     $A_instructions = $O_recipe->getSplitInstructions();
     $S_difficultyName = $O_recipe->getDifficulty()->S_NAME;
-    $A_parts = array(); // TODO
+    $A_parts = array();
+    foreach(ParticularityModel::searchByRecipe($O_recipe->I_ID) as $O_part){
+        array_push($A_parts, $O_part->S_NAME);
+    }
     $A_ingredients = $O_recipe->getIngredients();
 }
 ?>
@@ -51,11 +54,13 @@ if ($O_recipe === null) {
 
 
             <legend>Particularités du plat&nbsp;:</legend>
-            <input type="checkbox" name="part_Vegan" id="recipeVegan" <?= in_array("Végan", $A_parts)? "checked":"" ?> >
+            <input type="checkbox" name="part_Vegan" id="recipeVegan" <?= in_array("végan", $A_parts)? "checked":"" ?> >
             <label for="recipeVegan" class="labelParticularite">Végan</label>
-            <input type="checkbox" name="part_LactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", $A_parts)? "checked":"" ?> >
+            <input type="checkbox" name="part_Vegeta" id="recipeVegetarian" <?= in_array("végétarien", $A_parts)? "checked":"" ?> >
+            <label for="recipeVegetarian" class="labelParticularite">Végétarien</label>
+            <input type="checkbox" name="part_LactoseFree" id="recipeLactoseFree" <?= in_array("sans lactose", $A_parts)? "checked":"" ?> >
             <label for="recipeLactoseFree" class="labelParticularite">Sans lactose</label>
-            <input type="checkbox" name="part_GlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", $A_parts)? "checked":"" ?> >
+            <input type="checkbox" name="part_GlutenFree" id="recipeGlutenFree" <?= in_array("sans gluten", $A_parts)? "checked":"" ?> >
             <label for="recipeGlutenFree" class="labelParticularite">Sans gluten</label>
 
                 </br>

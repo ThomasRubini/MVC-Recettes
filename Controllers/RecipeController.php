@@ -8,12 +8,10 @@ final class RecipeController
         if(count($A_urlParams)!=1){
             throw new HTTPSpecialCaseException(404);
         }
-
         $O_recipe = RecipeModel::getByID($A_urlParams[0]);
         if ($O_recipe === null) {
             throw new HTTPSpecialCaseException(404);
         }
-
         View::show("recipe/view", array(
             "ADMIN" => Session::is_admin(),
             "USER_ID" => Session::is_login() ? $_SESSION["ID"] : null,
@@ -93,6 +91,27 @@ final class RecipeController
         $A_ingredientNames = Utils::getOrDie($A_postParams, "recipeIngredientNames");
         $A_ingredientQuantities = Utils::getOrDie($A_postParams, "recipeIngredientQuantities");
 
+
+
+        // handle particularities
+        if(isset($A_postParams["recipeVegan"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "végan");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["recipeVegetarian"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "végétarien");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["recipeLactoseFree"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "sans lactose");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["recipeGlutenFree"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "sans gluten");
+            $O_part->insert();
+        }
+
+
         $A_ingredients = array();
         for($i=0; $i<count($A_ingredientNames); $i++) {
             $O_ingr = new IngredientModel(
@@ -126,6 +145,27 @@ final class RecipeController
         // fill basic recipe attribtues
         self::fillRecipeFromPostParams($O_recipe, $A_postParams);
         $O_recipe->update();
+
+        ParticularityModel::removeByRecipe($O_recipe->I_ID);
+
+        // handle particularities
+        if(isset($A_postParams["part_Vegan"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "végan");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["part_Vegeta"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "végétarien");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["part_LactoseFree"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "sans lactose");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["part_GlutenFree"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "sans gluten");
+            $O_part->insert();
+        }
+        
         
         // update img if necessary
         $fp = Utils::tryProcessImg("recipeImage");
