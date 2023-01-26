@@ -62,9 +62,16 @@ final class RecipeController
         $O_recipe->S_NAME = Utils::getOrDie($A_postParams, "recipeName");
         $O_recipe->I_TIME = Utils::intOrDie(Utils::getOrDie($A_postParams, "recipeTime"));
         $O_recipe->S_DESCR = Utils::getOrDie($A_postParams, "recipeDescription");
-        $O_recipe->S_RECIPE = null; // TODO
         $O_recipe->I_DIFFICULTY_ID = $O_difficulty->I_ID;
         $O_recipe->I_AUTHOR_ID = $_SESSION["ID"];
+
+        $S_recipe = "";
+        $i = 0;
+        foreach(Utils::getOrDie($A_postParams, "recipeInstructions") as $S_instr) {
+            $S_recipe.= "\n\n".$S_instr;
+            $i++;
+        }
+        $O_recipe->S_RECIPE = substr($S_recipe, 2);
     }
 
     public function createAction(Array $A_urlParams = null, Array $A_postParams = null)
@@ -74,6 +81,20 @@ final class RecipeController
         $O_recipe = RecipeModel::createEmpty();
         self::fillRecipeFromPostParams($O_recipe, $A_postParams);
         $O_recipe->insert();
+
+        $A_ingredientNames = Utils::getOrDie($A_postParams, "recipeIngredientNames");
+        $A_ingredientQuantities = Utils::getOrDie($A_postParams, "recipeIngredientQuantities");
+
+        $A_ingredients = array();
+        for($i=0; $i<count($A_ingredientNames); $i++) {
+            $O_ingr = new IngredientModel(
+                $O_recipe->I_ID,
+                $A_ingredientNames[$i],
+                $A_ingredientQuantities[$i]
+            );
+            $O_ingr->insert();
+            array_push($A_ingredients, $O_ingr);
+        }
 
         header("Location: /recipe/view/".$O_recipe->I_ID);
     }
