@@ -78,7 +78,7 @@ final class RecipeModel
     }
 
     private static function createFromRow($A_row, $I_ID){
-        $O_recipe = RecipeModel::createFull($A_row["NAME"], $A_row["TIME"], $A_row["DESCR"], $A_row["RECIPE"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
+        $O_recipe = RecipeModel::createFull($A_row["NAME"], $A_row["TIME"], $A_row["DESCR"], $A_row["INSTRUCTIONS"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
         $O_recipe->I_ID = $I_ID;
         return $O_recipe;
     }
