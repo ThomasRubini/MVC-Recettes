@@ -29,7 +29,7 @@ $O_recipe = $A_view["RECIPE"];
             <h2>Préparation</h2>
             <ol>
                 <?php
-                    foreach(explode("\n\n", $O_recipe->S_RECIPE) as $S_instr)
+                    foreach($O_recipe->getSteps() as $S_instr)
                         echo "<li>".$S_instr."</li>";
                 ?>
             </ol>
