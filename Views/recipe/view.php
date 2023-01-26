@@ -9,7 +9,7 @@ $O_recipe = $A_view["RECIPE"];
         <section class="infosRecette">
             <header>
                 <h1><?= $O_recipe->S_NAME ?></h1>
-                <p><?= $O_recipe->I_TIME ?>&nbsp;—&nbsp;<?= $O_recipe->O_DIFFICULTY->S_NAME ?></p>
+                <p><?= $O_recipe->I_TIME ?>&nbsp;—&nbsp;<?= $O_recipe->getDifficulty()->S_NAME ?></p>
             </header>
             <p><?= $O_recipe->S_DESCR ?></p>
         </section>

@@ -147,30 +147,6 @@ final class RecipeModel
         return $this->A_APPRS;
     }
 
-    public function getFullRecipe()
-    {
-        $this->getAuthor();
-        $this->getDifficulty();
-        $this->getIngredients();
-    }
-
-    public static function getFullRecipeById($I_id)
-    {
-        $O_recipe = self::getByID($I_id);
-        $O_recipe->getFullRecipe();
-        return $O_recipe;
-    }
-
-    public static function getFullRecipeWithApprs($I_id)
-    {
-        $O_recipe = self::getFullRecipeById($I_id);
-        if ($O_recipe === null)return null;
-
-        $O_recipe->getApprs();
-
-        return $O_recipe;
-    }
-
     //TODO: return array object
     public static function searchRecipesByName($S_query)
     {
