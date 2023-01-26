@@ -133,7 +133,7 @@ final class UserController
         if (isset($_FILES["profilPicture"]) && !empty($_FILES["profilPicture"]["name"])) {
             if ($_FILES['profilPicture']['error'] === UPLOAD_ERR_OK) {
                 $info = getimagesize($_FILES['profilPicture']['tmp_name']);
-                if ($info !== false && ($info[2] === IMAGETYPE_JPEG || $info[2] !== IMAGETYPE_PNG)) {
+                if ($info !== false && ($info[2] === IMAGETYPE_JPEG || $info[2] === IMAGETYPE_PNG)) {
                     $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
                     $O_user->updateProfilePic($fp);
                 } else {
