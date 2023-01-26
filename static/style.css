@@ -357,3 +357,12 @@ footer {
     color: var(--secondary-pastel);
     font-size: var(--size-xl);
 }
+
+.error_main {
+    align-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
