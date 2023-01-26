@@ -79,14 +79,18 @@ final class RecipeController
         Session::login_or_die();
 
         $O_recipe = RecipeModel::createEmpty();
+
+        // fill basic recipe attribtues
         self::fillRecipeFromPostParams($O_recipe, $A_postParams);
         $O_recipe->insert();
 
+        // update img if necessary
         $fp = Utils::tryProcessImg("recipeImage");
         if($fp !== null) {
             $O_recipe->updateImg($fp);
         }
 
+        // handle ingredients
         $A_ingredientNames = Utils::getOrDie($A_postParams, "recipeIngredientNames");
         $A_ingredientQuantities = Utils::getOrDie($A_postParams, "recipeIngredientQuantities");
 
@@ -120,14 +124,17 @@ final class RecipeController
             }
         }
 
+        // fill basic recipe attribtues
         self::fillRecipeFromPostParams($O_recipe, $A_postParams);
         $O_recipe->update();
-
+        
+        // update img if necessary
         $fp = Utils::tryProcessImg("recipeImage");
         if($fp !== null) {
             $O_recipe->updateImg($fp);
         }
-
+        
+        // handle ingredients
         $A_ingredientNames = Utils::getOrDie($A_postParams, "recipeIngredientNames");
         $A_ingredientQuantities = Utils::getOrDie($A_postParams, "recipeIngredientQuantities");
 
