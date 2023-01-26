@@ -415,6 +415,19 @@ main.editRecipe > form > section > button:disabled {
     background: var(--grey-light);
     color: var(--grey-dark);
 }
+main.editRecipe > form > input[type=submit] {
+    color: var(--secondary-pastel);
+    font-size: var(--size-xl);
+    background: var(--principal-neutral);
+    height: var(--size-max);
+    border-radius: var(--border-radius);
+    border: none;
+    padding-left: var(--size-max);
+    padding-right: var(--size-max);
+    margin-top: var(--size-xl);
+    width: fit-content;
+}
+
 
 footer {
     display: flex;
