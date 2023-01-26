@@ -193,13 +193,12 @@ final class RecipeModel
 
         -- get a row per occurrence and sort by occurrences number
         select RECIPE.*
-        1 AS NOTE
         from CTE
                 JOIN RECIPE
         WHERE CTE.NAME is not null
         AND INSTR(RECIPE.NAME, CTE.NAME) > 0
         GROUP BY RECIPE.ID
-        ORDER BY count(RECIPE.ID) DESCR
+        ORDER BY count(RECIPE.ID)
         LIMIT 10;
         ");
 

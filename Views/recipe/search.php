@@ -22,7 +22,7 @@
                         echo '<p class="no_results_description">Assurez-vous d\'avoir rentré correctement vos termes de recherche ou essayez des mots clefs différents.</p>';
                     } else {
                         foreach ($search_results as $key => $value) {
-                            View::show("common/recipe", $value);
+                            View::show("common/recipe", array("RECIPE" => $value));
                         }
                     }
                 }
