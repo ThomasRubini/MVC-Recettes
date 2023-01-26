@@ -6,5 +6,5 @@
         echo '<p>Message d\'erreur&nbsp;: ' . $A_view .'</p>';
     }
     ?>
-    <a href="/">Retourner à l'accueil<a>
+    <a href="/">↩︎ Retourner à l'accueil<a>
 </main>
