@@ -191,7 +191,7 @@ final class UserController
         $O_user = UserModel::getByID($A_urlParams[0]);
         
         if (isset($O_user)) {
-            $S_pfp = $O_user->getProfilePic();
+            $S_pfp = $O_user->queryProfilePic();
             if($S_pfp !== null) {
                 header("Content-Type: image");
                 echo $S_pfp;
