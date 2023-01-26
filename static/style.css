@@ -447,9 +447,6 @@ main.recipeView > article > section > form > section.appreciationNoteValue {
     flex-direction: row;
     gap: var(--size-s);
 }
-main.recipeView > article > section > form > input[type=submit] {
-
-}
 
 main.editRecipe {
     min-width: 300px;
