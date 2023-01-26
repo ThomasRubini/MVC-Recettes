@@ -99,6 +99,21 @@ final class RecipeController
         header("Location: /recipe/view/".$O_recipe->I_ID);
     }
 
+    public function deleteAction(Array $A_urlParams = null, Array $A_postParams = null)
+    {
+        Session::login_or_die();
+
+        $O_recipe = RecipeModel::getByID(Utils::intOrDie(Utils::getOrDie($A_postParams, "recipe_id")));
+        
+        if ($O_recipe->I_AUTHOR_ID !== $_SESSION["ID"]) {
+            if(!Session::is_admin()){
+                throw new HTTPSpecialCaseException(400, "You are not the owner of this recipe");
+            }
+        }
+
+        $O_recipe->delete();
+    }
+
     public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
         if (isset($A_getParams["query"])) {
