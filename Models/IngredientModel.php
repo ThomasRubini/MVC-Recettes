@@ -23,7 +23,7 @@ final class IngredientModel
     
     public function insert(){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT 1 FROM INGREDIENT WHERE :name=name");
+        $stmt = $O_model->prepare("SELECT ID FROM INGREDIENT WHERE :name=name");
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->execute();
         if($stmt->rowCount() === 0){
@@ -31,6 +31,8 @@ final class IngredientModel
             $stmt->bindParam("name", $this->S_NAME);
             $stmt->execute();
             $this->I_INGREDIENT_ID = Model::get()->lastInsertId();
+        } else {
+            $this->I_INGREDIENT_ID = $stmt->fetch()["ID"];
         }
         $stmt = $O_model->prepare("INSERT INTO RECIPE_INGREDIENT VALUES(:recipe_id, :ingredient_id, :quantity)");
         $stmt->bindParam("recipe_id", $this->I_RECIPE_ID);
