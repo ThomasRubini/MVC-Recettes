@@ -41,6 +41,15 @@ final class IngredientModel
         $stmt->execute();
     }
     
+    public function update(){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("UPDATE RECIPE_INGREDIENT SET QUANTITY=:quantity
+        WHERE RECIPE_ID=:recipe_id AND INGREDIENT_ID=:ingredient_id");
+        $stmt->bindParam("quantity", $this->S_QUANTITY);
+        $stmt->bindParam("recipe_id", $this->I_RECIPE_ID);
+        $stmt->bindParam("ingredient_id", $this->I_INGREDIENT_ID);
+        $stmt->execute();
+    }
 
     public function delete(){
         $O_model = Model::get();
@@ -52,6 +61,7 @@ final class IngredientModel
         $stmt->bindParam("id", $this->I_INGREDIENT_ID);
         $stmt->execute();
     }
+
     public static function getByRecipeAndName($I_recipe_id, $S_name){
         $S_name = strtolower($S_name);
         $O_model = Model::get();
