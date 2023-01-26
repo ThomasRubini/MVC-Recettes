@@ -6,7 +6,7 @@ final class RecipeModel
     public $S_NAME = null;
     public $I_TIME = null;
     public $S_DESCR = null;
-    public $S_RECIPE = null;
+    public $S_INSTRUCTIONS = null;
     public $I_DIFFICULTY_ID = null;
     public $I_AUTHOR_ID = null;
     
@@ -22,13 +22,13 @@ final class RecipeModel
         return new RecipeModel();
     }
 
-    public static function createFull($S_NAME, $I_TIME, $S_DESCR, $S_RECIPE, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
+    public static function createFull($S_NAME, $I_TIME, $S_DESCR, $S_INSTRUCTIONS, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
     {
         $O_recipe = new RecipeModel();
         $O_recipe->S_NAME = $S_NAME;
         $O_recipe->I_TIME = $I_TIME;
         $O_recipe->S_DESCR = $S_DESCR;
-        $O_recipe->S_RECIPE = $S_RECIPE;
+        $O_recipe->S_INSTRUCTIONS = $S_INSTRUCTIONS;
         $O_recipe->I_DIFFICULTY_ID = $I_DIFFICULTY_ID;
         $O_recipe->I_AUTHOR_ID = $I_AUTHOR_ID;
         return $O_recipe;
@@ -37,11 +37,11 @@ final class RecipeModel
     public function insert()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("INSERT INTO RECIPE (NAME, TIME, DESCR, RECIPE ,DIFFICULTY_ID, AUTHOR_ID) VALUES(:name, :time, :descr, :recipe, :difficulty_id, :author_id)");
+        $stmt = $O_model->prepare("INSERT INTO RECIPE (NAME, TIME, DESCR, INSTRUCTIONS ,DIFFICULTY_ID, AUTHOR_ID) VALUES(:name, :time, :descr, :instructions, :difficulty_id, :author_id)");
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("descr", $this->S_DESCR);
-        $stmt->bindParam("recipe", $this->S_RECIPE);
+        $stmt->bindParam("instructions", $this->S_INSTRUCTIONS);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
         $stmt->execute();
@@ -51,12 +51,12 @@ final class RecipeModel
     public function update()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, DESCR=:descr, RECIPE=:recipe, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
+        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, DESCR=:descr, INSTRUCTIONS=:instructions, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("descr", $this->S_DESCR);
-        $stmt->bindParam("recipe", $this->S_RECIPE);
+        $stmt->bindParam("instructions", $this->S_INSTRUCTIONS);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
         $stmt->execute();
@@ -166,8 +166,8 @@ final class RecipeModel
         return $this->A_APPRS;
     }
 
-    public function getSteps(){
-        return explode("\n\n", str_replace("\r", "", $this->S_RECIPE));
+    public function getSplitInstructions(){
+        return explode("\n\n", str_replace("\r", "", $this->S_INSTRUCTIONS));
     }
 
     //TODO: return array object

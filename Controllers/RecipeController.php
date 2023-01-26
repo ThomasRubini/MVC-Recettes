@@ -65,13 +65,13 @@ final class RecipeController
         $O_recipe->I_DIFFICULTY_ID = $O_difficulty->I_ID;
         $O_recipe->I_AUTHOR_ID = $_SESSION["ID"];
 
-        $S_recipe = "";
+        $S_instructions = "";
         $i = 0;
         foreach(Utils::getOrDie($A_postParams, "recipeInstructions") as $S_instr) {
-            $S_recipe.= "\n\n".$S_instr;
+            $S_instructions.= "\n\n".$S_instr;
             $i++;
         }
-        $O_recipe->S_RECIPE = substr($S_recipe, 2);
+        $O_recipe->S_INSTRUCTIONS = substr($S_instructions, 2);
     }
 
     public function createAction(Array $A_urlParams = null, Array $A_postParams = null)
