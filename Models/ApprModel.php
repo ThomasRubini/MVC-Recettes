@@ -53,6 +53,15 @@ final class ApprModel {
         $stmt->bindParam("id", $this->I_ID);
         $stmt->execute();
     }
+    
+    public function getAuthorOrAnon(){
+        $O_author = self::getAuthor();
+        if ($O_author === null) {
+            return UserModel::getAnonUser();
+        } else {
+            return $O_author;
+        }
+    }
 
     public function getAuthor(){
         if($this->O_AUTHOR === null){
