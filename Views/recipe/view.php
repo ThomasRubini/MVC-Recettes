@@ -19,7 +19,7 @@ $O_recipe = $A_view["RECIPE"];
             <ul>
                 <?php
                     foreach($O_recipe->getIngredients() as $O_ingredient){
-                        echo "<li> $O_ingredient->S_NAME: $O_ingredient->I_QUANTITY </li>";
+                        echo "<li> $O_ingredient->S_NAME: $O_ingredient->S_QUANTITY </li>";
                     }
                 ?>
             </ul>
