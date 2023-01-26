@@ -616,6 +616,7 @@ main.manageUser > section > ul > li {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     overflow: hidden;
+    width: 100%;
 }
 main.manageUser > section > ul > li > section {
     display: flex;
