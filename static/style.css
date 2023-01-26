@@ -442,7 +442,7 @@ footer {
     font-size: var(--size-xl);
 }
 
-.error_main {
+main.errorPage {
     align-content: center;
     align-items: center;
     display: flex;
