@@ -60,7 +60,16 @@ final class Session
     public static function login_or_die()
     {
         if (!self::is_login()) {
-            header("Location: /user/login?return_uri=".$_SERVER["REQUEST_URI"]);
+            $S_uri = null;
+            
+            // special case: user probably got there from the account button
+            if (str_starts_with($_SERVER["REQUEST_URI"], "/user/") && isset($_SERVER["HTTP_REFERER"])) {
+                $S_uri = $_SERVER['HTTP_REFERER'];
+            } else {
+                $S_uri = $_SERVER["REQUEST_URI"];
+            }
+
+            header("Location: /user/login?return_uri=".$S_uri);
             throw new HTTPSpecialCaseException(403);
         }
     }
