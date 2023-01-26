@@ -130,20 +130,11 @@ final class UserController
 
         $O_user = UserModel::getByID($_SESSION["ID"]);
 
-        if (isset($_FILES["profilPicture"]) && !empty($_FILES["profilPicture"]["name"])) {
-            if ($_FILES['profilPicture']['error'] === UPLOAD_ERR_OK) {
-                $info = getimagesize($_FILES['profilPicture']['tmp_name']);
-                if ($info !== false && ($info[2] === IMAGETYPE_JPEG || $info[2] === IMAGETYPE_PNG)) {
-                    $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
-                    $O_user->updateProfilePic($fp);
-                } else {
-                    throw new HTTPSpecialCaseException(400, "Profile picture submitted is not jpeg/png");
-                }
-            } else {
-                throw new HTTPSpecialCaseException(400, "Profile picture upload error");
-            }
-            
+        $fp = Utils::tryProcessImg("profilPicture");
+        if($fp !== null) {
+            $O_user->updateProfilePic($fp);
         }
+
         if (isset($_POST["email"]) && !empty($S_email)) {
             $S_email = $_POST["email"];
             if (filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
