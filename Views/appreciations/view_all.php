@@ -1,7 +1,7 @@
 <?php
 $O_recipe = $A_view["RECIPE"];
 ?>
-<section>
+<section class="apprecitations">
     <h2> Appréciations: </h2>
     <form method="POST" action="/appr/create">
         <label for="comment">Ajoutez un commentaire :</label>
