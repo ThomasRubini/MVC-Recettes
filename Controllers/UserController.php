@@ -130,30 +130,32 @@ final class UserController
 
         $O_user = UserModel::getByID($_SESSION["ID"]);
 
-        if (isset($_FILES["profilPicture"])) {
-            
+        if (isset($_FILES["profilPicture"]) && !empty($_FILES["profilPicture"]["name"])) {
             if ($_FILES['profilPicture']['error'] === UPLOAD_ERR_OK) {
                 $info = getimagesize($_FILES['profilPicture']['tmp_name']);
-                if ($info !== false && ($info[2] === IMAGETYPE_JPEG || $info[2] !== IMAGETYPE_PNG)) {
+                if ($info !== false && ($info[2] === IMAGETYPE_JPEG || $info[2] === IMAGETYPE_PNG)) {
                     $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
                     $O_user->updateProfilePic($fp);
+                } else {
+                    throw new HTTPSpecialCaseException(400, "Profile picture submitted is not jpeg/png");
                 }
+            } else {
+                throw new HTTPSpecialCaseException(400, "Profile picture upload error");
             }
             
         }
-        if (isset($_POST["email"])) {
+        if (isset($_POST["email"]) && !empty($S_email)) {
             $S_email = $_POST["email"];
-            if (!empty($S_email) && filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
+            if (filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
                 $O_user->S_EMAIL = $_POST["email"];
                 $O_user->update();
+            } else {
+                throw new HTTPSpecialCaseException(400, "Invalid email");
             }
         }
-        if (isset($_POST["username"])) {
-            $S_username = $_POST["username"];
-            if (!empty($S_username)) {
-                $O_user->S_USERNAME = $_POST["username"];
-                $O_user->update();
-            }
+        if (isset($_POST["username"]) && !empty($S_email)) {
+            $O_user->S_USERNAME = $_POST["username"];
+            $O_user->update();
         }
 
         header("Location: /user");
