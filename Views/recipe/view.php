@@ -37,10 +37,12 @@ $O_recipe = $A_view["RECIPE"];
 
         <p>By <?= $O_recipe->getAuthorOrAnon()->S_USERNAME ?> </p>
 
-        <section class="buttonsEditRecipe">
-            <a href="/recipe/edit/<?= $O_recipe->I_ID ?>">Modifier la recette</a>
-            <a href="/recipe/delete/<?= $O_recipe->I_ID ?>">Supprimer la recette</a>
-        </section>
+        <?php if ($A_view["ADMIN"] || $A_view["USER_ID"] === $O_recipe->I_AUTHOR_ID) { ?>
+            <section class="buttonsEditRecipe">
+                <a href="/recipe/edit/<?= $O_recipe->I_ID ?>">Modifier la recette</a>
+                <a href="/recipe/delete/<?= $O_recipe->I_ID ?>">Supprimer la recette</a>
+            </section>
+        <?php } ?>
 
         <?php
             View::show("appreciations/view_all", $A_view)
