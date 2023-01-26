@@ -35,14 +35,7 @@ $O_recipe = $A_view["RECIPE"];
             </ol>
         </section>
 
-        <?php
-        $O_author = $O_recipe->getAuthor();
-        if($O_author === null) {
-            echo '<p>By an anonymous user</p>';
-        } else {
-            echo '<p>By '.$O_author->S_USERNAME.' </p>';
-        }
-        ?>
+        <p>By <?= $O_recipe->getAuthorOrAnon()->S_USERNAME ?> </p>
 
         <section class="buttonsEditRecipe">
             <a href="/recipe/edit/<?= $O_recipe->I_ID ?>">Modifier la recette</a>
