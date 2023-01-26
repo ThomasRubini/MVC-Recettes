@@ -7,6 +7,10 @@ ini_set("session.cookie_lifetime", $__SESSION_TIMEOUT);
 final class UserController
 {
 
+    private static function currentDate(){
+        return date("Y-m-d H:i:s");
+    }
+
     public function loginAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
         if (Session::is_login()) {
@@ -53,6 +57,9 @@ final class UserController
             return header("Location: /user/login");
         }
 
+        $O_user->S_LAST_SEEN = self::currentDate();
+        $O_user->update();
+
         Session::set_login($O_user->I_ID);
         
         self::redirectToPreviousPage($A_postParams);
@@ -81,7 +88,7 @@ final class UserController
 
         $S_password_hash = password_hash($S_password, PASSWORD_DEFAULT);
         
-        $O_user = new UserModel($S_email, $S_username, $S_password_hash, null, date("Y-m-d"), 0, 0);
+        $O_user = UserModel::createFull($S_email, $S_username, $S_password_hash, self::currentDate(), self::currentDate(), 0, 0);
         $O_user->insert();
 
         Session::set_login($O_user->I_ID);
