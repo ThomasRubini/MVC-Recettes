@@ -194,7 +194,7 @@ final class RecipeModel
         from CTE
                 JOIN RECIPE
         WHERE CTE.NAME is not null
-        AND INSTR(RECIPE.NAME, CTE.NAME) > 0
+        AND RECIPE.NAME LIKE CONCAT('%', CTE.NAME, '%') > 0
         GROUP BY RECIPE.ID
         ORDER BY count(RECIPE.ID)
         LIMIT 10;
