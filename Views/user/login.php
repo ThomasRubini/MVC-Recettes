@@ -10,7 +10,7 @@
             <label for="email">Entrez votre email</label>
             <input type="email" name="email" id="email" placeholder="Email" required>
             <label for="password">Entrez votre mot de passe</label>
-            <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+            <input type="password" name="password" id="passzword" placeholder="Mot de passe" required>
             <input type="hidden" name="return_uri" value="<?= $A_view["return_uri"] ?>">
             <input type="submit" value="Envoyer">
         </form>
