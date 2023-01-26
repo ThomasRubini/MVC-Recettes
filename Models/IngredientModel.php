@@ -14,10 +14,10 @@ final class IngredientModel
         $this->S_QUANTITY = $S_QUANTITY;
     }
     
-    private function createFromRow($A_row, $I_id)
+    private static function createFromRow($A_row, $I_ingredient_id)
     {
         $O_ingr = new IngredientModel($A_row["RECIPE_ID"], $A_row["NAME"], $A_row["QUANTITY"]);
-        $O_ingr = $I_id;
+        $O_ingr->I_INGREDIENT_ID = $I_ingredient_id;
         return $O_ingr; 
     }
     
@@ -53,7 +53,7 @@ final class IngredientModel
     public static function getByRecipeAndName($I_recipe_id, $S_name){
         $S_name = strtolower($S_name);
         $O_model = Model::get();
-        $stmt = $O_model->prepare("SELECT * FROM INGREDIENT
+        $stmt = $O_model->prepare("SELECT *, INGREDIENT.ID AS INGREDIENT_ID FROM INGREDIENT
             JOIN RECIPE_INGREDIENT RI on INGREDIENT.ID = RI.INGREDIENT_ID
             WHERE NAME=:name");
         $stmt->bindParam("name", $S_name);
@@ -62,26 +62,26 @@ final class IngredientModel
         $row = $stmt->fetch();
         if ($row === false) return null;
 
-        return self::createFromRow($row, $I_recipe_id);
+        return self::createFromRow($row, $row["INGREDIENT_ID"]);
     }
 
     public static function searchByRecipe($I_recipe_id)
     {
         $O_model = Model::get();
         $stmt = $O_model->prepare("
-        SELECT * FROM INGREDIENT
+        SELECT *, INGREDIENT.ID AS INGREDIENT_ID FROM INGREDIENT
         JOIN RECIPE_INGREDIENT ON RECIPE_INGREDIENT.INGREDIENT_ID=INGREDIENT.ID
         WHERE RECIPE_INGREDIENT.RECIPE_ID = :recipe_id
         ");
         $stmt->bindParam("recipe_id", $I_recipe_id);
         $stmt->execute();
         
-        $A_users = array();
+        $A_ingr = array();
         foreach($stmt->fetchAll() as $row){
-            array_push($A_users, self::createFromRow($row, $row["ID"]));
+            array_push($A_ingr, self::createFromRow($row, $row["INGREDIENT_ID"]));
         }
 
-        return $A_users;
+        return $A_ingr;
     }
 
 
