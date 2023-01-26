@@ -432,21 +432,46 @@ main.editRecipe > form > input[type=submit] {
 footer {
     display: flex;
     flex-direction: column;
-    gap: var(--size-max);
+    gap: var(--size-xl);
     justify-content: center;
     align-items: center;
     height: 200px;
-    width: 100vw;
+    width: calc(100vw - 2* var(--size-max));
     background: var(--grey-dark);
     color: var(--secondary-pastel);
     font-size: var(--size-xl);
+    padding: var(--size-max);
+    padding-top: var(--size-xl);
+    padding-bottom: var(--size-xl);
+    text-align: center;
+}
+footer > h1 {
+    font-size: var(--size-xl);
+
+}
+footer > p {
+    font-size: var(--size-l);
 }
 
-.error_main {
+main.errorPage {
     align-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+}
+main.errorPage > h1 {
+    color: var(--principal-neutral);
+    font-size: var(--size-max);
+    font-weight: 800;
+}
+main.errorPage > h2 {
+    font-size: var(--size-xl);
+}
+main.errorPage > a {
+    color: black;
+    font-size: var(--size-l);
+    text-decoration: none;
+    margin-top: var(--size-m);
 }
