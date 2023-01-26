@@ -103,8 +103,6 @@ final class UserController
         header("Location: /");
     }
 
-    // Kept for compatibility purposes
-    // TODO do a redirect route once implemented
     public function viewAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         return self::defaultAction($A_urlParams, $A_postParams);
@@ -120,7 +118,6 @@ final class UserController
 
         $O_user = UserModel::getByID($_SESSION["ID"]);
         
-        //TODO Convert User into array
         return View::show("user/edit", array("USER" => $O_user));
     }
 
