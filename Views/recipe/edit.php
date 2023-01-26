@@ -110,7 +110,7 @@ if ($O_recipe === null) {
             <ol class="recipeInstructions">
                 <?php
                     if(!empty($S_recipe)) {
-                        $steps = explode("\n", $S_recipe);
+                        $steps = explode("\n\n", $S_recipe);
                         $i = 1;
                         foreach($steps as $step) {
                             echo '<li>
