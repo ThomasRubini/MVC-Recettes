@@ -497,6 +497,15 @@ main.editRecipe, main.manageUser {
     margin-left: auto;
     margin-right: auto;
 }
+main.editRecipe > a.backButton {
+    background: var(--principal-neutral);
+    color: var(--secondary-pastel);
+    text-decoration: none;
+    margin-top: var(--size-max);
+    padding: var(--size-m);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
 main.editRecipe > form {
     display: flex;
     flex-direction: column;

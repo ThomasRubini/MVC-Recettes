@@ -23,7 +23,8 @@ if ($O_recipe === null) {
 <main class="editRecipe">
     <?php
     if ($O_recipe !== null) { ?>
-        <a href="/recipe/view/<?= $O_recipe->I_ID ?>">Retour</a>
+        </br>
+        <a href="/recipe/view/<?= $O_recipe->I_ID ?>" class="backButton">← Retour</a>
     <?php } ?>
 
 
