@@ -490,7 +490,7 @@ main.recipeView > article > section.apprecitations > section > header > a {
 
 
 
-main.editRecipe {
+main.editRecipe, main.manageUser {
     min-width: 300px;
     width: 600px;
     max-width: 700px;
@@ -566,6 +566,41 @@ main.editRecipe > form > input[type=submit] {
     padding-right: var(--size-max);
     margin-top: var(--size-xl);
     width: fit-content;
+}
+
+main.manageUser {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-m);
+}
+main.manageUser > h1 {
+    margin-top: var(--size-l);
+    margin-bottom: var(--size-l);
+    border-bottom: var(--border) var(--principal-neutral);
+}
+main.manageUser > form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+main.manageUser > form > label {
+    display: none;
+}
+main.manageUser > form > input[type=text] {
+    background: var(--grey-light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding-left: var(--size-m);
+    font-size: var(--size-xl);
+    padding: var(--size-m);
+}
+main.manageUser > form > input[type=submit] {
+    color: var(--secondary-pastel);
+    background: var(--principal-neutral);
+    font-size: var(--size-xl);
+    padding: var(--size-m);
+    border: none;
+    border-radius: var(--border-radius);
 }
 
 
