@@ -187,6 +187,7 @@ body > main > article > section > ul > li::marker {
     flex-direction: column;
     color: black;
     text-decoration: none;
+    overflow: hidden;
 }
 .recipe > section {
     display: flex;
