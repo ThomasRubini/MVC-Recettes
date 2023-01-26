@@ -37,7 +37,12 @@ $O_recipe = $A_view["RECIPE"];
 
         <p>By <?= $O_recipe->getAuthorOrAnon()->S_USERNAME ?> </p>
 
-        <?php if ($A_view["ADMIN"] || $A_view["USER_ID"] === $O_recipe->I_AUTHOR_ID) { ?>
+        <?php
+        $B_can_interact = (
+            $A_view["ADMIN"] ||
+            ($A_view["USER_ID"] === $O_appr->I_AUTHOR_ID && $O_appr->I_AUTHOR_ID !== null)
+        );
+        if ($B_can_interact) { ?>
             <section class="buttonsEditRecipe">
                 <a href="/recipe/edit/<?= $O_recipe->I_ID ?>">Modifier la recette</a>
                 <a href="/recipe/delete/<?= $O_recipe->I_ID ?>">Supprimer la recette</a>
