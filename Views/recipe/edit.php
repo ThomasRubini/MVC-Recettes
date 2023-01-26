@@ -21,6 +21,11 @@ if ($O_recipe === null) {
 ?>
 
 <main>
+    <?php
+    if ($O_recipe !== null) { ?>
+        <a href="/recipe/view/<?= $O_recipe->I_ID ?>">Retour</a>
+    <?php } ?>
+
 
     <form action="<?= $A_view["POST_URI"] ?>" method="post">
 
