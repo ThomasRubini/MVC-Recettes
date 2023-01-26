@@ -1,7 +1,7 @@
 <?php
 $O_recipe = $A_view["RECIPE"];
 ?>
-<main class="hasAside>
+<main class="hasAside">
     <?php View::show("common/category_list") ?>
     <article>
         <img src="<?= $O_recipe->getImgLink() ?>" alt="Image d'illustration de la recette">
@@ -43,6 +43,11 @@ $O_recipe = $A_view["RECIPE"];
             echo '<p>By '.$O_author->S_USERNAME.' </p>';
         }
         ?>
+
+        <section class="buttonsEditRecipe">
+            <a href="/recipe/edit/<?= $O_recipe->I_ID ?>">Modifier la recette</a>
+            <a href="/recipe/delete/<?= $O_recipe->I_ID ?>">Supprimer la recette</a>
+        </section>
 
         <?php
             View::show("appreciations/view_all", $A_view)
