@@ -119,6 +119,15 @@ final class RecipeModel
         
         return round($avg*2)/2;
     }
+    
+    public function getAuthorOrAnon(){
+        $O_author = self::getAuthor();
+        if ($O_author === null) {
+            return UserModel::getAnonUser();
+        } else {
+            return $O_author;
+        }
+    }
 
     public function getAuthor(){
         if($this->O_AUTHOR === null){
