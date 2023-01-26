@@ -77,9 +77,9 @@ if ($O_recipe === null) {
                     foreach($A_ingredients as $O_ingredient) {
                         echo '<li>
                             <label for="recipeIngredient'.$i.'">Ingrédient&nbsp;:</label>
-                            <input type="text" name="recipeIngredient'.$i.'" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$O_ingredient["NAME"].'">
+                            <input type="text" name="recipeIngredient'.$i.'" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$O_ingredient->S_NAME.'">
                             <label for="recipeQuantity'.$i.'">Quantité&nbsp;:</label>
-                            <input type="text" name="recipeQuantity'.$i.'" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$O_ingredient["QUANTITY"].'">
+                            <input type="text" name="recipeQuantity'.$i.'" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$O_ingredient->S_QUANTITY.'">
                         </li>';
                         $i++;
                     }
