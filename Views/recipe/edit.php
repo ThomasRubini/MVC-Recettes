@@ -51,13 +51,13 @@ if ($O_recipe === null) {
 
             <legend>Particularités du plat&nbsp;:</legend>
             <input type="checkbox" name="part_Vegan" id="recipeVegan" <?= in_array("Végan", $A_parts)? "checked":"" ?> >
-            <label for="recipeVegan">Végan</label>
+            <label for="recipeVegan" class="labelParticularite">Végan</label>
             <input type="checkbox" name="part_LactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", $A_parts)? "checked":"" ?> >
-            <label for="recipeLactoseFree">Sans lactose</label>
+            <label for="recipeLactoseFree" class="labelParticularite">Sans lactose</label>
             <input type="checkbox" name="part_GlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", $A_parts)? "checked":"" ?> >
-            <label for="recipeGlutenFree">Sans gluten</label>
+            <label for="recipeGlutenFree" class="labelParticularite">Sans gluten</label>
 
-            </br>
+                </br>
 
             <label for="recipeTime">Temps de préparation&nbsp;:</label>
             <input type="number" name="recipeTime" id="recipeTime" min="5" max="1500" step="5" placeholder="Temps de préparation" value="<?= $I_time ?>" required>
@@ -145,7 +145,6 @@ if ($O_recipe === null) {
 </main>
 
 <script>
-console.log("a");
 numberOfIngredients = <?= $numberOfIngredients ?>;
 const buttonIngredientPlus = document.querySelector("#recipeButtonIngredientPlus");
 const buttonIngredientLess = document.querySelector("#recipeButtonIngrdientLess");

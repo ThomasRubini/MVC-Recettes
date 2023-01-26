@@ -393,6 +393,28 @@ main.editRecipe > form > textarea#recipeDescription {
 main.editRecipe > form > textarea#recipeDescription:focus-visible {
     outline: none;
 }
+main.editRecipe > form > section > h1 {
+    color: var(--principal-neutral);
+    font-size: var(--size-xl);
+    padding-bottom: var(--size-m);
+}
+main.editRecipe > form > section > :not(label.labelParticularite, h1) {
+    margin-left: var(--size-l);
+}
+main.editRecipe > form > section > button {
+    margin-top: var(--size-m);
+    width: var(--size-xl);
+    height: var(--size-xl);
+    background: var(--principal-neutral);
+    border-radius: var(--size-s);
+    box-shadow: var(--shadow);
+    border: none;
+    color: var(--secondary-pastel);
+}
+main.editRecipe > form > section > button:disabled {
+    background: var(--grey-light);
+    color: var(--grey-dark);
+}
 
 footer {
     display: flex;
