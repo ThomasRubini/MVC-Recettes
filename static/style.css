@@ -114,7 +114,7 @@ body > header > nav > ul > li:last-child > a > img {
     height: calc(var(--size-max) - var(--size-xl));
 }
 
-main:has(aside) {
+main.hasAside {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -140,7 +140,7 @@ aside ul {
     flex-direction: column;
     gap: var(--size-s);
 }
-aside li:has(h3)::marker{
+aside li.hasH3::marker{
     content: none;
 }
 aside li h3 {
@@ -206,7 +206,7 @@ main.registerPage {
     gap: var(--size-xl);
 }
 
-body:has(main.registerPage) > p {
+p.inMainRegisterPage {
     display: flex;
     justify-content: center;
     font-size: var(--size-xl);

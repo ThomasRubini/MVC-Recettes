@@ -1,6 +1,6 @@
 <?php
     if (isset($A_view["errmsg"])){
-        echo "<p> Error: {$A_view["errmsg"]} </p>";
+        echo "<p class=\"inMainRegisterPage\"> Error: {$A_view["errmsg"]} </p>";
     }
 ?>
 <main class="registerPage">

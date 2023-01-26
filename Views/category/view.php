@@ -9,7 +9,7 @@ $allCategory = array(
 );
 ?>
 
-<main>
+<main class="hasAside">
     <?= View::show("common/category_list"); ?>
     <article>
         <?php

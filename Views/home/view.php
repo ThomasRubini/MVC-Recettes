@@ -1,7 +1,7 @@
 <img src="static/img/bandeau.jpg" alt="Cook">
 
 
-<main>
+<main class="hasAside">
     <?php View::show("common/category_list") ?>
     <article>
         <section>
