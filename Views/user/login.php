@@ -5,7 +5,7 @@
 ?>
 <main class="registerPage">
     <section>
-        <form method="POST" action="/user/signin">
+        <form class="registerForm" method="POST" action="/user/signin">
             <h2>Connexion</h2>
             <label for="email">Entrez votre email</label>
             <input type="email" name="email" id="email" placeholder="Email" required>
@@ -17,7 +17,7 @@
     </section>
     <hr>
     <section>
-        <form method="POST" action="/user/signup" id="signin">
+        <form class="registerForm" method="POST" action="/user/signup" id="signin">
             <h2>Inscription</h2>
             <label for="email">Entrez votre email</label>
             <input type="email" name="email" id="email" placeholder="Email" required>

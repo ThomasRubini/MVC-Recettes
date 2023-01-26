@@ -219,7 +219,7 @@ main.registerPage > hr {
     border-radius: var(--border-radius);
 }
 
-main.registerPage > section > form {
+form.registerForm {
     display: flex;
     flex-direction: column;
     gap: var(--size-xl);
@@ -227,19 +227,19 @@ main.registerPage > section > form {
     align-items: center;
 }
 
-main.registerPage > section > form > h2 {
+form.registerForm > h2 {
     font-size: var(--size-xl);
 }
 
-main.registerPage > section > form > label {
+form.registerForm > label {
     display: none;
 }
 
-main.registerPage > section > form > input {
+form.registerForm > input {
     font-family: 'Nunito', 'Arial';
 }
 
-main.registerPage > section > form > input[type=text], input[type=email], input[type=password] {
+form.registerForm > :is(input[type=text], input[type=email], input[type=password]) {
     height: var(--size-xl);
     border-radius: var(--border-radius);
     padding: var(--size-l);
@@ -248,12 +248,12 @@ main.registerPage > section > form > input[type=text], input[type=email], input[
     font-size: var(--size-xl);
 }
 
-main.registerPage > section > form > :is(input[type=text], input[type=email], input[type=password])::placeholder {
+form.registerForm > :is(input[type=text], input[type=email], input[type=password])::placeholder {
     color: var(--grey-dark);
 }
 
 
-main.registerPage > section > form > input[type=submit] {
+form.registerForm > input[type=submit] {
     background: var(--principal-neutral);
     border: none;
     border-radius: var(--border-radius);
