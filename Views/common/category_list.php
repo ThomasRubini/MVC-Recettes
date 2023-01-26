@@ -11,7 +11,7 @@ $allCategory = array(
         <li class="hasH3"><h3>Catégories :</h3></li>
         <?php
         foreach($allCategory as $category => $category_path) {
-            echo '<li><a href="/category/' . $category_path . '">'. $category . '</a></li>';
+            echo '<li><a href="/category#' . $category_path . '">'. $category . '</a></li>';
         }?>
     </ul>
 </aside>
