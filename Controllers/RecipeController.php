@@ -17,7 +17,7 @@ final class RecipeController
 
         View::show("recipe/view", array(
             "ADMIN" => Session::is_admin(),
-            "USER_ID" => $_SESSION["ID"],
+            "USER_ID" => Session::is_login() ? $_SESSION["ID"] : null,
             "RECIPE" => $O_recipe
         ));
     }
