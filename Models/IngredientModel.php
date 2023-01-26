@@ -55,7 +55,8 @@ final class IngredientModel
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT *, INGREDIENT.ID AS INGREDIENT_ID FROM INGREDIENT
             JOIN RECIPE_INGREDIENT RI on INGREDIENT.ID = RI.INGREDIENT_ID
-            WHERE NAME=:name");
+            RECIPE.ID=:recipe_id AND WHERE NAME=:name");
+        $stmt->bindParam("recipe_id", $I_recipe_id);
         $stmt->bindParam("name", $S_name);
         $stmt->execute();
 
@@ -83,6 +84,4 @@ final class IngredientModel
 
         return $A_ingr;
     }
-
-
 }
