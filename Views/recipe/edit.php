@@ -77,9 +77,9 @@ if ($O_recipe === null) {
                     foreach($A_ingredients as $O_ingredient) {
                         echo '<li>
                             <label for="recipeIngredient'.$i.'">Ingrédient&nbsp;:</label>
-                            <input type="text" name="recipeIngredient'.$i.'" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$O_ingredient->S_NAME.'">
+                            <input type="text" name="recipeIngredientNames[]" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$O_ingredient->S_NAME.'">
                             <label for="recipeQuantity'.$i.'">Quantité&nbsp;:</label>
-                            <input type="text" name="recipeQuantity'.$i.'" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$O_ingredient->S_QUANTITY.'">
+                            <input type="text" name="recipeIngredientQuantities[]" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$O_ingredient->S_QUANTITY.'">
                         </li>';
                         $i++;
                     }
@@ -89,9 +89,9 @@ if ($O_recipe === null) {
                 } else {
                     echo '<li>
                         <label for="recipeIngredient1">Ingrédient&nbsp;:</label>
-                        <input type="text" name="recipeIngredient1" id="recipeIngredient1" placeholder="Farine">
+                        <input type="text" name="recipeIngredientNames[]" id="recipeIngredient1" placeholder="Farine">
                         <label for="recipeQuantity1">Quantité&nbsp;:</label>
-                        <input type="text" name="recipeQuantity1" id="recipeIngredient1" placeholder="500g">
+                        <input type="text" name="recipeIngredientQuantities[]" id="recipeIngredient1" placeholder="500g">
                         </li>
                     </ul>
                     <button type="button" disabled="disabled" id="recipeButtonIngrdientLess">-</button>';
@@ -112,16 +112,17 @@ if ($O_recipe === null) {
                     if (count($A_steps) === 0) {
                         echo '<li>
                         <label for="recipeInstruction1">Étape 1&nbsp;:</label>
-                        <input type="text" name="recipeInstruction1" id="recipeInstruction1" placeholder="Battre les oeufs et la farine dans un grand saladier.">
+                        <input type="text" name="recipeInstructions[]" id="recipeInstruction1" placeholder="Battre les oeufs et la farine dans un grand saladier.">
                         </li>
                         </ol>
                         <button type="button" disabled="disabled" id="recipeButtonInstructionLess">-</button>';
                         $numberOfInstructions = 1;
                     } else {
+                        $i = 1;
                         foreach($A_steps as $S_step) {
                             echo '<li>
                                 <label for="recipeInstruction'.$i.'">Étape '.$i.'&nbsp;:</label>
-                                <input type="text" name="recipeInstruction'.$i.'" id="recipeInstruction'.$i.'" placeholder="Battre les oeufs et la farine dans un grand saladier." value="'.$S_step.'">
+                                <input type="text" name="recipeInstructions[]" id="recipeInstruction'.$i.'" placeholder="Battre les oeufs et la farine dans un grand saladier." value="'.$S_step.'">
                             </li>';
                             $i++;
                         }
@@ -157,7 +158,6 @@ buttonIngredientPlus.addEventListener('click', () => {
         if(nextArray[e].tagName == "LABEL") {
             nextArray[e].setAttribute("for", "recipeIngredient"+numberOfIngredients);
         } else {
-            nextArray[e].setAttribute("name", "recipeIngredient"+numberOfIngredients);
             nextArray[e].setAttribute("id", "recipeIngredient"+numberOfIngredients);
             nextArray[e].value = "";
         }
@@ -191,11 +191,10 @@ buttonInstructionPlus.addEventListener('click', () => {
     for(let e in nextArray) {
         console.log(nextArray[e]);
         if(nextArray[e].tagName == "LABEL") {
-            nextArray[e].setAttribute("for", "recipeIngredient"+numberOfInstructions);
+            nextArray[e].setAttribute("for", "recipeInstruction"+numberOfInstructions);
             nextArray[e].textContent = "Étape "+numberOfInstructions+"\u00A0:";
         } else {
-            nextArray[e].setAttribute("name", "recipeIngredient"+numberOfInstructions);
-            nextArray[e].setAttribute("id", "recipeIngredient"+numberOfInstructions);
+            nextArray[e].setAttribute("id", "recipeInstruction"+numberOfInstructions);
             nextArray[e].value = "";
         }
         next.appendChild(nextArray[e]);
