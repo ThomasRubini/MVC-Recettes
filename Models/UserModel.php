@@ -45,10 +45,11 @@ final class UserModel extends UserSessionModel
     
     public function insert(){
         $O_model = Model::get();
-        $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, USERNAME, PASS_HASH, FIRST_SEEN) VALUES(:email, :username, :password_hash, :first_seen)");
+        $stmt = $O_model->prepare("INSERT INTO USER (EMAIL, USERNAME, PASS_HASH, FIRST_SEEN, LAST_SEEN) VALUES(:email, :username, :password_hash, :first_seen, :last_seen)");
         $stmt->bindParam("email", $this->S_EMAIL);
         $stmt->bindParam("username", $this->S_USERNAME);
         $stmt->bindParam("password_hash", $this->S_PASSWORD_HASH);
+        $stmt->bindParam("last_seen", $this->S_LAST_SEEN);
         $stmt->bindParam("first_seen", $this->S_FIRST_SEEN);
         $stmt->execute();
         $this->I_ID = Model::get()->lastInsertId();

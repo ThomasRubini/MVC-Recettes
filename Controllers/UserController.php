@@ -7,6 +7,10 @@ ini_set("session.cookie_lifetime", $__SESSION_TIMEOUT);
 final class UserController
 {
 
+    private static function currentDate(){
+        return date("Y-m-d H:i:s");
+    }
+
     public function loginAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
         if (Session::is_login()) {
@@ -52,6 +56,9 @@ final class UserController
             $_SESSION["errmsg"] = $S_errmsg;
             return header("Location: /user/login");
         }
+
+        $O_user->S_LAST_SEEN = self::currentDate();
+        $O_user->update();
 
         Session::set_login($O_user->I_ID);
         
