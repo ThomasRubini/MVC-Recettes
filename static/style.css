@@ -353,6 +353,9 @@ main.search > article > section {
 
 main.recipeView > article {
     max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-xl);
 }
 main.recipeView > article > img {
     min-width: 100%;
@@ -362,6 +365,37 @@ main.recipeView > article > img {
     object-position: center;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
+}
+main.recipeView > article > section.infosRecette > header {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    border-bottom: var(--border) var(--principal-neutral);
+    justify-content: space-between;
+    margin-bottom: var(--size-l);
+    align-items: baseline;
+}
+main.recipeView > article > section.infosRecette > header > h1 {
+    font-size: var(--size-max);
+}
+main.recipeView > article > section.infosRecette > header > p {
+    font-size: var(--size-l);
+}
+main.recipeView > article > section > h2 {
+    font-size: var(--size-xl);
+    border-bottom: var(--border) var(--principal-neutral);
+    margin-bottom: var(--size-l);
+}
+main.recipeView > article > section > :is(ul, ol) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-s);
+}
+main.recipeView > article > section > :is(ul, ol) > li {
+    margin-left: var(--size-l);
+}
+main.recipeView > article > section > ul > li::marker {
+    content: "- ";
 }
 
 main.editRecipe {
