@@ -219,6 +219,8 @@ final class RecipeController
         }
 
         $O_recipe->delete();
+
+        header("Location: /");
     }
 
     public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
