@@ -206,7 +206,7 @@ final class RecipeController
     {
         Session::login_or_die();
 
-        $O_recipe = RecipeModel::getByID(Utils::intOrDie(Utils::getOrDie($A_postParams, "recipe_id")));
+        $O_recipe = RecipeModel::getByID(Utils::intOrDie(Utils::getOrDie($A_urlParams, 0)));
         
         if ($O_recipe->I_AUTHOR_ID !== $_SESSION["ID"]) {
             if(!Session::is_admin()){
