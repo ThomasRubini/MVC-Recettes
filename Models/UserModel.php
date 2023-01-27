@@ -57,7 +57,7 @@ final class UserModel extends UserSessionModel
     public function update(){
         $O_model = Model::get();
         $stmt = $O_model->prepare("UPDATE USER SET EMAIL=:email, USERNAME=:username, PASS_HASH=:password_hash, FIRST_SEEN=:first_seen, LAST_SEEN=:last_seen, ADMIN=:admin, DISABLED=:disabled WHERE ID=:id");
-        $stmt->bindParam("id", $this->I_ID);
+        $stmt->bindParam("id", $this->I_ID, PDO::PARAM_INT);
         $stmt->bindParam("email", $this->S_EMAIL);
         $stmt->bindParam("username", $this->S_USERNAME);
         $stmt->bindParam("password_hash", $this->S_PASSWORD_HASH);
@@ -98,7 +98,7 @@ final class UserModel extends UserSessionModel
     public static function getByID($I_id){
         $O_model = Model::get();
         $stmt = $O_model->prepare("SELECT * FROM USER WHERE ID=:id");
-        $stmt->bindParam("id", $I_id);
+        $stmt->bindParam("id", $I_id, PDO::PARAM_INT);
         $stmt->execute();
         
         $row = $stmt->fetch();
