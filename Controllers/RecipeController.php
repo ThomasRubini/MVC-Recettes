@@ -204,9 +204,13 @@ final class RecipeController
 
     public function deleteAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
+        if(count($A_urlParams)!=1){
+            throw new HTTPSpecialCaseException(404);
+        }
+
         Session::login_or_die();
 
-        $O_recipe = RecipeModel::getByID(Utils::intOrDie(Utils::getOrDie($A_urlParams, 0)));
+        $O_recipe = RecipeModel::getByID(Utils::intOrDie($A_urlParams[0]));
         
         if ($O_recipe->I_AUTHOR_ID !== $_SESSION["ID"]) {
             if(!Session::is_admin()){
@@ -215,6 +219,8 @@ final class RecipeController
         }
 
         $O_recipe->delete();
+
+        header("Location: /");
     }
 
     public function searchAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
