@@ -1,11 +1,10 @@
 <?php
 $allCategory = array(
-    "Type de cuisson" => "type_de_cuisson",
-    "Temps de préparation" => "temps_de_preparation",
-    "Difficulté" => "difficulte",
     "Végan" => "vegan",
-    "Sans gluten" => "sans_gluten",
-    "Sans lactose" => "sans_lactose");
+    "Végetérien" => "vegetarian",
+    "Sans gluten" => "glutenLess",
+    "Sans lactose" => "lactoseLess",
+    "Non Catégorisé" => "uncategorized");
 ?>
 
 <aside>

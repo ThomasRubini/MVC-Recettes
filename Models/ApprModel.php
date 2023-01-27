@@ -18,7 +18,7 @@ final class ApprModel {
         $this->I_AUTHOR_ID = $I_AUTHOR_ID;
         $this->I_RECIPE_ID = $I_RECIPE_ID;
     }
-    private function createFromRow($A_row,$I_id){
+    private static function createFromRow($A_row,$I_id){
         $O_appr = new ApprModel($A_row["COMMENT"], $A_row["NOTE"], $A_row["DATE"], $A_row["AUTHOR_ID"], $A_row["RECIPE_ID"]);
         $O_appr->I_ID = $I_id;
         return $O_appr;
@@ -52,6 +52,15 @@ final class ApprModel {
         $stmt = $O_model->prepare("DELETE FROM APPRECIATION WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);
         $stmt->execute();
+    }
+    
+    public function getAuthorOrAnon(){
+        $O_author = self::getAuthor();
+        if ($O_author === null) {
+            return UserModel::getAnonUser();
+        } else {
+            return $O_author;
+        }
     }
 
     public function getAuthor(){

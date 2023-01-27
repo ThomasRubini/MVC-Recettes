@@ -52,13 +52,18 @@ final class ManageUserController
         if (isset($A_postParams["enable"])) {
             $O_user->B_DISABLED = 0;
             $O_user->update();
-        }else if (isset($A_postParams["disable"])) {
+        } else if (isset($A_postParams["disable"])) {
             $O_user->B_DISABLED = 1;
             $O_user->update();
-        }else if (isset($A_postParams["delete"])) {
-            $O_user->delete();
-        }
-
+        } else if (isset($A_postParams["op"])) {
+            $O_user->B_ADMIN = 1;
+            $O_user->update();
+        } else if (isset($A_postParams["deop"])) {
+            $O_user->B_ADMIN = 0;
+            $O_user->update();
+        } else if (isset($A_postParams["delete"])) {
+                $O_user->delete();
+            }
         header("Location: ".$_SERVER['HTTP_REFERER']);
     }
 

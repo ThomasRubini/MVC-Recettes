@@ -6,7 +6,7 @@ final class RecipeModel
     public $S_NAME = null;
     public $I_TIME = null;
     public $S_DESCR = null;
-    public $S_RECIPE = null;
+    public $S_INSTRUCTIONS = null;
     public $I_DIFFICULTY_ID = null;
     public $I_AUTHOR_ID = null;
     
@@ -22,13 +22,13 @@ final class RecipeModel
         return new RecipeModel();
     }
 
-    public static function createFull($S_NAME, $I_TIME, $S_DESCR, $S_RECIPE, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
+    public static function createFull($S_NAME, $I_TIME, $S_DESCR, $S_INSTRUCTIONS, $I_DIFFICULTY_ID, $I_AUTHOR_ID)
     {
         $O_recipe = new RecipeModel();
         $O_recipe->S_NAME = $S_NAME;
         $O_recipe->I_TIME = $I_TIME;
         $O_recipe->S_DESCR = $S_DESCR;
-        $O_recipe->S_RECIPE = $S_RECIPE;
+        $O_recipe->S_INSTRUCTIONS = $S_INSTRUCTIONS;
         $O_recipe->I_DIFFICULTY_ID = $I_DIFFICULTY_ID;
         $O_recipe->I_AUTHOR_ID = $I_AUTHOR_ID;
         return $O_recipe;
@@ -37,29 +37,39 @@ final class RecipeModel
     public function insert()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("INSERT INTO RECIPE (NAME, TIME, DESCR, RECIPE ,DIFFICULTY_ID, AUTHOR_ID) VALUES(:name, :time, :descr, :recipe, :difficulty_id, :author_id)");
+        $stmt = $O_model->prepare("INSERT INTO RECIPE (NAME, TIME, DESCR, INSTRUCTIONS ,DIFFICULTY_ID, AUTHOR_ID) VALUES(:name, :time, :descr, :instructions, :difficulty_id, :author_id)");
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("descr", $this->S_DESCR);
-        $stmt->bindParam("recipe", $this->S_RECIPE);
+        $stmt->bindParam("instructions", $this->S_INSTRUCTIONS);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
         $stmt->execute();
         $this->I_ID = Model::get()->lastInsertId();
     }
+
     public function update()
     {
         $O_model = Model::get();
-        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, DESCR=:descr, RECIPE=:recipe, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
+        $stmt = $O_model->prepare("UPDATE RECIPE SET NAME=:name, TIME=:time, DESCR=:descr, INSTRUCTIONS=:instructions, DIFFICULTY_ID=:difficulty_id, AUTHOR_ID=:author_id WHERE ID=:id");
         $stmt->bindParam("id", $this->I_ID);
         $stmt->bindParam("name", $this->S_NAME);
         $stmt->bindParam("time", $this->I_TIME);
         $stmt->bindParam("descr", $this->S_DESCR);
-        $stmt->bindParam("recipe", $this->S_RECIPE);
+        $stmt->bindParam("instructions", $this->S_INSTRUCTIONS);
         $stmt->bindParam("difficulty_id", $this->I_DIFFICULTY_ID);
         $stmt->bindParam("author_id", $this->I_AUTHOR_ID);
         $stmt->execute();
     }
+
+    public function updateImg($img_fp){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("UPDATE RECIPE SET IMG=:img WHERE ID=:id");
+        $stmt->bindParam("id", $this->I_ID);
+        $stmt->bindParam("img", $img_fp, PDO::PARAM_LOB);
+        $stmt->execute();
+    }
+
     public function delete(){
         $O_model = Model::get();
         $stmt = $O_model->prepare("DELETE FROM RECIPE WHERE ID=:id");
@@ -68,7 +78,7 @@ final class RecipeModel
     }
 
     private static function createFromRow($A_row, $I_ID){
-        $O_recipe = RecipeModel::createFull($A_row["NAME"], $A_row["TIME"], $A_row["DESCR"], $A_row["RECIPE"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
+        $O_recipe = RecipeModel::createFull($A_row["NAME"], $A_row["TIME"], $A_row["DESCR"], $A_row["INSTRUCTIONS"], $A_row["DIFFICULTY_ID"], $A_row["AUTHOR_ID"]);
         $O_recipe->I_ID = $I_ID;
         return $O_recipe;
     }
@@ -119,6 +129,15 @@ final class RecipeModel
         
         return round($avg*2)/2;
     }
+    
+    public function getAuthorOrAnon(){
+        $O_author = self::getAuthor();
+        if ($O_author === null) {
+            return UserModel::getAnonUser();
+        } else {
+            return $O_author;
+        }
+    }
 
     public function getAuthor(){
         if($this->O_AUTHOR === null){
@@ -147,7 +166,10 @@ final class RecipeModel
         return $this->A_APPRS;
     }
 
-    //TODO: return array object
+    public function getSplitInstructions(){
+        return explode("\n\n", str_replace("\r", "", $this->S_INSTRUCTIONS));
+    }
+
     public static function searchRecipesByName($S_query)
     {
 
@@ -171,13 +193,26 @@ final class RecipeModel
         from CTE
                 JOIN RECIPE
         WHERE CTE.NAME is not null
-        AND INSTR(RECIPE.NAME, CTE.NAME) > 0
+        AND RECIPE.NAME LIKE CONCAT('%', CTE.NAME, '%') > 0
         GROUP BY RECIPE.ID
         ORDER BY count(RECIPE.ID)
         LIMIT 10;
         ");
 
         $stmt->bindParam("query", $S_query);
+        $stmt->execute();
+        
+        $A_recipes = array();
+        foreach($stmt->fetchAll() as $row){
+            array_push($A_recipes, self::createFromRow($row, $row["ID"]));
+        }
+
+        return $A_recipes;
+    }
+
+    public static function getUncategorizedRecipes(){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT * FROM RECIPE WHERE ID NOT IN (SELECT RECIPE_ID FROM RECIPE_PARTICULARITY)");
         $stmt->execute();
         
         $A_recipes = array();

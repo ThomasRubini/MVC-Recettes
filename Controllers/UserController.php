@@ -7,6 +7,10 @@ ini_set("session.cookie_lifetime", $__SESSION_TIMEOUT);
 final class UserController
 {
 
+    private static function currentDate(){
+        return date("Y-m-d H:i:s");
+    }
+
     public function loginAction(Array $A_urlParams = null, Array $A_postParams = null, Array $A_getParams = null)
     {
         if (Session::is_login()) {
@@ -27,7 +31,7 @@ final class UserController
     }
 
     private function redirectToPreviousPage(Array $A_postParams = null){
-        if (isset($A_postParams["return_uri"])) {
+        if (isset($A_postParams["return_uri"]) && !empty($A_postParams["return_uri"])) {
             header("Location: ".$A_postParams["return_uri"]);
         } else {
             header("Location: /");
@@ -52,6 +56,9 @@ final class UserController
             $_SESSION["errmsg"] = $S_errmsg;
             return header("Location: /user/login");
         }
+
+        $O_user->S_LAST_SEEN = self::currentDate();
+        $O_user->update();
 
         Session::set_login($O_user->I_ID);
         
@@ -81,7 +88,7 @@ final class UserController
 
         $S_password_hash = password_hash($S_password, PASSWORD_DEFAULT);
         
-        $O_user = new UserModel($S_email, $S_username, $S_password_hash, null, date("Y-m-d"), 0, 0);
+        $O_user = UserModel::createFull($S_email, $S_username, $S_password_hash, self::currentDate(), self::currentDate(), 0, 0);
         $O_user->insert();
 
         Session::set_login($O_user->I_ID);
@@ -96,8 +103,6 @@ final class UserController
         header("Location: /");
     }
 
-    // Kept for compatibility purposes
-    // TODO do a redirect route once implemented
     public function viewAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         return self::defaultAction($A_urlParams, $A_postParams);
@@ -113,7 +118,6 @@ final class UserController
 
         $O_user = UserModel::getByID($_SESSION["ID"]);
         
-        //TODO Convert User into array
         return View::show("user/edit", array("USER" => $O_user));
     }
 
@@ -123,30 +127,23 @@ final class UserController
 
         $O_user = UserModel::getByID($_SESSION["ID"]);
 
-        if (isset($_FILES["profilPicture"])) {
-            
-            if ($_FILES['profilPicture']['error'] === UPLOAD_ERR_OK) {
-                $info = getimagesize($_FILES['profilPicture']['tmp_name']);
-                if ($info !== false && ($info[2] === IMAGETYPE_JPEG || $info[2] !== IMAGETYPE_PNG)) {
-                    $fp = fopen($_FILES['profilPicture']['tmp_name'], 'rb');
-                    $O_user->updateProfilePic($fp);
-                }
-            }
-            
+        $fp = Utils::tryProcessImg("profilPicture");
+        if($fp !== null) {
+            $O_user->updateProfilePic($fp);
         }
-        if (isset($_POST["email"])) {
+
+        if (isset($_POST["email"]) && !empty($S_email)) {
             $S_email = $_POST["email"];
-            if (!empty($S_email) && filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
+            if (filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
                 $O_user->S_EMAIL = $_POST["email"];
                 $O_user->update();
+            } else {
+                throw new HTTPSpecialCaseException(400, "Invalid email");
             }
         }
-        if (isset($_POST["username"])) {
-            $S_username = $_POST["username"];
-            if (!empty($S_username)) {
-                $O_user->S_USERNAME = $_POST["username"];
-                $O_user->update();
-            }
+        if (isset($_POST["username"]) && !empty($S_email)) {
+            $O_user->S_USERNAME = $_POST["username"];
+            $O_user->update();
         }
 
         header("Location: /user");
@@ -191,7 +188,7 @@ final class UserController
         $O_user = UserModel::getByID($A_urlParams[0]);
         
         if (isset($O_user)) {
-            $S_pfp = $O_user->getProfilePic();
+            $S_pfp = $O_user->queryProfilePic();
             if($S_pfp !== null) {
                 header("Content-Type: image");
                 echo $S_pfp;

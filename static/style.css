@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800&display=swap');
 
 :root {
+    scroll-behavior: smooth;
     font-family: 'Nunito', 'Arial';
     /* vars */
     /*--principal-pastel:     hsl(341, 100%, 95%);*/
@@ -187,6 +188,7 @@ body > main > article > section > ul > li::marker {
     flex-direction: column;
     color: black;
     text-decoration: none;
+    overflow: hidden;
 }
 .recipe > section {
     display: flex;
@@ -302,7 +304,10 @@ main.userView > form > label {
     font-size: var(--size-l);
 }
 
-:is(main.userView > form, main.search > article > form) > :is(input[type=text], input[type=email]) {
+:is(main.userView > form,
+    main.search > article > form)
+> :is(input[type=text],
+      input[type=email]) {
     height: var(--size-l);
     border-radius: var(--border-radius);
     padding: var(--size-l);
@@ -311,7 +316,10 @@ main.userView > form > label {
     font-size: var(--size-l);
 }
 
-:is(main.userView > form, main.search > article > form) > input[type=submit] {
+:is(main.userView > form,
+    main.search > article > form,
+    main.recipeView > article > section > form)
+> input[type=submit] {
     background: var(--principal-neutral);
     border: none;
     border-radius: var(--border-radius);
@@ -345,24 +353,355 @@ main.search > article > section {
     gap: var(--size-xl);
 }
 
+main.recipeView > article {
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-xl);
+}
+main.recipeView > article > img {
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 150px;
+    object-fit: none;
+    object-position: center;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+main.recipeView > article > section.infosRecette > header {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    border-bottom: var(--border) var(--principal-neutral);
+    justify-content: space-between;
+    margin-bottom: var(--size-l);
+    align-items: baseline;
+}
+main.recipeView > article > section.infosRecette > header > h1 {
+    font-size: var(--size-max);
+}
+main.recipeView > article > section.infosRecette > header > p {
+    font-size: var(--size-l);
+}
+main.recipeView > article > section > h2 {
+    font-size: var(--size-xl);
+    border-bottom: var(--border) var(--principal-neutral);
+    margin-bottom: var(--size-l);
+}
+main.recipeView > article > section > :is(ul, ol) {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-s);
+}
+main.recipeView > article > section > :is(ul, ol) > li {
+    margin-left: var(--size-l);
+}
+main.recipeView > article > section > ul > li::marker {
+    content: "- ";
+}
+main.recipeView > article > p {
+    color: var(--grey-dark);
+}
+main.recipeView > article > section.buttonsEditRecipe {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-xl);
+}
+main.recipeView > article > section.buttonsEditRecipe > a {
+    display: flex;
+    align-items: center;
+    font-size: var(--size-l);
+    color: var(--secondary-pastel);
+    background: var(--principal-neutral);
+    height: calc(1.5 * var(--size-xl));
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    padding-left: var(--size-m);
+    padding-right: var(--size-m);
+    box-shadow: var(--shadow);
+}
+main.recipeView > article > section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-l);
+}
+main.recipeView > article > section > form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-s);
+}
+main.recipeView > article > section > form > label {
+    display: none;
+}
+main.recipeView > article > section > form > label:first-child {
+    display: block;
+    font-size: var(--size-xl);
+}
+main.recipeView > article > section > form > textarea {
+    font-family: 'Nunito', 'Arial';
+    background: var(--grey-light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--size-m);
+    font-size: var(--size-l);
+}
+main.recipeView > article > section > form > textarea:focus-visible {
+    outline: none;
+}
+main.recipeView > article > section > form > section.appreciationNoteValue {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-s);
+}
+main.recipeView > article > section.apprecitations > section {
+    background: var(--secondary-pastel);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+main.recipeView > article > section.apprecitations > section > header {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-m);
+    background: var(--grey-light);
+    padding: var(--size-m);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    align-items: baseline;
+    justify-content: space-between;
+}
+main.recipeView > article > section.apprecitations > section > :not(header) {
+    padding: var(--size-m);
+}
+main.recipeView > article > section.apprecitations > section > header > img {
+    width: var(--size-max);
+    height: var(--size-max);
+    border-radius: var(--size-m);
+}
+main.recipeView > article > section.apprecitations > section > header > a {
+    background: var(--principal-neutral);
+    border-radius: var(--border-radius);
+    color: var(--secondary-pastel);
+    text-decoration: none;
+    padding: var(--size-m);
+}
+
+
+
+main.editRecipe, main.manageUser {
+    min-width: 300px;
+    width: 600px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+main.editRecipe > a.backButton {
+    background: var(--principal-neutral);
+    color: var(--secondary-pastel);
+    text-decoration: none;
+    margin-top: var(--size-max);
+    padding: var(--size-m);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+main.editRecipe > form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-l);
+    margin-top: var(--size-xl);
+    margin-bottom: var(--size-xl);
+}
+main.editRecipe > form > label {
+    display: none;
+}
+main.editRecipe > form > label:first-child {
+    display: block;
+}
+main.editRecipe > form > :is(input, textarea) {
+    font-family: 'Nunito', 'Arial';
+}
+main.editRecipe > form > input#recipeName {
+    font-weight: 600;
+    font-size: var(--size-xl);
+    background: var(--secondary-pastel);
+    border: none;
+    border-bottom: var(--border) var(--principal-neutral);
+    padding-bottom: var(--size-m);
+    padding-left: var(--size-m);
+}
+main.editRecipe > form > input#recipeName:focus-visible {
+    outline: none;
+}
+main.editRecipe > form > textarea#recipeDescription {
+    font-size: var(--size-l);
+    border: none;
+    background: var(--secondary-pastel);
+}
+main.editRecipe > form > textarea#recipeDescription:focus-visible {
+    outline: none;
+}
+main.editRecipe > form > section > h1 {
+    color: var(--principal-neutral);
+    font-size: var(--size-xl);
+    padding-bottom: var(--size-m);
+}
+main.editRecipe > form > section > :not(label.labelParticularite, h1) {
+    margin-left: var(--size-l);
+}
+main.editRecipe > form > section > button {
+    margin-top: var(--size-m);
+    width: var(--size-xl);
+    height: var(--size-xl);
+    background: var(--principal-neutral);
+    border-radius: var(--size-s);
+    box-shadow: var(--shadow);
+    border: none;
+    color: var(--secondary-pastel);
+}
+main.editRecipe > form > section > button:disabled {
+    background: var(--grey-light);
+    color: var(--grey-dark);
+}
+main.editRecipe > form > input[type=submit] {
+    color: var(--secondary-pastel);
+    font-size: var(--size-xl);
+    background: var(--principal-neutral);
+    height: var(--size-max);
+    border-radius: var(--border-radius);
+    border: none;
+    padding-left: var(--size-max);
+    padding-right: var(--size-max);
+    margin-top: var(--size-xl);
+    width: fit-content;
+}
+
+main.manageUser {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-m);
+}
+main.manageUser > h1 {
+    margin-top: var(--size-l);
+    margin-bottom: var(--size-l);
+    border-bottom: var(--border) var(--principal-neutral);
+}
+main.manageUser > form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+main.manageUser > form > label {
+    display: none;
+}
+main.manageUser > form > input[type=text] {
+    background: var(--grey-light);
+    border: none;
+    border-radius: var(--border-radius);
+    padding-left: var(--size-m);
+    font-size: var(--size-xl);
+    padding: var(--size-m);
+}
+main.manageUser > form > input[type=submit] {
+    color: var(--secondary-pastel);
+    background: var(--principal-neutral);
+    font-size: var(--size-xl);
+    padding: var(--size-m);
+    border: none;
+    border-radius: var(--border-radius);
+}
+main.manageUser > section > ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--size-xl);
+}
+main.manageUser > section > ul > li::marker {
+    content: none;
+}
+main.manageUser > section > ul > li {
+    background: var(--secondary-pastel);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    width: 100%;
+}
+main.manageUser > section > ul > li > section {
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-m);
+    padding: var(--size-m);
+    background: var(--grey-light);
+    border-radius: var(--border-radius);
+    align-items: center;
+}
+main.manageUser > section > ul > li > section > img {
+    width: var(--size-max);
+    height: var(--size-max);
+    border-radius: var(--size-m);
+}
+main.manageUser > section > ul > li > form {
+    padding: var(--size-m);
+    display: flex;
+    flex-direction: row;
+    gap: var(--size-m);
+    justify-content: space-evenly;
+}
+main.manageUser > section > ul > li > form > input {
+    background: var(--principal-neutral);
+    border-radius: var(--border-radius);
+    border: none;
+    color: var(--secondary-pastel);
+    padding-left: var(--size-m);
+    padding-right: var(--size-m);
+    padding-top: var(--size-s);
+    padding-bottom: var(--size-s);
+}
+
 footer {
     display: flex;
     flex-direction: column;
-    gap: var(--size-max);
+    gap: var(--size-xl);
     justify-content: center;
     align-items: center;
     height: 200px;
-    width: 100vw;
+    width: calc(100vw - 2* var(--size-max));
     background: var(--grey-dark);
     color: var(--secondary-pastel);
     font-size: var(--size-xl);
+    padding: var(--size-max);
+    padding-top: var(--size-xl);
+    padding-bottom: var(--size-xl);
+    text-align: center;
+}
+footer > h1 {
+    font-size: var(--size-xl);
+
+}
+footer > p {
+    font-size: var(--size-l);
 }
 
-.error_main {
+main.errorPage {
     align-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+}
+main.errorPage > h1 {
+    color: var(--principal-neutral);
+    font-size: var(--size-max);
+    font-weight: 800;
+}
+main.errorPage > h2 {
+    font-size: var(--size-xl);
+}
+main.errorPage > a {
+    color: black;
+    font-size: var(--size-l);
+    text-decoration: none;
+    margin-top: var(--size-m);
 }

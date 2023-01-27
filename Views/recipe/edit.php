@@ -5,7 +5,7 @@ if ($O_recipe === null) {
     $S_name = null;
     $I_time = null;
     $S_descr = null;
-    $S_recipe = null;
+    $A_instructions = array();
     $S_difficultyName = null;
     $A_parts = array();
     $A_ingredients = array();
@@ -13,31 +13,32 @@ if ($O_recipe === null) {
     $S_name = $O_recipe->S_NAME;
     $I_time = $O_recipe->I_TIME;
     $S_descr = $O_recipe->S_DESCR;
-    $S_recipe = $O_recipe->S_RECIPE;
+    $A_instructions = $O_recipe->getSplitInstructions();
     $S_difficultyName = $O_recipe->getDifficulty()->S_NAME;
-    $A_parts = array(); // TODO
+    $A_parts = array();
+    foreach(ParticularityModel::searchByRecipe($O_recipe->I_ID) as $O_part){
+        array_push($A_parts, $O_part->S_NAME);
+    }
     $A_ingredients = $O_recipe->getIngredients();
 }
 ?>
 
-<main>
+<main class="editRecipe">
     <?php
     if ($O_recipe !== null) { ?>
-        <a href="/recipe/view/<?= $O_recipe->I_ID ?>">Retour</a>
+        </br>
+        <a href="/recipe/view/<?= $O_recipe->I_ID ?>" class="backButton">← Retour</a>
     <?php } ?>
 
 
-    <form action="<?= $A_view["POST_URI"] ?>" method="post">
+    <form action="<?= $A_view["POST_URI"] ?>" method="post" enctype="multipart/form-data">
 
-        <label for="recipeImage">Entrez l'image de haut de page&nbsp;:</label>
+        <label for="recipeImage">Ajoutez l'image de haut de page&nbsp;:</label>
         <input type="file" name="recipeImage" id="recipeImage">
-
         <label for="recipeName">Nom de la recette&nbsp;:</label>
         <input type="text" name="recipeName" id="recipeName" placeholder="Nom du plat" value="<?= $S_name ?>" required>
-        </br>
         <label for="recipeDescription">Description de la recette</label>
-        </br>
-        <textarea name="recipeDescription" id="recipeDescription"><?= $S_descr ?></textarea>
+        <textarea name="recipeDescription" id="recipeDescription" placeholder="Faites une description appétissante ! 😋"><?= $S_descr ?></textarea>
 
         <section>
             <h1>Informations alimentaires</h1>
@@ -53,14 +54,16 @@ if ($O_recipe === null) {
 
 
             <legend>Particularités du plat&nbsp;:</legend>
-            <input type="checkbox" name="part_Vegan" id="recipeVegan" <?= in_array("Végan", $A_parts)? "checked":"" ?> >
-            <label for="recipeVegan">Végan</label>
-            <input type="checkbox" name="part_LactoseFree" id="recipeLactoseFree" <?= in_array("Sans lactose", $A_parts)? "checked":"" ?> >
-            <label for="recipeLactoseFree">Sans lactose</label>
-            <input type="checkbox" name="part_GlutenFree" id="recipeGlutenFree" <?= in_array("Sans gluten", $A_parts)? "checked":"" ?> >
-            <label for="recipeGlutenFree">Sans gluten</label>
+            <input type="checkbox" name="part_Vegan" id="recipeVegan" <?= in_array("végan", $A_parts)? "checked":"" ?> >
+            <label for="recipeVegan" class="labelParticularite">Végan</label>
+            <input type="checkbox" name="part_Vegeta" id="recipeVegetarian" <?= in_array("végétarien", $A_parts)? "checked":"" ?> >
+            <label for="recipeVegetarian" class="labelParticularite">Végétarien</label>
+            <input type="checkbox" name="part_LactoseFree" id="recipeLactoseFree" <?= in_array("sans lactose", $A_parts)? "checked":"" ?> >
+            <label for="recipeLactoseFree" class="labelParticularite">Sans lactose</label>
+            <input type="checkbox" name="part_GlutenFree" id="recipeGlutenFree" <?= in_array("sans gluten", $A_parts)? "checked":"" ?> >
+            <label for="recipeGlutenFree" class="labelParticularite">Sans gluten</label>
 
-            </br>
+                </br>
 
             <label for="recipeTime">Temps de préparation&nbsp;:</label>
             <input type="number" name="recipeTime" id="recipeTime" min="5" max="1500" step="5" placeholder="Temps de préparation" value="<?= $I_time ?>" required>
@@ -80,9 +83,9 @@ if ($O_recipe === null) {
                     foreach($A_ingredients as $O_ingredient) {
                         echo '<li>
                             <label for="recipeIngredient'.$i.'">Ingrédient&nbsp;:</label>
-                            <input type="text" name="recipeIngredient'.$i.'" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$O_ingredient["NAME"].'">
+                            <input type="text" name="recipeIngredientNames[]" id="recipeIngredient'.$i.'" placeholder="Farine" value="'.$O_ingredient->S_NAME.'">
                             <label for="recipeQuantity'.$i.'">Quantité&nbsp;:</label>
-                            <input type="text" name="recipeQuantity'.$i.'" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$O_ingredient["QUANTITY"].'">
+                            <input type="text" name="recipeIngredientQuantities[]" id="recipeIngredient'.$i.'" placeholder="500g" value="'.$O_ingredient->S_QUANTITY.'">
                         </li>';
                         $i++;
                     }
@@ -92,9 +95,9 @@ if ($O_recipe === null) {
                 } else {
                     echo '<li>
                         <label for="recipeIngredient1">Ingrédient&nbsp;:</label>
-                        <input type="text" name="recipeIngredient1" id="recipeIngredient1" placeholder="Farine">
+                        <input type="text" name="recipeIngredientNames[]" id="recipeIngredient1" placeholder="Farine">
                         <label for="recipeQuantity1">Quantité&nbsp;:</label>
-                        <input type="text" name="recipeQuantity1" id="recipeIngredient1" placeholder="500g">
+                        <input type="text" name="recipeIngredientQuantities[]" id="recipeIngredient1" placeholder="500g">
                         </li>
                     </ul>
                     <button type="button" disabled="disabled" id="recipeButtonIngrdientLess">-</button>';
@@ -112,27 +115,26 @@ if ($O_recipe === null) {
 
             <ol class="recipeInstructions">
                 <?php
-                    if(!empty($S_recipe)) {
-                        $steps = explode("\n", $S_recipe);
+                    if (count($A_instructions) === 0) {
+                        echo '<li>
+                        <label for="recipeInstruction1">Étape 1&nbsp;:</label>
+                        <input type="text" name="recipeInstructions[]" id="recipeInstruction1" placeholder="Battre les oeufs et la farine dans un grand saladier.">
+                        </li>
+                        </ol>
+                        <button type="button" disabled="disabled" id="recipeButtonInstructionLess">-</button>';
+                        $numberOfInstructions = 1;
+                    } else {
                         $i = 1;
-                        foreach($steps as $step) {
+                        foreach($A_instructions as $S_instr) {
                             echo '<li>
                                 <label for="recipeInstruction'.$i.'">Étape '.$i.'&nbsp;:</label>
-                                <input type="text" name="recipeInstruction'.$i.'" id="recipeInstruction'.$i.'" placeholder="Battre les oeufs et la farine dans un grand saladier." value="'.$step.'">
+                                <input type="text" name="recipeInstructions[]" id="recipeInstruction'.$i.'" placeholder="Battre les oeufs et la farine dans un grand saladier." value="'.$S_instr.'">
                             </li>';
                             $i++;
                         }
                         $numberOfInstructions = $i-1;
                         echo '</ol>
                         <button type="button" id="recipeButtonInstructionLess">-</button>';
-                    } else {
-                        echo '<li>
-                            <label for="recipeInstruction1">Étape 1&nbsp;:</label>
-                            <input type="text" name="recipeInstruction1" id="recipeInstruction1" placeholder="Battre les oeufs et la farine dans un grand saladier.">
-                        </li>
-                    </ol>
-                    <button type="button" disabled="disabled" id="recipeButtonInstructionLess">-</button>';
-                    $numberOfIngredients = 1;
                     }
                 ?>
             <button type="button" id="recipeButtonInstructionPlus">+</button>
@@ -162,7 +164,6 @@ buttonIngredientPlus.addEventListener('click', () => {
         if(nextArray[e].tagName == "LABEL") {
             nextArray[e].setAttribute("for", "recipeIngredient"+numberOfIngredients);
         } else {
-            nextArray[e].setAttribute("name", "recipeIngredient"+numberOfIngredients);
             nextArray[e].setAttribute("id", "recipeIngredient"+numberOfIngredients);
             nextArray[e].value = "";
         }
@@ -196,11 +197,10 @@ buttonInstructionPlus.addEventListener('click', () => {
     for(let e in nextArray) {
         console.log(nextArray[e]);
         if(nextArray[e].tagName == "LABEL") {
-            nextArray[e].setAttribute("for", "recipeIngredient"+numberOfInstructions);
+            nextArray[e].setAttribute("for", "recipeInstruction"+numberOfInstructions);
             nextArray[e].textContent = "Étape "+numberOfInstructions+"\u00A0:";
         } else {
-            nextArray[e].setAttribute("name", "recipeIngredient"+numberOfInstructions);
-            nextArray[e].setAttribute("id", "recipeIngredient"+numberOfInstructions);
+            nextArray[e].setAttribute("id", "recipeInstruction"+numberOfInstructions);
             nextArray[e].value = "";
         }
         next.appendChild(nextArray[e]);
