@@ -70,12 +70,15 @@ final class UserController
         $S_email = Utils::getOrDie($A_postParams, "email");
         $S_username = Utils::getOrDie($A_postParams, "username");
         $S_password = Utils::getOrDie($A_postParams, "password");
+        $S_password_confirm = Utils::getOrDie($A_postParams, "password_confirm");
 
 
         if (!filter_var($S_email, FILTER_VALIDATE_EMAIL)) {
             $S_errmsg = "invalid email";
         } else if( strlen($S_password) < 8 || strlen($S_password) > 150 ) {
             $S_errmsg = "password must be between 8 and 150 characters";
+        } else if( $S_password !== $S_password_confirm) {
+            $S_errmsg = "password confirmation do not match";
         } else if(UserModel::isEmailInDatabase($S_email)) {
             $S_errmsg = "An user with this email is already registered";
         }
