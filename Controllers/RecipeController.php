@@ -49,7 +49,7 @@ final class RecipeController
         View::show("recipe/edit", array("POST_URI" => "/recipe/create", "RECIPE" => null));
     }
 
-    private static function fillRecipeFromPostParams($O_recipe, Array $A_postParams)
+    private static function fillBasicRecipeAttributes($O_recipe, Array $A_postParams)
     {
         $O_difficulty = DifficultyModel::getByName(Utils::getOrDie($A_postParams, "recipeDifficulty"));
         if($O_difficulty === null){
@@ -60,7 +60,6 @@ final class RecipeController
         $O_recipe->I_TIME = Utils::intOrDie(Utils::getOrDie($A_postParams, "recipeTime"));
         $O_recipe->S_DESCR = Utils::getOrDie($A_postParams, "recipeDescription");
         $O_recipe->I_DIFFICULTY_ID = $O_difficulty->I_ID;
-        $O_recipe->I_AUTHOR_ID = $_SESSION["ID"];
 
         $S_instructions = "";
         $i = 0;
@@ -98,7 +97,8 @@ final class RecipeController
         $O_recipe = RecipeModel::createEmpty();
 
         // fill basic recipe attribtues
-        self::fillRecipeFromPostParams($O_recipe, $A_postParams);
+        self::fillBasicRecipeAttributes($O_recipe, $A_postParams);
+        $O_recipe->I_AUTHOR_ID = $_SESSION["ID"];
         $O_recipe->insert();
 
         // update img if necessary
@@ -145,7 +145,7 @@ final class RecipeController
         }
 
         // fill basic recipe attribtues
-        self::fillRecipeFromPostParams($O_recipe, $A_postParams);
+        self::fillBasicRecipeAttributes($O_recipe, $A_postParams);
         $O_recipe->update();
 
         ParticularityModel::removeByRecipe($O_recipe->I_ID);
