@@ -1,9 +1,10 @@
 <?php
 $allCategory = array(
     "Végan" => "vegan",
-    "Végetarien" => "vegetarian",
+    "Végetérien" => "vegetarian",
     "Sans gluten" => "glutenLess",
-    "Sans lactose" => "lactoseLess");
+    "Sans lactose" => "lactoseLess",
+    "Non Catégorisé" => "uncategorized");
 ?>
 
 <aside>

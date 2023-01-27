@@ -9,12 +9,14 @@ final class CategoryController
         $A_vegan = ParticularityModel::getByName("végan")->getRecipes();
         $A_gluten = ParticularityModel::getByName("sans gluten")->getRecipes();
         $A_lactose = ParticularityModel::getByName("sans lactose")->getRecipes();
+        $A_recipes = RecipeModel::getUncategorizedRecipes();
         
         $A_array_categories = array(
             "Végan" => $A_vegan,
             "Végétarien" => $A_vegeta,
             "Sans gluten" => $A_gluten,
-            "Sans lactose" => $A_lactose
+            "Sans lactose" => $A_lactose,
+            "Non Catégorisé" => $A_recipes
         );
 
         View::show("category/view", $A_array_categories);

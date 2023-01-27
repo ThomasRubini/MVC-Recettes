@@ -71,6 +71,26 @@ final class RecipeController
         $O_recipe->S_INSTRUCTIONS = substr($S_instructions, 2);
     }
 
+    private function handleParticularities($O_recipe, $A_postParams){
+        // handle particularities
+        if(isset($A_postParams["part_Vegan"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "végan");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["part_Vegeta"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "végétarien");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["part_LactoseFree"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "sans lactose");
+            $O_part->insert();
+        }
+        if(isset($A_postParams["part_GlutenFree"])){
+            $O_part = new ParticularityModel($O_recipe->I_ID, "sans gluten");
+            $O_part->insert();
+        }
+    }
+
     public function createAction(Array $A_urlParams = null, Array $A_postParams = null)
     {
         Session::login_or_die();
@@ -91,26 +111,8 @@ final class RecipeController
         $A_ingredientNames = Utils::getOrDie($A_postParams, "recipeIngredientNames");
         $A_ingredientQuantities = Utils::getOrDie($A_postParams, "recipeIngredientQuantities");
 
-
-
         // handle particularities
-        if(isset($A_postParams["recipeVegan"])){
-            $O_part = new ParticularityModel($O_recipe->I_ID, "végan");
-            $O_part->insert();
-        }
-        if(isset($A_postParams["recipeVegetarian"])){
-            $O_part = new ParticularityModel($O_recipe->I_ID, "végétarien");
-            $O_part->insert();
-        }
-        if(isset($A_postParams["recipeLactoseFree"])){
-            $O_part = new ParticularityModel($O_recipe->I_ID, "sans lactose");
-            $O_part->insert();
-        }
-        if(isset($A_postParams["recipeGlutenFree"])){
-            $O_part = new ParticularityModel($O_recipe->I_ID, "sans gluten");
-            $O_part->insert();
-        }
-
+        self::handleParticularities($O_recipe, $A_postParams);
 
         $A_ingredients = array();
         for($i=0; $i<count($A_ingredientNames); $i++) {
@@ -149,23 +151,7 @@ final class RecipeController
         ParticularityModel::removeByRecipe($O_recipe->I_ID);
 
         // handle particularities
-        if(isset($A_postParams["part_Vegan"])){
-            $O_part = new ParticularityModel($O_recipe->I_ID, "végan");
-            $O_part->insert();
-        }
-        if(isset($A_postParams["part_Vegeta"])){
-            $O_part = new ParticularityModel($O_recipe->I_ID, "végétarien");
-            $O_part->insert();
-        }
-        if(isset($A_postParams["part_LactoseFree"])){
-            $O_part = new ParticularityModel($O_recipe->I_ID, "sans lactose");
-            $O_part->insert();
-        }
-        if(isset($A_postParams["part_GlutenFree"])){
-            $O_part = new ParticularityModel($O_recipe->I_ID, "sans gluten");
-            $O_part->insert();
-        }
-        
+        self::handleParticularities($O_recipe, $A_postParams);
         
         // update img if necessary
         $fp = Utils::tryProcessImg("recipeImage");
