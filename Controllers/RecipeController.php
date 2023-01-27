@@ -62,7 +62,6 @@ final class RecipeController
         $O_recipe->I_TIME = Utils::intOrDie(Utils::getOrDie($A_postParams, "recipeTime"));
         $O_recipe->S_DESCR = Utils::getOrDie($A_postParams, "recipeDescription");
         $O_recipe->I_DIFFICULTY_ID = $O_difficulty->I_ID;
-        $O_recipe->I_AUTHOR_ID = $_SESSION["ID"];
 
         $S_instructions = "";
         $i = 0;
@@ -81,6 +80,7 @@ final class RecipeController
 
         // fill basic recipe attribtues
         self::fillBasicRecipeAttributes($O_recipe, $A_postParams);
+        $O_recipe->I_AUTHOR_ID = $_SESSION["ID"];
         $O_recipe->insert();
 
         // update img if necessary
