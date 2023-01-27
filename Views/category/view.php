@@ -3,7 +3,8 @@ $allCategory = array(
     "Végan" => "vegan",
     "Végétarien" => "vegetarian",
     "Sans gluten" => "glutenLess",
-    "Sans lactose" => "lactoseLess");
+    "Sans lactose" => "lactoseLess",
+    "Non Catégorisé" => "uncategorized");
 ?>
 
 <main class="hasAside">

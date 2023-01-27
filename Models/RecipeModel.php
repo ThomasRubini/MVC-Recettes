@@ -210,6 +210,19 @@ final class RecipeModel
         return $A_recipes;
     }
 
+    public static function getUncategorizedRecipes(){
+        $O_model = Model::get();
+        $stmt = $O_model->prepare("SELECT * FROM RECIPE WHERE ID NOT IN (SELECT RECIPE_ID FROM RECIPE_PARTICULARITY)");
+        $stmt->execute();
+        
+        $A_recipes = array();
+        foreach($stmt->fetchAll() as $row){
+            array_push($A_recipes, self::createFromRow($row, $row["ID"]));
+        }
+
+        return $A_recipes;
+    }
+
     public static function getRandomRecipes($I_n)
     {
         $O_model = Model::get();
